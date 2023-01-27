@@ -1,5 +1,6 @@
 #include "PlayScene.h"
 
+
 //コンストラクタ
 PlayScene::PlayScene(GameObject * parent)
 	: GameObject(parent, "PlayScene")
