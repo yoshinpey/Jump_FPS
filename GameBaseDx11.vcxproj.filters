@@ -24,6 +24,21 @@
       <UniqueIdentifier>{47a6a3f5-8cfd-436b-8d58-beccd108f3f3}</UniqueIdentifier>
       <Extensions>hlsl</Extensions>
     </Filter>
+    <Filter Include="03Scene">
+      <UniqueIdentifier>{c74b3161-dce0-4174-87d0-23f28f24e0ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Scene\01Title">
+      <UniqueIdentifier>{3e8418c9-64a5-4e5b-a989-cb294e37f0e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Scene\02Play">
+      <UniqueIdentifier>{e9064624-0c6b-4b9d-a45b-522af7bf3b72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Scene\04Clear">
+      <UniqueIdentifier>{7955f22a-5ef1-43c3-a27c-fc7952b162f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Scene\03Over">
+      <UniqueIdentifier>{89f8e437-f747-469d-90e3-43c7635badc3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\BoxCollider.cpp">
@@ -80,7 +95,6 @@
     <ClCompile Include="Engine\Transform.cpp">
       <Filter>01Engine\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Engine\Audio.cpp">
       <Filter>01Engine\ResourceManager</Filter>
     </ClCompile>
@@ -89,6 +103,18 @@
     </ClCompile>
     <ClCompile Include="Engine\Debug.cpp">
       <Filter>01Engine\ResourceManager</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayScene.cpp">
+      <Filter>03Scene\02Play</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>03Scene\01Title</Filter>
+    </ClCompile>
+    <ClCompile Include="OverScene.cpp">
+      <Filter>03Scene\03Over</Filter>
+    </ClCompile>
+    <ClCompile Include="ClearScene.cpp">
+      <Filter>03Scene\04Clear</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -146,7 +172,6 @@
     <ClInclude Include="Engine\Transform.h">
       <Filter>01Engine\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Engine\Audio.h">
       <Filter>01Engine\ResourceManager</Filter>
     </ClInclude>
@@ -155,6 +180,18 @@
     </ClInclude>
     <ClInclude Include="Engine\Debug.h">
       <Filter>01Engine\ResourceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayScene.h">
+      <Filter>03Scene\02Play</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>03Scene\01Title</Filter>
+    </ClInclude>
+    <ClInclude Include="OverScene.h">
+      <Filter>03Scene\03Over</Filter>
+    </ClInclude>
+    <ClInclude Include="ClearScene.h">
+      <Filter>03Scene\04Clear</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

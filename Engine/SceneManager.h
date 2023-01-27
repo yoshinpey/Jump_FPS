@@ -5,7 +5,10 @@
 //ÉQÅ[ÉÄÇ…ìoèÍÇ∑ÇÈÉVÅ[Éì
 enum SCENE_ID
 {
-	SCENE_ID_PLAY = 0,
+	SCENE_ID_TITLE = 0,
+	SCENE_ID_PLAY,
+	SCENE_ID_OVER,
+	SCENE_ID_CLEAR,
 };
 
 //-----------------------------------------------------------
