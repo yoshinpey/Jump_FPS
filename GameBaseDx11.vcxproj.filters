@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="リソース ファイル">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="01Engine">
       <UniqueIdentifier>{e5fccdcb-f299-4448-bdb6-01fa28039576}</UniqueIdentifier>
     </Filter>
@@ -38,6 +34,19 @@
     </Filter>
     <Filter Include="03Scene\03Over">
       <UniqueIdentifier>{89f8e437-f747-469d-90e3-43c7635badc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Scene\Multipurpose">
+      <UniqueIdentifier>{88ed1941-2d7b-4413-9a54-7a1aee039f7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Scene\Resource">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="03Scene\Resource\Entity">
+      <UniqueIdentifier>{fd3012e6-becc-45de-98af-002547e727d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03Scene\Resource\Character">
+      <UniqueIdentifier>{a1957ed1-345d-4cac-a8f6-3f32f1a82cd3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -116,6 +125,33 @@
     <ClCompile Include="ClearScene.cpp">
       <Filter>03Scene\04Clear</Filter>
     </ClCompile>
+    <ClCompile Include="Score.cpp">
+      <Filter>03Scene\Multipurpose</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>03Scene\Multipurpose</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>03Scene\Resource\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Attack.cpp">
+      <Filter>03Scene\Resource\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_Ground.cpp">
+      <Filter>03Scene\Resource\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_Fly.cpp">
+      <Filter>03Scene\Resource\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Bomb.cpp">
+      <Filter>03Scene\Resource\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Ground.cpp">
+      <Filter>03Scene\Resource\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Crystal.cpp">
+      <Filter>03Scene\Resource\Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -192,6 +228,33 @@
     </ClInclude>
     <ClInclude Include="ClearScene.h">
       <Filter>03Scene\04Clear</Filter>
+    </ClInclude>
+    <ClInclude Include="Score.h">
+      <Filter>03Scene\Multipurpose</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>03Scene\Multipurpose</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>03Scene\Resource\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Attack.h">
+      <Filter>03Scene\Resource\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_Ground.h">
+      <Filter>03Scene\Resource\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_Fly.h">
+      <Filter>03Scene\Resource\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Bomb.h">
+      <Filter>03Scene\Resource\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Ground.h">
+      <Filter>03Scene\Resource\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Crystal.h">
+      <Filter>03Scene\Resource\Entity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
