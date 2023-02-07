@@ -4,6 +4,7 @@
 //Clearシーンを管理するクラス
 class ClearScene : public GameObject
 {
+	int hPict_;    //画像番号
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）
