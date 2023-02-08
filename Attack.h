@@ -1,7 +1,7 @@
 #pragma once
 #include "Engine/GameObject.h"
 
-//Attackを管理するクラス
+//近接攻撃を管理するクラス
 class Attack : public GameObject
 {
     int hModel_;    //モデル番号

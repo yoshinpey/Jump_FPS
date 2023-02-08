@@ -1,7 +1,7 @@
 #pragma once
 #include "Engine/GameObject.h"
 
-//Enemy_Groundを管理するクラス
+//地上敵を管理するクラス
 class Enemy_Ground : public GameObject
 {
     int hModel_;    //モデル番号

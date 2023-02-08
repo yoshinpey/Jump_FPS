@@ -1,7 +1,7 @@
 #pragma once
 #include "Engine/GameObject.h"
 
-//Bombを管理するクラス
+//投擲アイテムを管理するクラス
 class Bomb : public GameObject
 {
     int hModel_;    //モデル番号

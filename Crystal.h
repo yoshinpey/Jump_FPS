@@ -1,7 +1,7 @@
 #pragma once
 #include "Engine/GameObject.h"
 
-//Crystalを管理するクラス
+//守護目標(クリスタル)を管理するクラス
 class Crystal : public GameObject
 {
     int hModel_;    //モデル番号

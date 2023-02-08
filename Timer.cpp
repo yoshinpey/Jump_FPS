@@ -6,7 +6,7 @@ static const int FPS = 60;
 //コンストラクタ
 Timer::Timer(GameObject* parent)
     :GameObject(parent, "Timer"), pNum(nullptr),
-    Frame(0), Active(false), drawX(0), drawY(0)
+    Frame(0), Active(false), drawX(10), drawY(20)
 {
 }
 
@@ -25,8 +25,10 @@ void Timer::Initialize()
 //更新
 void Timer::Update()
 {
+    //起動状態
     if (Active) 
     {
+        //カウントダウン
         if (Frame > 0) 
         {
             Frame--;
@@ -37,13 +39,14 @@ void Timer::Update()
 //描画
 void Timer::Draw()
 {
-    pNum->SetScale(1.0f);
-    pNum->Draw(drawX, drawY, "Time");
-    if (Frame % FPS < 10)
-        pNum->SetScale((Frame % FPS) * 0.2f + 1.0f);
+    
+    pNum->SetScale(1.0f);                                   //テキストのサイズ
+    pNum->Draw(drawX, drawY, "Time:");                       //描画内容
+    if (Frame % FPS < 10)                                   //数字の躍動感
+        pNum->SetScale((Frame % FPS) * 0.2f + 1.0f);        //規定フレーム以下時に適応
     else
         pNum->SetScale(1.0f);
-    int sec = Frame / FPS;
+    int sec = Frame / FPS;                                  //秒数
     pNum->Draw(drawX + 100, drawY, sec);
 }
 

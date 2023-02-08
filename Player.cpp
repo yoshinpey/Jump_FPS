@@ -98,7 +98,9 @@ void Player::PlayerMove()
 
 void Player::CameraPosition() 
 {
-    XMFLOAT3 camPos;
-    camPos = (0, 10, 15);
+    //とりあえずのカメラ
+    XMFLOAT3 camPos = XMFLOAT3(0, 5, -15);
     Camera::SetPosition(camPos);
+
+    //マウスに連動する視点を作りたい！！
 }

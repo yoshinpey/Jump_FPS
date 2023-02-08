@@ -2,14 +2,14 @@
 #include "Engine/Text.h"
 #include "Engine/GameObject.h"
 
-//Timer管理するクラス
+//タイマー管理するクラス
 class Timer : public GameObject
 {
-    bool Active;
-    int Frame;
-    Text* pNum;
-    float drawX;
-    float drawY;
+    bool Active;        //起動しているかどうか
+    int Frame;          //一秒間に何回更新されるか
+    Text* pNum;         //秒数テキスト
+    float drawX;        //描画位置(左右)
+    float drawY;        //描画高さ
 
 public:
     //コンストラクタ

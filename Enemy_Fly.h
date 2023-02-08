@@ -1,7 +1,7 @@
 #pragma once
 #include "Engine/GameObject.h"
 
-//Enemy_Flyを管理するクラス
+//浮遊敵を管理するクラス
 class Enemy_Fly : public GameObject
 {
     int hModel_;    //モデル番号

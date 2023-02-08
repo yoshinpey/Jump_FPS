@@ -1,11 +1,11 @@
 #pragma once
 #include "Engine/GameObject.h"
 
-//Playerを管理するクラス
+//主人公を管理するクラス
 class Player : public GameObject
 {
     int hModel_;    //モデル番号
-    int camType_;
+    int camPos;
 public:
     //コンストラクタ
     Player(GameObject* parent);
