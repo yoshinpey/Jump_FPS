@@ -1,24 +1,26 @@
 #pragma once
-#include "Engine/Text.h"
 #include "Engine/GameObject.h"
-
-//Scoreを管理するクラス
-class Score : public GameObject
+//Playerの子供
+//銃を管理するクラス
+class Gun : public GameObject
 {
-    Text* pText;
+    int hModel_;    //モデル番号
 public:
     //コンストラクタ
-    Score(GameObject* parent);
+    Gun(GameObject* parent);
+
     //デストラクタ
-    ~Score();
+    ~Gun();
+
     //初期化
     void Initialize() override;
+
     //更新
     void Update() override;
+
     //描画
     void Draw() override;
+
     //開放
     void Release() override;
-
-
 };

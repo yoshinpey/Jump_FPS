@@ -155,6 +155,9 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>Resource\Entity</Filter>
     </ClCompile>
+    <ClCompile Include="Gun.cpp">
+      <Filter>Resource\Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -260,6 +263,9 @@
       <Filter>Resource\Entity</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
+      <Filter>Resource\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Gun.h">
       <Filter>Resource\Entity</Filter>
     </ClInclude>
   </ItemGroup>

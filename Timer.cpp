@@ -1,6 +1,7 @@
 #include "Timer.h"
 #include "Engine/Input.h"
 
+//フレームレート
 static const int FPS = 60;
 
 //コンストラクタ
@@ -41,7 +42,7 @@ void Timer::Draw()
 {
     
     pNum->SetScale(1.0f);                                   //テキストのサイズ
-    pNum->Draw(drawX, drawY, "Time:");                       //描画内容
+    pNum->Draw(drawX, drawY, "Time:");                      //描画内容
     if (Frame % FPS < 10)                                   //数字の躍動感
         pNum->SetScale((Frame % FPS) * 0.2f + 1.0f);        //規定フレーム以下時に適応
     else
@@ -58,6 +59,7 @@ void Timer::Release()
 //タイマー設定
 void Timer::SetLimit(float seconds)
 {
+    //このようにできるだけ数字は変数に入れて扱う
     Frame = (int)(seconds * FPS);
 }
 
