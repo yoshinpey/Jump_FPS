@@ -1,4 +1,5 @@
 #include "Timer.h"
+#include "Engine/Input.h"
 
 //コンストラクタ
 Timer::Timer(GameObject* parent)

@@ -27,4 +27,8 @@ public:
 
     //プレイヤー移動
     void PlayerMove();
+
+    //カメラ
+    void CameraPosition();
+
 };

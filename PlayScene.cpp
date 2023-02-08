@@ -3,11 +3,8 @@
 
 #include "PlayScene.h"
 #include "Player.h"
+#include "Ground.h"
 
-enum
-{
-
-};
 
 //コンストラクタ
 PlayScene::PlayScene(GameObject * parent)
@@ -20,6 +17,8 @@ void PlayScene::Initialize()
 {
 	//プレイヤー登場
 	Instantiate<Player>(this);
+
+	Instantiate<Ground>(this);
 	/*
 	//背景画像データのロード
 	hPict_ = Image::Load("ファイル名");

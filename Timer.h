@@ -2,9 +2,12 @@
 #include "Engine/Text.h"
 #include "Engine/GameObject.h"
 
+static const int FPS = 60;
+
 //Timer管理するクラス
 class Timer : public GameObject
 {
+    int timer;
     Text* pText;
 public:
     //コンストラクタ
@@ -24,4 +27,10 @@ public:
 
     //開放
     void Release() override;
+
+    void Start(float seconds);
+
+    bool IaFinished();
+
+
 };

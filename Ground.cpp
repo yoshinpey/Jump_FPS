@@ -18,7 +18,7 @@ Ground::~Ground()
 void Ground::Initialize()
 {
     //モデルデータのロード
-    hModel_ = Model::Load("ファイル名");
+    hModel_ = Model::Load("Stage/Ground.fbx");
     assert(hModel_ >= 0);
 }
 
