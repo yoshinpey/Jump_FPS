@@ -1,5 +1,6 @@
-#include "Attack.h"
 #include "Engine/Model.h"
+
+#include "Attack.h"
 
 //コンストラクタ
 Attack::Attack(GameObject* parent)

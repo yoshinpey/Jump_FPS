@@ -1,5 +1,7 @@
-#include "Crystal.h"
 #include "Engine/Model.h"
+
+#include "Crystal.h"
+
 
 //コンストラクタ
 Crystal::Crystal(GameObject* parent)

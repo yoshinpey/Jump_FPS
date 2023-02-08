@@ -1,5 +1,7 @@
-#include "Enemy_Ground.h"
 #include "Engine/Model.h"
+
+#include "Enemy_Ground.h"
+
 
 //コンストラクタ
 Enemy_Ground::Enemy_Ground(GameObject* parent)

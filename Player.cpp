@@ -1,6 +1,18 @@
-#include "Player.h"
+#include "Engine/Camera.h"
 #include "Engine/Model.h"
 #include "Engine/Input.h"
+
+#include "Player.h"
+
+
+enum
+{
+    CAM_TYPE_FIXED,         //0　全体像固定
+    CAM_TYPE_TPS_NO_ROT,    //1　三人称(回転なし)
+    CAM_TYPE_TPS,           //2　三人称
+    CAM_TYPE_FPS,           //3　一人称
+    CAM_TYPE_MAX            //4　最後のカメラ　
+};
 
 //コンストラクタ
 Player::Player(GameObject* parent)
@@ -25,6 +37,56 @@ void Player::Initialize()
 void Player::Update()
 {
     PlayerMove();
+
+    if (Input::IsKeyDown(DIK_V))
+    {
+        camType_++;
+    }
+
+    switch (camType_)
+    {
+    case CAM_TYPE_FIXED:
+    {
+        Camera::SetPosition(XMFLOAT3(0, 30, -100));
+        Camera::SetTarget(XMFLOAT3(0, 0, 0));
+        break;
+    }
+
+    case CAM_TYPE_TPS_NO_ROT:
+    {
+        Camera::SetTarget(transform_.position_);
+        XMFLOAT3 camPos = transform_.position_;
+        camPos.y += 10;
+        camPos.z -= 20;
+        Camera::SetPosition(camPos);
+        break;
+    }
+
+    case CAM_TYPE_TPS:
+    {
+        Camera::SetTarget(transform_.position_);
+        XMVECTOR vCam = { 0, 10, -20, 0 };
+        vCam = XMVector3TransformCoord(vCam, mRotY);
+        XMFLOAT3 camPos;
+        XMStoreFloat3(&camPos, vPos + vCam);
+        Camera::SetPosition(camPos);
+        break;
+    }
+
+    case CAM_TYPE_FPS:
+    {
+        Camera::SetPosition(transform_.position_);
+        XMFLOAT3 camTarget;
+        XMStoreFloat3(&camTarget, vPos + vMove);
+        Camera::SetTarget(camTarget);
+        break;
+    }
+
+    case CAM_TYPE_MAX:
+    {
+        camType_ = 0;
+        break;
+    }
 }
 
 //描画

@@ -1,8 +1,13 @@
 #include "Engine/SceneManager.h"
 #include "Engine/Image.h"
+
 #include "PlayScene.h"
 #include "Player.h"
 
+enum
+{
+
+};
 
 //コンストラクタ
 PlayScene::PlayScene(GameObject * parent)
@@ -13,9 +18,10 @@ PlayScene::PlayScene(GameObject * parent)
 //初期化
 void PlayScene::Initialize()
 {
+	//プレイヤー登場
 	Instantiate<Player>(this);
 	/*
-	//画像データのロード
+	//背景画像データのロード
 	hPict_ = Image::Load("ファイル名");
 	assert(hPict_ >= 0);
 	*/
@@ -30,8 +36,10 @@ void PlayScene::Update()
 void PlayScene::Draw()
 {
 	/*
+	//背景描画
 	Image::SetTransform(hPict_, transform_);
-	Image::Draw(hPict_);*/
+	Image::Draw(hPict_);
+	*/
 }
 
 //開放

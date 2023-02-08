@@ -1,5 +1,7 @@
-#include "Bullet.h"
 #include "Engine/Model.h"
+
+#include "Bullet.h"
+
 
 //コンストラクタ
 Bullet::Bullet(GameObject* parent)

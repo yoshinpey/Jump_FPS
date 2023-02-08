@@ -5,6 +5,7 @@
 class Player : public GameObject
 {
     int hModel_;    //モデル番号
+    int camType_;
 public:
     //コンストラクタ
     Player(GameObject* parent);

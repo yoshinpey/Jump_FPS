@@ -1,5 +1,7 @@
-#include "Enemy_Fly.h"
 #include "Engine/Model.h"
+
+#include "Enemy_Fly.h"
+
 
 //コンストラクタ
 Enemy_Fly::Enemy_Fly(GameObject* parent)

@@ -1,5 +1,7 @@
-#include "Bomb.h"
 #include "Engine/Model.h"
+
+#include "Bomb.h"
+
 
 //コンストラクタ
 Bomb::Bomb(GameObject* parent)
