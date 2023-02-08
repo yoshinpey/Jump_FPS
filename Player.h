@@ -23,4 +23,7 @@ public:
 
     //開放
     void Release() override;
+
+    //プレイヤー移動
+    void PlayerMove();
 };
