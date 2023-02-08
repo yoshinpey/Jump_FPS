@@ -98,10 +98,7 @@ void Player::PlayerMove()
 
 void Player::CameraPosition() 
 {
-    XMVECTOR vPos = XMLoadFloat3(&transform_.position_);
-    XMVECTOR vMove = { 0.0f, 0.0f, 0.8f, 0.0f, };
-    Camera::SetPosition(transform_.position_);
-    XMFLOAT3 camTarget;
-    XMStoreFloat3(&camTarget, vPos + vMove);
-    Camera::SetTarget(camTarget);
+    XMFLOAT3 camPos;
+    camPos = (0, 10, 15);
+    Camera::SetPosition(camPos);
 }
