@@ -1,9 +1,11 @@
 #include "Engine/SceneManager.h"
 #include "Engine/Image.h"
+#include "Engine/Input.h"
 
 #include "PlayScene.h"
 #include "Player.h"
 #include "Ground.h"
+#include "Timer.h"
 
 
 //コンストラクタ
@@ -15,10 +17,12 @@ PlayScene::PlayScene(GameObject * parent)
 //初期化
 void PlayScene::Initialize()
 {
-	//プレイヤー登場
-	Instantiate<Player>(this);
-
-	Instantiate<Ground>(this);
+	Instantiate<Player>(this);			//プレイヤー登場
+	Instantiate<Ground>(this);			//地面登場
+	Instantiate<Timer>(this);			//
+	//タイマー設定
+	Timer* t = (Timer*)FindObject("Timer");
+	t->SetLimit(5);
 	/*
 	//背景画像データのロード
 	hPict_ = Image::Load("ファイル名");
@@ -29,6 +33,17 @@ void PlayScene::Initialize()
 //更新
 void PlayScene::Update()
 {
+	if (Input::IsKeyDown(DIK_Y))
+	{
+		Timer* t = (Timer*)FindObject("Timer");
+		t->TimeStart();
+	}
+
+	if (Input::IsKeyDown(DIK_H))
+	{
+		Timer* t = (Timer*)FindObject("Timer");
+		t->TimeStop();
+	}
 }
 
 //描画

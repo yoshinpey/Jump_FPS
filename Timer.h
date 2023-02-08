@@ -2,35 +2,38 @@
 #include "Engine/Text.h"
 #include "Engine/GameObject.h"
 
-static const int FPS = 60;
-
 //Timer管理するクラス
 class Timer : public GameObject
 {
-    int timer;
-    Text* pText;
+    bool Active;
+    int Frame;
+    Text* pNum;
+    float drawX;
+    float drawY;
+
 public:
     //コンストラクタ
     Timer(GameObject* parent);
-
     //デストラクタ
     ~Timer();
-
     //初期化
     void Initialize() override;
-
     //更新
     void Update() override;
-
     //描画
     void Draw() override;
-
     //開放
     void Release() override;
 
-    void Start(float seconds);
+    //タイマー設定
+    void SetLimit(float seconds);
 
-    bool IaFinished();
+    //タイマー開始
+    void TimeStart();
 
+    //タイマー終了
+    void TimeStop();
 
+    //タイマー処理終了
+    bool IsFinished();
 };
