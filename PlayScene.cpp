@@ -22,7 +22,7 @@ void PlayScene::Initialize()
 	Instantiate<Timer>(this);			//
 	//タイマー設定
 	Timer* t = (Timer*)FindObject("Timer");
-	t->SetLimit(5);
+	t->SetLimit(15);
 	/*
 	//背景画像データのロード
 	hPict_ = Image::Load("ファイル名");
