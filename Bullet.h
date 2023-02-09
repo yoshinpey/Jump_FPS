@@ -4,7 +4,11 @@
 //銃弾を管理するクラス
 class Bullet : public GameObject
 {
-    int hModel_;    //モデル番号
+    int hModel_;            //モデル番号    
+    int BulletKill_;        
+
+    XMFLOAT3 move_;         
+
 public:
     //コンストラクタ
     Bullet(GameObject* parent);
@@ -23,4 +27,7 @@ public:
 
     //開放
     void Release() override;
+
+    //弾の位置設定用
+    void SetMove(XMFLOAT3 move) { move_ = move; }
 };

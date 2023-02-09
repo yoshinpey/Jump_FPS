@@ -1,3 +1,4 @@
+#include "Engine/SphereCollider.h"
 #include "Engine/Model.h"
 
 #include "Bullet.h"
@@ -5,7 +6,7 @@
 
 //コンストラクタ
 Bullet::Bullet(GameObject* parent)
-    :GameObject(parent, "Bullet"), hModel_(-1)
+    :GameObject(parent, "Bullet"), hModel_(-1), BulletKill_(0)
 {
 }
 
@@ -18,13 +19,28 @@ Bullet::~Bullet()
 void Bullet::Initialize()
 {
     //モデルデータのロード
-    hModel_ = Model::Load("ファイル名");
+    hModel_ = Model::Load("Entity/Bullet.fbx");
     assert(hModel_ >= 0);
+    //当たり判定
+    SphereCollider* collision = new SphereCollider(XMFLOAT3(0, 0, 0), 0.3f);
+    AddCollider(collision);
 }
 
 //更新
 void Bullet::Update()
 {
+    //弾を飛ばす方向にベクトルを変換
+    transform_.position_.x += move_.x;
+    transform_.position_.y += move_.y;
+    transform_.position_.z += move_.z;
+
+    //弾を消す準備
+    BulletKill_++;
+    //弾を消す条件
+    if (BulletKill_ >= 240)
+    {
+        KillMe();
+    }
 }
 
 //描画

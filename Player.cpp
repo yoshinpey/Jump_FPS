@@ -23,6 +23,7 @@ void Player::Initialize()
     hModel_ = Model::Load("Character/Human_only.fbx");
     assert(hModel_ >= 0);
 
+    //e‚ğ“oê‚³‚¹‚é
     Instantiate<Gun>(this);
 }
 

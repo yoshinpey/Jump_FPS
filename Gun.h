@@ -5,6 +5,7 @@
 class Gun : public GameObject
 {
     int hModel_;    //モデル番号
+    float Bullet_speed;
 public:
     //コンストラクタ
     Gun(GameObject* parent);
