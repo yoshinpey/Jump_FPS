@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Ground.h"
 #include "Timer.h"
+#include "Gun.h"
 
 
 //コンストラクタ
@@ -19,7 +20,8 @@ void PlayScene::Initialize()
 {
 	Instantiate<Player>(this);			//プレイヤー登場
 	Instantiate<Ground>(this);			//地面登場
-	Instantiate<Timer>(this);			//
+	Instantiate<Timer>(this);			//タイマー登場
+	
 	//タイマー設定
 	Timer* t = (Timer*)FindObject("Timer");
 	t->SetLimit(15);

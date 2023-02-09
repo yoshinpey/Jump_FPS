@@ -3,6 +3,7 @@
 #include "Engine/Input.h"
 
 #include "Player.h"
+#include "Gun.h"
 
 //コンストラクタ
 Player::Player(GameObject* parent)
@@ -19,8 +20,10 @@ Player::~Player()
 void Player::Initialize()
 {
     //モデルデータのロード
-    hModel_ = Model::Load("Character/Player.fbx");
+    hModel_ = Model::Load("Character/Human_only.fbx");
     assert(hModel_ >= 0);
+
+    Instantiate<Gun>(this);
 }
 
 //更新

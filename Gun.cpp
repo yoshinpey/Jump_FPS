@@ -18,8 +18,12 @@ Gun::~Gun()
 void Gun::Initialize()
 {
     //モデルデータのロード
-    hModel_ = Model::Load("ファイル名");
+    hModel_ = Model::Load("Entity/Rifle_mini.fbx");
     assert(hModel_ >= 0);
+
+    transform_.position_.y = 0.72;
+    transform_.position_.x = 0.25;
+    transform_.position_.z = 1.5;
 }
 
 //更新
