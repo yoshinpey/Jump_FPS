@@ -6,11 +6,11 @@
 //主人公を管理するクラス
 class Player : public GameObject
 {
-    int hModel_;    //モデル番号
-    XMVECTOR camPos;
-    Text* pNum;
-    XMFLOAT3 movelen1;
-    XMFLOAT3 movelen2;
+    int hModel_;            //モデル番号
+    double camPosX;        
+    double camPosY;        
+    Text* pNum;             
+    XMFLOAT3 moveLength;    
 public:
     //コンストラクタ
     Player(GameObject* parent);
