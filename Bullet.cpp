@@ -22,7 +22,7 @@ void Bullet::Initialize()
     hModel_ = Model::Load("Entity/Bullet.fbx");
     assert(hModel_ >= 0);
     //“–‚½‚è”»’è
-    SphereCollider* collision = new SphereCollider(XMFLOAT3(0, 0, 0), 0.3f);
+    SphereCollider* collision = new SphereCollider(XMFLOAT3(0, 0, 0), 0.1f);
     AddCollider(collision);
 }
 
@@ -34,9 +34,8 @@ void Bullet::Update()
     transform_.position_.y += move_.y;
     transform_.position_.z += move_.z;
 
-    //’e‚ðÁ‚·€”õ
+    //’e‚ðÁ‚·
     BulletKill_++;
-    //’e‚ðÁ‚·ðŒ
     if (BulletKill_ >= 240)
     {
         KillMe();

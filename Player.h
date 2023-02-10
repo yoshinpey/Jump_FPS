@@ -31,4 +31,6 @@ public:
     //ƒJƒƒ‰
     void CameraPosition();
 
+    //get
+    void GetPlayerPosition();
 };

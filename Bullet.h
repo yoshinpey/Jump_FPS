@@ -1,13 +1,12 @@
 #pragma once
 #include "Engine/GameObject.h"
-//銃の子供
+
 //銃弾を管理するクラス
 class Bullet : public GameObject
 {
     int hModel_;            //モデル番号    
-    int BulletKill_;        
-
-    XMFLOAT3 move_;         
+    int BulletKill_;        //弾を時間で消去
+    XMFLOAT3 move_;         //弾の動き
 
 public:
     //コンストラクタ

@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Gun.h"
 
+
 //コンストラクタ
 Player::Player(GameObject* parent)
     :GameObject(parent, "Player"), hModel_(-1)
@@ -102,9 +103,20 @@ void Player::PlayerMove()
 
 void Player::CameraPosition() 
 {
-    //とりあえずのカメラ
-    XMFLOAT3 camPos = XMFLOAT3(0, 5, -15);
-    Camera::SetPosition(camPos);
+    ////とりあえずのカメラ
+    //XMFLOAT3 camPos = XMFLOAT3(0, 5, -15);
+    //Camera::SetPosition(camPos);
+
 
     //マウスに連動する視点を作りたい！！
+    XMMATRIX mRotY = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));
+    XMFLOAT3 camPos = XMFLOAT3(0, 0, 0);
+    XMFLOAT3 GetMousePosition(camPos);
+    Camera::SetPosition(transform_.position_);
+    GetPlayerPosition();
+
+}
+
+void Player::GetPlayerPosition()
+{
 }

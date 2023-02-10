@@ -7,7 +7,7 @@
 
 //コンストラクタ
 Gun::Gun(GameObject* parent)
-    :GameObject(parent, "Gun"), hModel_(-1), Bullet_speed(2)
+    :GameObject(parent, "Gun"), hModel_(-1), Bullet_speed(1)
 {
 }
 
@@ -46,7 +46,7 @@ void Gun::Update()
         XMVECTOR vMove = vTop - vRoot;
         //正規化
         vMove = XMVector3Normalize(vMove);
-        //vMove *= Bullet_speed;予定
+        //弾速
         vMove *= Bullet_speed;
         //元に戻す
         XMFLOAT3 move;
