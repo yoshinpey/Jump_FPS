@@ -1,11 +1,16 @@
 #pragma once
+#include "Engine/Text.h"
 #include "Engine/GameObject.h"
+
 
 //主人公を管理するクラス
 class Player : public GameObject
 {
     int hModel_;    //モデル番号
     XMVECTOR camPos;
+    Text* pNum;
+    XMFLOAT3 movelen1;
+    XMFLOAT3 movelen2;
 public:
     //コンストラクタ
     Player(GameObject* parent);

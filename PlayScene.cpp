@@ -18,9 +18,10 @@ PlayScene::PlayScene(GameObject * parent)
 //初期化
 void PlayScene::Initialize()
 {
-	Instantiate<Player>(this);			//プレイヤー登場
+	
 	Instantiate<Ground>(this);			//地面登場
 	Instantiate<Timer>(this);			//タイマー登場
+	Instantiate<Player>(this);			//プレイヤー登場
 	
 	//タイマー設定
 	Timer* t = (Timer*)FindObject("Timer");

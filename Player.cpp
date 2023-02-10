@@ -8,8 +8,10 @@
 
 //コンストラクタ
 Player::Player(GameObject* parent)
-    :GameObject(parent, "Player"), hModel_(-1)
+    :GameObject(parent, "Player"), hModel_(-1), pNum(nullptr)
 {
+    movelen1 = XMFLOAT3{ 0,0,0 };
+    movelen2 = XMFLOAT3{ 0,0,0 };
 }
 
 //デストラクタ
@@ -26,21 +28,33 @@ void Player::Initialize()
 
     //銃を登場させる
     Instantiate<Gun>(this);
+
+    pNum = new Text;
+    pNum->Initialize();
 }
 
 //更新
 void Player::Update()
 {
+    movelen1 = Input::GetMouseMove();
+
     PlayerMove();
 
     CameraPosition();
+
+
 }
 
 //描画
 void Player::Draw()
 {
+    pNum->Draw(250, 100, movelen1.x);
+    pNum->Draw(250, 200, movelen1.y);
+
     Model::SetTransform(hModel_, transform_);
     Model::Draw(hModel_);
+
+
 }
 
 //開放
@@ -102,14 +116,11 @@ void Player::PlayerMove()
 
 void Player::CameraPosition() 
 {
-    ////とりあえずのカメラ
-    //XMFLOAT3 camPos = XMFLOAT3(0, 5, -15);
-    //Camera::SetPosition(camPos);
-
+    //とりあえずのカメラ
+    XMFLOAT3 camPos = XMFLOAT3(0, 5, -15);
+    Camera::SetPosition(camPos);
     
     //マウスに連動する視点を作りたい！！
-    XMFLOAT3 camPos = 
-    XMFLOAT3 GetMousePosition();
 
 }
 
