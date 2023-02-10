@@ -5,7 +5,7 @@
 class Player : public GameObject
 {
     int hModel_;    //モデル番号
-    int camPos;
+    XMVECTOR camPos;
 public:
     //コンストラクタ
     Player(GameObject* parent);

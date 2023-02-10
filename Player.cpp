@@ -34,7 +34,6 @@ void Player::Update()
     PlayerMove();
 
     CameraPosition();
-
 }
 
 //描画
@@ -107,13 +106,10 @@ void Player::CameraPosition()
     //XMFLOAT3 camPos = XMFLOAT3(0, 5, -15);
     //Camera::SetPosition(camPos);
 
-
+    
     //マウスに連動する視点を作りたい！！
-    XMMATRIX mRotY = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));
-    XMFLOAT3 camPos = XMFLOAT3(0, 0, 0);
-    XMFLOAT3 GetMousePosition(camPos);
-    Camera::SetPosition(transform_.position_);
-    GetPlayerPosition();
+    XMFLOAT3 camPos = 
+    XMFLOAT3 GetMousePosition();
 
 }
 
