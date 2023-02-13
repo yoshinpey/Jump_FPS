@@ -2,15 +2,16 @@
 #include "Engine/Model.h"
 #include "Engine/Input.h"
 
+#include "PlayerCamera.h"
 #include "Player.h"
 #include "Gun.h"
 
 
 //コンストラクタ
 Player::Player(GameObject* parent)
-    :GameObject(parent, "Player"), hModel_(-1), pNum(nullptr)
+    :GameObject(parent, "Player"), hModel_(-1)
 {
-    moveLength = XMFLOAT3{ 0,0,0 };
+
 }
 
 //デストラクタ
@@ -28,20 +29,15 @@ void Player::Initialize()
     //銃を登場させる
     Instantiate<Gun>(this);
 
-    //マウス座標テキスト
-    pNum = new Text;
-    pNum->Initialize();
+    //カメラ
+    Instantiate<PlayerCamera>(this);
+
+
 }
 
 //更新
 void Player::Update()
 {
-    //マウス移動量
-    moveLength = Input::GetMouseMove();
-    //transition_.rotate_.y += moveLength;
-    camPosX += transform_.position_.x;
-    camPosY += transform_.position_.y;
-
 
     PlayerMove();
 
@@ -55,10 +51,6 @@ void Player::Draw()
     //モデル
     Model::SetTransform(hModel_, transform_);
     Model::Draw(hModel_);
-
-    //テキスト
-    pNum->Draw(250, 100, moveLength.x);
-    pNum->Draw(250, 200, moveLength.y*-1);  //表記を視覚的にわかりやすくするため上下反転にて表示
 }
 
 //開放

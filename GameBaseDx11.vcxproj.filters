@@ -158,6 +158,9 @@
     <ClCompile Include="Gun.cpp">
       <Filter>Resource\Entity</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerCamera.cpp">
+      <Filter>Resource\Character</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -267,6 +270,9 @@
     </ClInclude>
     <ClInclude Include="Gun.h">
       <Filter>Resource\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerCamera.h">
+      <Filter>Resource\Character</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

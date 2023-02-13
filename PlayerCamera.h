@@ -4,16 +4,20 @@
 
 
 //主人公を管理するクラス
-class Player : public GameObject
+class PlayerCamera : public GameObject
 {
-    int hModel_;            //モデル番号   
-       
+    int hModel_;            //モデル番号
+    XMFLOAT3 moveLength;
+    XMFLOAT3 moveStop;
+    double camPosX;
+    double camPosY;
+    Text* pNum;
 public:
     //コンストラクタ
-    Player(GameObject* parent);
+    PlayerCamera(GameObject* parent);
 
     //デストラクタ
-    ~Player();
+    ~PlayerCamera();
 
     //初期化
     void Initialize() override;
@@ -27,12 +31,4 @@ public:
     //開放
     void Release() override;
 
-    //プレイヤー移動
-    void PlayerMove();
-
-    //カメラ
-    void CameraPosition();
-
-    //get
-    void GetPlayerPosition();
 };
