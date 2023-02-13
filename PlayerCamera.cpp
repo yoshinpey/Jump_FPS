@@ -24,15 +24,15 @@ void PlayerCamera::Initialize()
     //モデルデータのロード
     hModel_ = Model::Load("Character/PlayerCamera.fbx");
     assert(hModel_ >= 0);
-    transform_.position_.x = 2;
-    transform_.position_.y = 2;
+    transform_.position_.x = 0;
+    transform_.position_.y = 5;
+    transform_.position_.z =-10;
 
     //マウス座標テキスト
     pNum = new Text;
     pNum->Initialize();
 
-    XMFLOAT3 camPos = XMFLOAT3(0, 5, -15);
-    Camera::SetPosition(camPos);
+
 }
 
 //更新
@@ -55,6 +55,8 @@ void PlayerCamera::Update()
 
     //違う。。。。。。。。。。。。。。
     //camPosX = Player::GetPlayerPositionX(camPosX);
+    XMFLOAT3 camPos = XMFLOAT3(transform_.position_.x, transform_.position_.y, transform_.position_.z);
+    Camera::SetPosition(camPos);
 }
 
 //描画

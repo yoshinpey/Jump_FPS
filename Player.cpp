@@ -30,7 +30,7 @@ void Player::Initialize()
     Instantiate<Gun>(this);
 
     //カメラ
-    //Instantiate<PlayerCamera>(this);
+    Instantiate<PlayerCamera>(this);
 
 
 }
@@ -116,7 +116,7 @@ void Player::PlayerMove()
 void Player::CameraPosition() 
 {
     //とりあえずのカメラ
-    //XMFLOAT3 camPos = XMFLOAT3(0, 5, -15);
+    //XMFLOAT3 camPos = XMFLOAT3(transform_.position_.x, 8, transform_.position_.z);
     //Camera::SetPosition(camPos);
     
     //マウスに連動する視点を作りたい！！
