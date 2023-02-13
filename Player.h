@@ -7,7 +7,8 @@
 class Player : public GameObject
 {
     int hModel_;            //モデル番号   
-       
+    float PlaPosX_;
+    float PlaPosZ_;
 public:
     //コンストラクタ
     Player(GameObject* parent);
@@ -34,5 +35,6 @@ public:
     void CameraPosition();
 
     //get
-    void GetPlayerPosition();
+    float GetPlayerPositionX() { return transform_.position_.x; }
+    float GetPlayerPositionZ() { return transform_.position_.z; }
 };

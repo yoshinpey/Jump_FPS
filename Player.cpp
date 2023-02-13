@@ -30,7 +30,7 @@ void Player::Initialize()
     Instantiate<Gun>(this);
 
     //カメラ
-    Instantiate<PlayerCamera>(this);
+    //Instantiate<PlayerCamera>(this);
 
 
 }
@@ -108,6 +108,8 @@ void Player::PlayerMove()
         //デグリーに変換　
         transform_.rotate_.y = XMConvertToDegrees(angle);
     }
+    PlaPosX_ += transform_.position_.x;
+    PlaPosZ_ += transform_.position_.z;
 }
 
 //視点
@@ -121,7 +123,3 @@ void Player::CameraPosition()
 
 }
 
-//位置取得用
-void Player::GetPlayerPosition()
-{
-}

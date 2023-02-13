@@ -8,7 +8,7 @@
 
 //コンストラクタ
 PlayerCamera::PlayerCamera(GameObject* parent)
-    :GameObject(parent, "PlayerCamera"), hModel_(-1), pNum(nullptr)
+    :GameObject(parent, "PlayerCamera"), hModel_(-1), pNum(nullptr), camPosX(0), camPosY(0)
 {
     moveLength = XMFLOAT3{ 0,0,0 };
 }
@@ -24,6 +24,8 @@ void PlayerCamera::Initialize()
     //モデルデータのロード
     hModel_ = Model::Load("Character/PlayerCamera.fbx");
     assert(hModel_ >= 0);
+    transform_.position_.x = 2;
+    transform_.position_.y = 2;
 
     //マウス座標テキスト
     pNum = new Text;
@@ -50,9 +52,9 @@ void PlayerCamera::Update()
 
 
     Camera::SetTarget(moveLength);
-    //camPosX += transform_.rotate_.x;
-    //camPosX += transform_.rotate_.y;
 
+    //違う。。。。。。。。。。。。。。
+    //camPosX = Player::GetPlayerPositionX(camPosX);
 }
 
 //描画
