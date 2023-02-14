@@ -4,7 +4,7 @@
 
 #include "PlayerCamera.h"
 #include "Player.h"
-#include "Gun.h"
+
 
 
 //コンストラクタ
@@ -26,8 +26,7 @@ void Player::Initialize()
     hModel_ = Model::Load("Character/Human_only.fbx");
     assert(hModel_ >= 0);
 
-    //銃を登場させる
-    Instantiate<Gun>(this);
+
 
     //カメラ
     Instantiate<PlayerCamera>(this);
@@ -77,6 +76,7 @@ void Player::PlayerMove()
         fMove.x = 1.0f;
     }
 
+    //移動量を一定に調整
     XMVECTOR vMove;
     vMove = XMLoadFloat3(&fMove);
     vMove = XMVector3Normalize(vMove);
@@ -85,7 +85,7 @@ void Player::PlayerMove()
 
     transform_.position_.x += fMove.x;
     transform_.position_.z += fMove.z;
-
+    /*
     //向き変更  
     XMVECTOR vLength = XMVector3Length(vMove);
     float length = XMVectorGetX(vLength);
@@ -107,7 +107,7 @@ void Player::PlayerMove()
         }
         //デグリーに変換　
         transform_.rotate_.y = XMConvertToDegrees(angle);
-    }
+    }*/
     PlaPosX_ += transform_.position_.x;
     PlaPosZ_ += transform_.position_.z;
 }

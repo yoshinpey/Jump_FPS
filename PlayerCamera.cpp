@@ -4,6 +4,7 @@
 
 #include "PlayerCamera.h"
 #include "Player.h"
+#include "Gun.h"
 
 
 //コンストラクタ
@@ -11,6 +12,7 @@ PlayerCamera::PlayerCamera(GameObject* parent)
     :GameObject(parent, "PlayerCamera"), hModel_(-1), pNum(nullptr), camPosX(0), camPosY(0)
 {
     moveLength = XMFLOAT3{ 0,0,0 };
+    moveStop = XMFLOAT3{ 0,0,0 };
 }
 
 //デストラクタ
@@ -25,27 +27,30 @@ void PlayerCamera::Initialize()
     hModel_ = Model::Load("Character/PlayerCamera.fbx");
     assert(hModel_ >= 0);
     transform_.position_.x = 0;
-    transform_.position_.y = 5;
-    transform_.position_.z =-10;
+    transform_.position_.y = 3;
+    transform_.position_.z = -1;
 
     //マウス座標テキスト
     pNum = new Text;
     pNum->Initialize();
 
-
+    //銃はカメラの向く方向へ動かす
+    Instantiate<Gun>(this);
 }
 
 //更新
 void PlayerCamera::Update()
 {
+
+    moveStop = Input::GetMousePosition();
     //マウス移動量
     moveLength = Input::GetMouseMove();
 
-    if (moveLength.x >= 0)
+    if (moveLength.x > 0)
     {
         moveLength.x += transform_.rotate_.y * 0.1;
     }
-    else
+    if (moveLength.x < 0)
     {
         moveLength.x -= transform_.rotate_.y * 0.1;
     }
@@ -53,9 +58,11 @@ void PlayerCamera::Update()
 
     Camera::SetTarget(moveLength);
 
-    //違う。。。。。。。。。。。。。。
-    //camPosX = Player::GetPlayerPositionX(camPosX);
+
     XMFLOAT3 camPos = XMFLOAT3(transform_.position_.x, transform_.position_.y, transform_.position_.z);
+    camPos.x += transform_.position_.x;
+    camPos.y += transform_.position_.y;
+    camPos.z += transform_.position_.z;
     Camera::SetPosition(camPos);
 }
 
