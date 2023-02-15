@@ -45,27 +45,27 @@ void PlayerCamera::Update()
     //マウス移動量
     fPoint = Input::GetMouseMove();
 
-    //ポイントセット
-    XMVECTOR vPos = XMLoadFloat3(&transform_.position_);
-    XMVECTOR vMove = { 0.0f, 0.0f, 0.3f, 0.0f, };//奥に0.3移動
-    
+    if (length != 0)
+    {
+        XMVECTOR vFront = { 0,0,1,0 };
+        vMove = XMVector3Normalize(vMove);
 
-    XMVECTOR vPoint = XMLoadFloat3(&fPoint);
-    XMVECTOR vPoint2 = XMLoadFloat3(&fPoint2);
-    XMVECTOR vMove = vPoint - vPoint2;
+        //内積
+        XMVECTOR vDot = XMVector3Dot(vFront, vMove);
+        float dot = XMVectorGetX(vDot);
+        float angle = acos(dot);
 
-    //vMove = XMVector3Normalize(vMove);
-    //vMove *= 0.3;
+        //外積
+        XMVECTOR vCross = XMVector3Cross(vFront, vMove);
+        if (XMVectorGetY(vCross) < 0)
+        {
+            angle *= -1;
+        }
 
-    Camera::SetPosition(transform_.position_);
-
-    XMFLOAT3 camTarget;
-    XMStoreFloat3(&camTarget, vPoint + vMove);
-    Camera::SetTarget(camTarget);
-
-    //カメラを頭に位置にセット
-    camPos = transform_.position_;
-    
+        //デグリーに変換　
+        transform_.rotate_.y = XMConvertToDegrees(angle);
+        //ちなみに  　XMConvertToRadians()      <--ラジアンに変換180°＝ラジアン
+    }
 }
 
 //描画
