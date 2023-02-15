@@ -9,10 +9,11 @@
 
 //コンストラクタ
 PlayerCamera::PlayerCamera(GameObject* parent)
-    :GameObject(parent, "PlayerCamera"), hModel_(-1), pNum(nullptr), camPosX(0), camPosY(0)
+    :GameObject(parent, "PlayerCamera"), hModel_(-1), pNum(nullptr)
 {
-    moveLength = XMFLOAT3{ 0,0,0 };
-    moveStop = XMFLOAT3{ 0,0,0 };
+    XMFLOAT3 fMove = XMFLOAT3{ 0,0,0 };
+    XMFLOAT3 moveLength = XMFLOAT3{ 0,0,0 };
+    XMFLOAT3 camPos = XMFLOAT3{ 0,0,0 };
 }
 
 //デストラクタ
@@ -41,28 +42,16 @@ void PlayerCamera::Initialize()
 //更新
 void PlayerCamera::Update()
 {
+    //ポイントセット
+    fMove = Input::GetMousePosition();
 
-    moveStop = Input::GetMousePosition();
     //マウス移動量
     moveLength = Input::GetMouseMove();
-
-    if (moveLength.x > 0)
-    {
-        moveLength.x += transform_.rotate_.y * 0.1;
-    }
-    if (moveLength.x < 0)
-    {
-        moveLength.x -= transform_.rotate_.y * 0.1;
-    }
-
-
     Camera::SetTarget(moveLength);
 
-
-    XMFLOAT3 camPos = XMFLOAT3(transform_.position_.x, transform_.position_.y, transform_.position_.z);
-    camPos.x += transform_.position_.x;
-    camPos.y += transform_.position_.y;
-    camPos.z += transform_.position_.z;
+    camPos.x = transform_.position_.x;
+    camPos.y = transform_.position_.y;
+    camPos.z = transform_.position_.z;
     Camera::SetPosition(camPos);
 }
 

@@ -7,8 +7,8 @@
 class PlayerCamera : public GameObject
 {
     int hModel_;            //モデル番号
-    XMFLOAT3 moveLength, moveStop;
-    float camPosX,camPosY;
+    XMFLOAT3 moveLength, fMove;
+    XMFLOAT3 camPos;
     Text* pNum;
 public:
     //コンストラクタ
