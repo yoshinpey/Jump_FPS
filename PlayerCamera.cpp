@@ -44,11 +44,11 @@ void PlayerCamera::Update()
 {
     //ポイントセット
     fMove = Input::GetMousePosition();
-
     //マウス移動量
     moveLength = Input::GetMouseMove();
-    Camera::SetTarget(moveLength);
+    Camera::SetTarget(fMove);
 
+    //カメラを頭に位置にセット
     camPos.x = transform_.position_.x;
     camPos.y = transform_.position_.y;
     camPos.z = transform_.position_.z;

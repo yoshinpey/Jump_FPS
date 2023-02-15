@@ -9,9 +9,8 @@
 
 //コンストラクタ
 Player::Player(GameObject* parent)
-    :GameObject(parent, "Player"), hModel_(-1)
+    :GameObject(parent, "Player"), hModel_(-1), PlaPosX_(0), PlaPosY_(0), PlaPosZ_(0)
 {
-
 }
 
 //デストラクタ
@@ -26,11 +25,8 @@ void Player::Initialize()
     hModel_ = Model::Load("Character/Human_only.fbx");
     assert(hModel_ >= 0);
 
-
-
     //カメラ
     Instantiate<PlayerCamera>(this);
-
 
 }
 
@@ -109,6 +105,7 @@ void Player::PlayerMove()
         transform_.rotate_.y = XMConvertToDegrees(angle);
     }*/
     PlaPosX_ += transform_.position_.x;
+    PlaPosY_ += transform_.position_.y;
     PlaPosZ_ += transform_.position_.z;
 }
 
