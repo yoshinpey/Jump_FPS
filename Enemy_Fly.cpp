@@ -18,8 +18,9 @@ Enemy_Fly::~Enemy_Fly()
 void Enemy_Fly::Initialize()
 {
     //モデルデータのロード
-    hModel_ = Model::Load("ファイル名");
+    hModel_ = Model::Load("Character/Enemy.fbx");
     assert(hModel_ >= 0);
+    transform_.position_.z = 10;
 }
 
 //更新

@@ -2,6 +2,7 @@
 #include "Engine/Image.h"
 #include "Engine/Input.h"
 
+#include "Enemy_Fly.h"
 #include "PlayScene.h"
 #include "Player.h"
 #include "Ground.h"
@@ -22,7 +23,8 @@ void PlayScene::Initialize()
 	Instantiate<Ground>(this);			//地面登場
 	Instantiate<Timer>(this);			//タイマー登場
 	Instantiate<Player>(this);			//プレイヤー登場
-	
+	Instantiate<Enemy_Fly>(this);
+
 	//タイマー設定
 	Timer* t = (Timer*)FindObject("Timer");
 	t->SetLimit(15);

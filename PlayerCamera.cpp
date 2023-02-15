@@ -12,7 +12,7 @@ PlayerCamera::PlayerCamera(GameObject* parent)
     :GameObject(parent, "PlayerCamera"), hModel_(-1), pNum(nullptr)
 {
     XMFLOAT3 fMove = XMFLOAT3{ 0,0,0 };
-    XMFLOAT3 moveLength = XMFLOAT3{ 0,0,0 };
+    XMFLOAT3 fPoint = XMFLOAT3{ 0,0,0 };
     XMFLOAT3 camPos = XMFLOAT3{ 0,0,0 };
 }
 
@@ -42,17 +42,30 @@ void PlayerCamera::Initialize()
 //更新
 void PlayerCamera::Update()
 {
-    //ポイントセット
-    fMove = Input::GetMousePosition();
     //マウス移動量
-    moveLength = Input::GetMouseMove();
-    Camera::SetTarget(fMove);
+    fPoint = Input::GetMouseMove();
+
+    //ポイントセット
+    XMVECTOR vPos = XMLoadFloat3(&transform_.position_);
+    XMVECTOR vMove = { 0.0f, 0.0f, 0.3f, 0.0f, };//奥に0.3移動
+    
+
+    XMVECTOR vPoint = XMLoadFloat3(&fPoint);
+    XMVECTOR vPoint2 = XMLoadFloat3(&fPoint2);
+    XMVECTOR vMove = vPoint - vPoint2;
+
+    //vMove = XMVector3Normalize(vMove);
+    //vMove *= 0.3;
+
+    Camera::SetPosition(transform_.position_);
+
+    XMFLOAT3 camTarget;
+    XMStoreFloat3(&camTarget, vPoint + vMove);
+    Camera::SetTarget(camTarget);
 
     //カメラを頭に位置にセット
-    camPos.x = transform_.position_.x;
-    camPos.y = transform_.position_.y;
-    camPos.z = transform_.position_.z;
-    Camera::SetPosition(camPos);
+    camPos = transform_.position_;
+    
 }
 
 //描画
@@ -63,8 +76,8 @@ void PlayerCamera::Draw()
     Model::Draw(hModel_);
 
     //テキスト
-    pNum->Draw(250, 100, moveLength.x);
-    pNum->Draw(250, 200, moveLength.y * -1);  //表記を視覚的にわかりやすくするため上下反転にて表示
+    pNum->Draw(250, 100, fPoint.x);
+    pNum->Draw(250, 200, fPoint.y * -1);  //表記を視覚的にわかりやすくするため上下反転にて表示
 }
 
 //開放
