@@ -6,11 +6,11 @@
 //主人公を管理するクラス
 class PlayerCamera : public GameObject
 {
-    int hModel_;            //モデル番号
-    XMFLOAT3 fPoint, fPoint2, fMove;
-    float PlaPosX_, PlaPosY_, PlaPosZ_;
-    XMFLOAT3 camPos;
-    Text* pNum;
+    int hModel_;                            //モデル番号
+    float PlaPosX_, PlaPosY_, PlaPosZ_;     //
+    XMFLOAT3 fPoint, fPoint2, fMove;        //
+    XMFLOAT3 camPos;                        //
+    Text* pNum;                             //
 public:
     //コンストラクタ
     PlayerCamera(GameObject* parent);

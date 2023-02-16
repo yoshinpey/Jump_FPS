@@ -9,7 +9,8 @@
 
 //コンストラクタ
 PlayerCamera::PlayerCamera(GameObject* parent)
-    :GameObject(parent, "PlayerCamera"), hModel_(-1), pNum(nullptr), PlaPosX_(0), PlaPosY_(0), PlaPosZ_(0)
+    :GameObject(parent, "PlayerCamera"), hModel_(-1), 
+    pNum(nullptr), PlaPosX_(0), PlaPosY_(0), PlaPosZ_(0)
 {
     XMFLOAT3 fMove = XMFLOAT3{ 0,0,0 };
     XMFLOAT3 fPoint = XMFLOAT3{ 0,0,0 };
@@ -46,6 +47,7 @@ void PlayerCamera::Update()
     //マウス移動量
     fPoint = Input::GetMouseMove();
 
+    //プレイヤー座標取得
     Player* pPlayer = (Player*)FindObject("Player");
     PlaPosX_ = pPlayer->GetPlaPosX();
     PlaPosY_ = pPlayer->GetPlaPosY();
@@ -62,8 +64,10 @@ void PlayerCamera::Draw()
     Model::Draw(hModel_);
 
     //デバック用テキスト
-    pNum->Draw(250, 100, fPoint.x);
-    pNum->Draw(250, 200, fPoint.y * -1);  //表記を視覚的にわかりやすくするため上下反転表示
+    pNum->Draw(1100, 100, "X:   ");
+    pNum->Draw(1150, 100,  fPoint.x);
+    pNum->Draw(1100, 200, "Y:   ");
+    pNum->Draw(1150, 200, fPoint.y * -1);//表記を視覚的にわかりやすくするため上下反転表示
 }
 
 //開放

@@ -10,7 +10,7 @@
 
 //コンストラクタ
 Player::Player(GameObject* parent)
-    :GameObject(parent, "Player"), hModel_(-1), PlaPosX_(0), PlaPosY_(0), PlaPosZ_(0), maxHp_(120), nowHp_(120)
+    :GameObject(parent, "Player"), hModel_(-1), PlaPosX_(0), PlaPosY_(0), PlaPosZ_(0), maxHp_(100), nowHp_(100)
 {
 }
 
