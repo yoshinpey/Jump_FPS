@@ -10,7 +10,7 @@
 
 //コンストラクタ
 Player::Player(GameObject* parent)
-    :GameObject(parent, "Player"), hModel_(-1), PlaPosX_(0), PlaPosY_(0), PlaPosZ_(0), maxHp_(180), nowHp_(30)
+    :GameObject(parent, "Player"), hModel_(-1), PlaPosX_(0), PlaPosY_(0), PlaPosZ_(0), maxHp_(120), nowHp_(120)
 {
 }
 
@@ -39,25 +39,7 @@ void Player::Update()
 
     CameraPosition();
 
-    //HP
-    Gauge* pGauge = (Gauge*)FindObject("Gauge");
-    pGauge->SetHp(maxHp_, nowHp_);
-    if (Input::IsKeyDown(DIK_M))
-    {
-        nowHp_ += 30;
-        if (nowHp_ > maxHp_)
-        {
-            nowHp_ = maxHp_;
-        }
-    }
-    if (Input::IsKeyDown(DIK_N))
-    {
-        nowHp_ -= 30;
-        if (nowHp_ < 0)
-        {
-            nowHp_ = 0;
-        }
-    }
+    PlayerHitPoint();
 }
 
 //描画
@@ -71,6 +53,32 @@ void Player::Draw()
 //開放
 void Player::Release()
 {
+}
+
+//プレイヤーのHP
+void Player::PlayerHitPoint()
+{
+    //HP
+    Gauge* pGauge = (Gauge*)FindObject("Gauge");
+    pGauge->SetHp(maxHp_, nowHp_);
+
+    //エラー潰し
+    if (Input::IsKeyDown(DIK_M))
+    {
+        nowHp_ += 20;
+        if (nowHp_ > maxHp_)
+        {
+            nowHp_ = maxHp_;
+        }
+    }
+    if (Input::IsKeyDown(DIK_N))
+    {
+        nowHp_ -= 20;
+        if (nowHp_ < 0)
+        {
+            nowHp_ = 0;
+        }
+    }
 }
 
 //プレイヤーの移動

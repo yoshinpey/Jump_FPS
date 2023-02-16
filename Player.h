@@ -31,8 +31,15 @@ public:
     //プレイヤー移動
     void PlayerMove();
 
+    //プレイヤーHP
+    void PlayerHitPoint();
+
     //カメラ
     void CameraPosition();
+
+    
+
+
 
     //プレイヤー座標のゲッター
     float GetPlaPosX() { return PlaPosX_ = transform_.position_.x; }

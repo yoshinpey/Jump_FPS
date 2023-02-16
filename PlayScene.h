@@ -21,4 +21,7 @@ public:
 
 	//開放
 	void Release() override;
+
+	//タイマー
+	void TimeProcess();
 };
