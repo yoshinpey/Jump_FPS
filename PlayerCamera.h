@@ -8,6 +8,7 @@ class PlayerCamera : public GameObject
 {
     int hModel_;            //ÉÇÉfÉãî‘çÜ
     XMFLOAT3 fPoint, fPoint2, fMove;
+    float PlaPosX_, PlaPosY_, PlaPosZ_;
     XMFLOAT3 camPos;
     Text* pNum;
 public:

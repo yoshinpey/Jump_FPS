@@ -161,6 +161,9 @@
     <ClCompile Include="PlayerCamera.cpp">
       <Filter>Resource\Character</Filter>
     </ClCompile>
+    <ClCompile Include="Gauge.cpp">
+      <Filter>Multipurpose</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -273,6 +276,9 @@
     </ClInclude>
     <ClInclude Include="PlayerCamera.h">
       <Filter>Resource\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Gauge.h">
+      <Filter>Multipurpose</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

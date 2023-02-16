@@ -1,13 +1,14 @@
 #pragma once
-#include "Engine/Text.h"
 #include "Engine/GameObject.h"
 
 
 //主人公を管理するクラス
 class Player : public GameObject
 {
-    int hModel_;            //モデル番号   
-    float PlaPosX_, PlaPosY_, PlaPosZ_;
+    int hModel_;                            //モデル番号   
+    int maxHp_, nowHp_;                     //HP
+    float PlaPosX_, PlaPosY_, PlaPosZ_;     //プレイヤー座標
+
 public:
     //コンストラクタ
     Player(GameObject* parent);
@@ -33,8 +34,8 @@ public:
     //カメラ
     void CameraPosition();
 
-    //get
-    float GetPlayerPositionX() { return PlaPosX_; }
-    float GetPlayerPositionY() { return PlaPosY_; }
-    float GetPlayerPositionZ() { return PlaPosZ_; }
+    //プレイヤー座標のゲッター
+    float GetPlaPosX() { return PlaPosX_ = transform_.position_.x; }
+    float GetPlaPosY() { return PlaPosY_ = transform_.position_.y; }
+    float GetPlaPosZ() { return PlaPosZ_ = transform_.position_.z; }
 };

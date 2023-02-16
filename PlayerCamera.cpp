@@ -9,11 +9,12 @@
 
 //コンストラクタ
 PlayerCamera::PlayerCamera(GameObject* parent)
-    :GameObject(parent, "PlayerCamera"), hModel_(-1), pNum(nullptr)
+    :GameObject(parent, "PlayerCamera"), hModel_(-1), pNum(nullptr), PlaPosX_(0), PlaPosY_(0), PlaPosZ_(0)
 {
     XMFLOAT3 fMove = XMFLOAT3{ 0,0,0 };
     XMFLOAT3 fPoint = XMFLOAT3{ 0,0,0 };
     XMFLOAT3 camPos = XMFLOAT3{ 0,0,0 };
+    XMFLOAT3 plaPos_ = XMFLOAT3{ 0,0,0 };
 }
 
 //デストラクタ
@@ -45,27 +46,12 @@ void PlayerCamera::Update()
     //マウス移動量
     fPoint = Input::GetMouseMove();
 
-    if (length != 0)
-    {
-        XMVECTOR vFront = { 0,0,1,0 };
-        vMove = XMVector3Normalize(vMove);
+    Player* pPlayer = (Player*)FindObject("Player");
+    PlaPosX_ = pPlayer->GetPlaPosX();
+    PlaPosY_ = pPlayer->GetPlaPosY();
+    PlaPosZ_ = pPlayer->GetPlaPosZ();
 
-        //内積
-        XMVECTOR vDot = XMVector3Dot(vFront, vMove);
-        float dot = XMVectorGetX(vDot);
-        float angle = acos(dot);
 
-        //外積
-        XMVECTOR vCross = XMVector3Cross(vFront, vMove);
-        if (XMVectorGetY(vCross) < 0)
-        {
-            angle *= -1;
-        }
-
-        //デグリーに変換　
-        transform_.rotate_.y = XMConvertToDegrees(angle);
-        //ちなみに  　XMConvertToRadians()      <--ラジアンに変換180°＝ラジアン
-    }
 }
 
 //描画
@@ -75,9 +61,9 @@ void PlayerCamera::Draw()
     Model::SetTransform(hModel_, transform_);
     Model::Draw(hModel_);
 
-    //テキスト
+    //デバック用テキスト
     pNum->Draw(250, 100, fPoint.x);
-    pNum->Draw(250, 200, fPoint.y * -1);  //表記を視覚的にわかりやすくするため上下反転にて表示
+    pNum->Draw(250, 200, fPoint.y * -1);  //表記を視覚的にわかりやすくするため上下反転表示
 }
 
 //開放

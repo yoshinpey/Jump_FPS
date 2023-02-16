@@ -4,12 +4,13 @@
 
 #include "PlayerCamera.h"
 #include "Player.h"
+#include "Gauge.h"
 
 
 
 //コンストラクタ
 Player::Player(GameObject* parent)
-    :GameObject(parent, "Player"), hModel_(-1), PlaPosX_(0), PlaPosY_(0), PlaPosZ_(0)
+    :GameObject(parent, "Player"), hModel_(-1), PlaPosX_(0), PlaPosY_(0), PlaPosZ_(0), maxHp_(180), nowHp_(30)
 {
 }
 
@@ -38,6 +39,25 @@ void Player::Update()
 
     CameraPosition();
 
+    //HP
+    Gauge* pGauge = (Gauge*)FindObject("Gauge");
+    pGauge->SetHp(maxHp_, nowHp_);
+    if (Input::IsKeyDown(DIK_M))
+    {
+        nowHp_ += 30;
+        if (nowHp_ > maxHp_)
+        {
+            nowHp_ = maxHp_;
+        }
+    }
+    if (Input::IsKeyDown(DIK_N))
+    {
+        nowHp_ -= 30;
+        if (nowHp_ < 0)
+        {
+            nowHp_ = 0;
+        }
+    }
 }
 
 //描画
@@ -79,44 +99,16 @@ void Player::PlayerMove()
     vMove *= 0.1f;
     XMStoreFloat3(&fMove, vMove);
 
+    //移動に反映
     transform_.position_.x += fMove.x;
     transform_.position_.z += fMove.z;
-    /*
-    //向き変更  
-    XMVECTOR vLength = XMVector3Length(vMove);
-    float length = XMVectorGetX(vLength);
-    //ベクトル
-    XMVECTOR vFront = { 0,0,1,0 };
-    vMove = XMVector3Normalize(vMove);
-
-    //移動入力がないときは向きを固定
-    if (length != 0)
-    {
-        //内積
-        XMVECTOR vDot = XMVector3Dot(vFront, vMove);
-        float dot = XMVectorGetX(vDot);
-        float angle = acos(dot);
-        //外積
-        XMVECTOR vCross = XMVector3Cross(vFront, vMove);
-        if (XMVectorGetY(vCross) < 0){
-            angle *= -1;
-        }
-        //デグリーに変換　
-        transform_.rotate_.y = XMConvertToDegrees(angle);
-    }*/
-    PlaPosX_ += transform_.position_.x;
-    PlaPosY_ += transform_.position_.y;
-    PlaPosZ_ += transform_.position_.z;
 }
 
 //視点
 void Player::CameraPosition() 
 {
     //とりあえずのカメラ
-    //XMFLOAT3 camPos = XMFLOAT3(transform_.position_.x, 8, transform_.position_.z);
-    //Camera::SetPosition(camPos);
-    
-    //マウスに連動する視点を作りたい！！
-
+    XMFLOAT3 camPos = XMFLOAT3(transform_.position_.x, 8, transform_.position_.z);
+    Camera::SetPosition(camPos);
 }
 
