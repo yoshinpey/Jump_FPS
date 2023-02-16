@@ -24,7 +24,7 @@ void Gauge::Initialize()
 
     //И╩ТuТ▓Ро
     transform_.position_.x = -0.95;
-    transform_.position_.y = 0.85;
+    transform_.position_.y = 0.75;
 }
 
 //НXРV

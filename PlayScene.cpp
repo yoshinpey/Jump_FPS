@@ -20,7 +20,6 @@ PlayScene::PlayScene(GameObject * parent)
 //初期化
 void PlayScene::Initialize()
 {
-	
 	Instantiate<Ground>(this);			//地面登場
 	Instantiate<Enemy_Fly>(this);		//敵登場
 	Instantiate<Player>(this);			//プレイヤー登場
@@ -29,20 +28,19 @@ void PlayScene::Initialize()
 	Instantiate<Timer>(this);			//タイマー登場
 	Instantiate<Gauge>(this);			//HPゲージ	
 
-	//タイマー設定
-	Timer* t = (Timer*)FindObject("Timer");
-	t->SetLimit(15);
-	
 	//背景画像データのロード
 	hPict_ = Image::Load("Earth.png");
 	assert(hPict_ >= 0);
-	
+
+	//タイマー設定
+	Timer* t = (Timer*)FindObject("Timer");
+	t->SetLimit(15);
 }
 
 //更新
 void PlayScene::Update()
 {
-	//タイマー起動用
+	//タイマー起動
 	if (Input::IsKeyDown(DIK_Y))
 	{
 		Timer* t = (Timer*)FindObject("Timer");

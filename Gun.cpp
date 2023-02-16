@@ -24,7 +24,7 @@ void Gun::Initialize()
     assert(hModel_ >= 0);
 
     //ƒvƒŒƒCƒ„[‚ÌŽè‚ÌˆÊ’u‚Ü‚Å’²®
-    transform_.position_.y = 0.72;
+    transform_.position_.y = -1.25;
     transform_.position_.x = 0.25;
     transform_.position_.z = 1.5;
 }
@@ -51,8 +51,9 @@ void Gun::Update()
         //Œ³‚É–ß‚·
         XMFLOAT3 move;
         XMStoreFloat3(&move, vMove);
+
         //’e‚ðŒÄ‚Ô      Gun->Player->PlayScene
-        Bullet* pBullet = Instantiate<Bullet>(GetParent()->GetParent());
+        Bullet* pBullet = Instantiate<Bullet>(GetParent()->GetParent() -> GetParent());
         //’e‚ÌˆÊ’u
         pBullet->SetPosition(GunTop); // Žå–Cæ’[
         pBullet->SetMove(move);

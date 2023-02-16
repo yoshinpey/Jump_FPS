@@ -29,14 +29,14 @@ void PlayerCamera::Initialize()
     hModel_ = Model::Load("Character/PlayerCamera.fbx");
     assert(hModel_ >= 0);
     transform_.position_.x = 0;
-    transform_.position_.y = 3;
-    transform_.position_.z = -1;
+    transform_.position_.y = 2;
+    transform_.position_.z = 0;
 
     //マウス座標テキスト
     pNum = new Text;
     pNum->Initialize();
 
-    //銃はカメラの向く方向へ動かす
+    //銃はカメラにつく
     Instantiate<Gun>(this);
 }
 

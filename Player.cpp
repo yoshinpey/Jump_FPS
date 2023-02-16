@@ -107,8 +107,6 @@ void Player::PlayerMove()
 //‹“_
 void Player::CameraPosition() 
 {
-    //‚Æ‚è‚ ‚¦‚¸‚ÌƒJƒƒ‰
-    XMFLOAT3 camPos = XMFLOAT3(transform_.position_.x, 8, transform_.position_.z);
-    Camera::SetPosition(camPos);
+    //test
 }
 
