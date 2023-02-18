@@ -47,26 +47,29 @@ void Player::Update()
     //Gravity* pGravity = (Gravity*)FindObject("Gravity");
     //Gravity_ = pGravity->SetGravity(transform_.position_.y);
 
-    if (transform_.position_.y >= 0 && jumpReady == true)
+    if (transform_.position_.y >= 0 )
     {
-        transform_.position_.y -= 0.3;
+        jumpReady = false;
+        transform_.position_.y -= 0.3;//
     }
 
-    //ジャンプ可能
     float velocity = 0.0f;
-    if (Input::IsKeyDown(DIK_SPACE))//押されたらジャンプ
+    if (jumpReady)//ジャンプ可能
     {
-        float velocity =  2.0f;
-        if (transform_.position_.y >= 0)
+        if (Input::IsKeyDown(DIK_SPACE))//押されたらジャンプ
         {
-            velocity -= 0.2f;
-            transform_.position_.y += velocity;
-            jumpReady = true;
-        }
-        if (transform_.position_.y <= 0)
-        {
-            velocity = 0;
-            jumpReady = false;
+            float velocity =  2.0f;
+            if (transform_.position_.y >= 0)
+            {
+                velocity -= 0.2f;
+                transform_.position_.y += velocity;
+                jumpReady = true;
+            }
+            if (transform_.position_.y <= 0)
+            {
+                velocity = 0;
+                jumpReady = false;
+            }
         }
     }
 }
