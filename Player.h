@@ -7,6 +7,8 @@ class Player : public GameObject
 {
     int hModel_;                            //モデル番号   
     int maxHp_, nowHp_;                     //HP
+    bool nowAir, jumpReady;
+    float Gravity_;
     float PlaPosX_, PlaPosY_, PlaPosZ_;     //プレイヤー座標
 
 public:
@@ -37,8 +39,7 @@ public:
     //カメラ
     void CameraPosition();
 
-    
-
+    //ジャンプ
 
 
     //プレイヤー座標のゲッター

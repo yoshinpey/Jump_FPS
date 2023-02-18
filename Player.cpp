@@ -3,6 +3,7 @@
 #include "Engine/Input.h"
 
 #include "PlayerCamera.h"
+//#include "Gravity.h"
 #include "Player.h"
 #include "Gauge.h"
 
@@ -10,7 +11,9 @@
 
 //コンストラクタ
 Player::Player(GameObject* parent)
-    :GameObject(parent, "Player"), hModel_(-1), PlaPosX_(0), PlaPosY_(0), PlaPosZ_(0), maxHp_(100), nowHp_(100)
+    :GameObject(parent, "Player"), hModel_(-1), Gravity_(-0.0981), 
+    PlaPosX_(0), PlaPosY_(0), PlaPosZ_(0), maxHp_(100), nowHp_(100),
+    jumpReady(false), nowAir(false)
 {
 }
 
@@ -40,6 +43,32 @@ void Player::Update()
     CameraPosition();
 
     PlayerHitPoint();
+
+    //Gravity* pGravity = (Gravity*)FindObject("Gravity");
+    //Gravity_ = pGravity->SetGravity(transform_.position_.y);
+
+    if (transform_.position_.y >= 0 && jumpReady == true)
+    {
+        transform_.position_.y -= 0.3;
+    }
+
+    //ジャンプ可能
+    float velocity = 0.0f;
+    if (Input::IsKeyDown(DIK_SPACE))//押されたらジャンプ
+    {
+        float velocity =  2.0f;
+        if (transform_.position_.y >= 0)
+        {
+            velocity -= 0.2f;
+            transform_.position_.y += velocity;
+            jumpReady = true;
+        }
+        if (transform_.position_.y <= 0)
+        {
+            velocity = 0;
+            jumpReady = false;
+        }
+    }
 }
 
 //描画
@@ -117,4 +146,6 @@ void Player::CameraPosition()
 {
     //test
 }
+
+
 

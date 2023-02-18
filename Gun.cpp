@@ -33,7 +33,7 @@ void Gun::Initialize()
 void Gun::Update()
 {
     //”­–C
-    if (Input::IsKeyDown(DIK_SPACE))
+    if (Input::IsMouseButtonDown(0))
     {
         //eƒ‚ƒfƒ‹æ’[
         XMFLOAT3 GunTop = Model::GetBonePosition(hModel_, "Top");
