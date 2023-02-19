@@ -53,6 +53,15 @@ void PlayerCamera::Update()
     PlaPosY_ = pPlayer->GetPlaPosY();
     PlaPosZ_ = pPlayer->GetPlaPosZ();
 
+    //マウス位置保存用変数
+    float Px=0,Py=0;
+
+    //移動量を加算
+    Px += fPoint.x;     
+    Py += fPoint.y;
+    //回転移動に反映
+    transform_.rotate_.y += Px *0.05;
+    transform_.rotate_.x += Py *0.05;
 
 }
 

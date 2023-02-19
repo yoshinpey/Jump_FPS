@@ -256,9 +256,6 @@
     <ClInclude Include="Attack.h">
       <Filter>Resource\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy_Ground.h">
-      <Filter>Resource\Character</Filter>
-    </ClInclude>
     <ClInclude Include="Enemy_Fly.h">
       <Filter>Resource\Character</Filter>
     </ClInclude>
@@ -285,6 +282,9 @@
     </ClInclude>
     <ClInclude Include="Gravity.h">
       <Filter>Multipurpose</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_Ground.h">
+      <Filter>Resource\Entity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
