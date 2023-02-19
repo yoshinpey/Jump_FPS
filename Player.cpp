@@ -13,7 +13,7 @@
 Player::Player(GameObject* parent)
     :GameObject(parent, "Player"), hModel_(-1), Gravity_(-0.1), 
     PlaPosX_(0), PlaPosY_(0), PlaPosZ_(0), maxHp_(100), nowHp_(100),
-    jumpReady(false), nowAir(false)
+    jumpReady(false)
 {
 }
 

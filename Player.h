@@ -7,7 +7,7 @@ class Player : public GameObject
 {
     int hModel_;                            //モデル番号   
     int maxHp_, nowHp_;                     //HP
-    bool nowAir, jumpReady;
+    bool jumpReady;
     float Gravity_;
     float PlaPosX_, PlaPosY_, PlaPosZ_;     //プレイヤー座標
 

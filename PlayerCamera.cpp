@@ -39,11 +39,14 @@ void PlayerCamera::Initialize()
 
     //銃はカメラにつく
     Instantiate<Gun>(this);
+
+    Input::SetMousePosition(300, 250);//マウス初期位置(画面中央)
 }
 
 //更新
 void PlayerCamera::Update()
 {
+    
     //マウス移動量
     fPoint = Input::GetMouseMove();
 
@@ -63,6 +66,13 @@ void PlayerCamera::Update()
     transform_.rotate_.y += Px *0.05;
     transform_.rotate_.x += Py *0.05;
 
+
+    //視点ができない！！！！！
+    //Camera::SetPosition(transform_.position_);
+
+    //Gun* pGun = (Gun*)FindObject("Gun");
+    //XMFLOAT3 GunTop = Model::GetBonePosition(hModel_, "Top");
+    //Camera::SetTarget(GunTop);
 }
 
 //描画
