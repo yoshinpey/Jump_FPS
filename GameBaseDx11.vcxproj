@@ -125,6 +125,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AimPoint.cpp" />
     <ClCompile Include="Attack.cpp" />
     <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="Bullet.cpp" />
@@ -166,6 +167,7 @@
     <ClCompile Include="TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AimPoint.h" />
     <ClInclude Include="Attack.h" />
     <ClInclude Include="Bomb.h" />
     <ClInclude Include="Bullet.h" />

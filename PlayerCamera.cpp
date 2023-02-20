@@ -67,12 +67,25 @@ void PlayerCamera::Update()
     transform_.rotate_.x += Py *0.05;
 
 
-    //視点ができない！！！！！
-    //Camera::SetPosition(transform_.position_);
 
-    //Gun* pGun = (Gun*)FindObject("Gun");
+
+
+    //視点ができない！！！！！
+    XMVECTOR vPos = XMLoadFloat3(&transform_.position_);
+    XMVECTOR vMove = { 0.0f, 0.0f, 0.3f, 0.0f, };
+    XMMATRIX mRotY = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));
+    vMove = XMVector3TransformCoord(vMove, mRotY);
+    
+    Camera::SetPosition(transform_.position_);
+    XMFLOAT3 PlayerHead;
+    XMStoreFloat3(&PlayerHead, vPos + vMove);
+    Camera::SetTarget(PlayerHead);
+
     //XMFLOAT3 GunTop = Model::GetBonePosition(hModel_, "Top");
     //Camera::SetTarget(GunTop);
+
+
+
 }
 
 //描画

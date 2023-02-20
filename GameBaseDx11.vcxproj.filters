@@ -167,6 +167,9 @@
     <ClCompile Include="Gravity.cpp">
       <Filter>Multipurpose</Filter>
     </ClCompile>
+    <ClCompile Include="AimPoint.cpp">
+      <Filter>Resource\Character</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -285,6 +288,9 @@
     </ClInclude>
     <ClInclude Include="Enemy_Ground.h">
       <Filter>Resource\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="AimPoint.h">
+      <Filter>Resource\Character</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
