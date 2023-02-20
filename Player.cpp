@@ -142,6 +142,8 @@ void Player::PlayerMove()
     //ˆÚ“®‚É”½‰f
     transform_.position_.x += fMove.x;
     transform_.position_.z += fMove.z;
+
+
 }
 
 //Ž‹“_

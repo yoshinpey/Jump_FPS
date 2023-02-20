@@ -12,7 +12,7 @@ PlayerCamera::PlayerCamera(GameObject* parent)
     :GameObject(parent, "PlayerCamera"), hModel_(-1),
     pNum(nullptr), PlaPosX_(0), PlaPosY_(0), PlaPosZ_(0),
     camPos{ 0,0,0 }, camTarget{ 0,0,0 }, fPoint{ 0,0,0 },
-    vMove{ 0.0f, 0.0f, 0.0f, 0.0f}
+    vPos{0,0,0,0}, vMove{ 0.0f, 0.0f, 0.0f, 0.0f}
 {
 }
 
@@ -65,12 +65,14 @@ void PlayerCamera::Update()
     transform_.rotate_.x += Py *0.05;
 
     //現在地をベクトルに変換
-    XMVECTOR vPos = XMLoadFloat3(&transform_.position_);
+    vPos = XMLoadFloat3(&transform_.position_);
 
-    //カメラの回転を行列に
+    //カメラの回転
     XMMATRIX mRotX = XMMatrixRotationX(XMConvertToRadians(transform_.rotate_.x));
     XMMATRIX mRotY = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));
-    vMove = { 0.0f, 0.0f, 1.0f};
+
+    //方向
+    vMove = { 0, 0, 1, 0};
     //視点を固定
     vMove = XMVector3TransformCoord(vMove, mRotY*mRotX);
 

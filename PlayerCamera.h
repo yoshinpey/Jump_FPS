@@ -11,6 +11,7 @@ class PlayerCamera : public GameObject
     XMFLOAT3 fPoint;                        //マウスの移動
     XMFLOAT3 camPos, camTarget;             //カメラ 位置,焦点
     XMVECTOR vMove;                         //1フレームの移動ベクトル
+    XMVECTOR vPos;                          //1フレームの位置ベクトル
     Text* pNum;                             //テキスト
 public:
     //コンストラクタ
