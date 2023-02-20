@@ -10,12 +10,10 @@
 //コンストラクタ
 PlayerCamera::PlayerCamera(GameObject* parent)
     :GameObject(parent, "PlayerCamera"), hModel_(-1),
-    pNum(nullptr), PlaPosX_(0), PlaPosY_(0), PlaPosZ_(0)
+    pNum(nullptr), PlaPosX_(0), PlaPosY_(0), PlaPosZ_(0),
+    camPos{ 0,0,0 }, camTarget{ 0,0,0 }, fPoint{ 0,0,0 },
+    vMove{ 0.0f, 0.0f, 0.0f, 0.0f}
 {
-    XMFLOAT3 fMove = XMFLOAT3{ 0,0,0 };
-    XMFLOAT3 fPoint = XMFLOAT3{ 0,0,0 };
-    XMFLOAT3 camPos = XMFLOAT3{ 0,0,0 };
-    XMFLOAT3 plaPos_ = XMFLOAT3{ 0,0,0 };
 }
 
 //デストラクタ
@@ -60,36 +58,32 @@ void PlayerCamera::Update()
     float Px=0,Py=0;
 
     //移動量を加算
-    Px += fPoint.x;     
+    Px += fPoint.x;
     Py += fPoint.y;
     //回転移動に反映
     transform_.rotate_.y += Px *0.05;
     transform_.rotate_.x += Py *0.05;
 
-
-
-
-
-    //視点ができない！！！！！
+    //現在地をベクトルに変換
     XMVECTOR vPos = XMLoadFloat3(&transform_.position_);
-    XMVECTOR vMove = { 0.0f, 0.0f, 0.3f, 0.0f, };
-    XMMATRIX mRotY = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));
+
+    //カメラの回転を行列に
     XMMATRIX mRotX = XMMatrixRotationX(XMConvertToRadians(transform_.rotate_.x));
+    XMMATRIX mRotY = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));
+    vMove = { 0.0f, 0.0f, 1.0f};
+    //視点を固定
     vMove = XMVector3TransformCoord(vMove, mRotY*mRotX);
 
-    camPos.x = transform_.position_.x;
-    camPos.y = transform_.position_.y;
-    camPos.z = transform_.position_.z;
-
+    //カメラの位置(移動)
+    camPos = transform_.position_;   //目線高さ調整
     Camera::SetPosition(camPos);
-    XMFLOAT3 PlayerHead;
-    XMStoreFloat3(&PlayerHead, vPos + vMove);
-    Camera::SetTarget(PlayerHead);
+
+    //カメラ焦点
+    XMStoreFloat3(&camTarget, vPos + vMove);
+    Camera::SetTarget(camTarget);
 
     //XMFLOAT3 GunTop = Model::GetBonePosition(hModel_, "Top");
     //Camera::SetTarget(GunTop);
-
-
 
 }
 
