@@ -9,7 +9,7 @@
 
 //コンストラクタ
 PlayerCamera::PlayerCamera(GameObject* parent)
-    :GameObject(parent, "PlayerCamera"), hModel_(-1), 
+    :GameObject(parent, "PlayerCamera"), hModel_(-1),
     pNum(nullptr), PlaPosX_(0), PlaPosY_(0), PlaPosZ_(0)
 {
     XMFLOAT3 fMove = XMFLOAT3{ 0,0,0 };
@@ -74,9 +74,14 @@ void PlayerCamera::Update()
     XMVECTOR vPos = XMLoadFloat3(&transform_.position_);
     XMVECTOR vMove = { 0.0f, 0.0f, 0.3f, 0.0f, };
     XMMATRIX mRotY = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));
-    vMove = XMVector3TransformCoord(vMove, mRotY);
-    
-    Camera::SetPosition(transform_.position_);
+    XMMATRIX mRotX = XMMatrixRotationX(XMConvertToRadians(transform_.rotate_.x));
+    vMove = XMVector3TransformCoord(vMove, mRotY*mRotX);
+
+    camPos.x = transform_.position_.x;
+    camPos.y = transform_.position_.y;
+    camPos.z = transform_.position_.z;
+
+    Camera::SetPosition(camPos);
     XMFLOAT3 PlayerHead;
     XMStoreFloat3(&PlayerHead, vPos + vMove);
     Camera::SetTarget(PlayerHead);
@@ -96,6 +101,7 @@ void PlayerCamera::Draw()
     Model::Draw(hModel_);
 
     //デバック用テキスト
+    pNum->Draw(650, 400, "+");
     pNum->Draw(1100, 100, "X:   ");
     pNum->Draw(1150, 100,  fPoint.x);
     pNum->Draw(1100, 200, "Y:   ");
