@@ -2,14 +2,14 @@
 #include "Engine/Model.h"
 #include "Engine/Input.h"
 
-#include "PlayerCamera.h"
+#include "Aim.h"
 #include "Player.h"
 #include "Gun.h"
 
 
 //コンストラクタ
-PlayerCamera::PlayerCamera(GameObject* parent)
-    :GameObject(parent, "PlayerCamera"), hModel_(-1),
+Aim::Aim(GameObject* parent)
+    :GameObject(parent, "Aim"), hModel_(-1),
     pNum(nullptr), PlaPosX_(0), PlaPosY_(0), PlaPosZ_(0),
     camPos{ 0,0,0 }, camTarget{ 0,0,0 }, fPoint{ 0,0,0 },
     vPos{0,0,0,0}, vMove{ 0.0f, 0.0f, 0.0f, 0.0f}
@@ -17,19 +17,17 @@ PlayerCamera::PlayerCamera(GameObject* parent)
 }
 
 //デストラクタ
-PlayerCamera::~PlayerCamera()
+Aim::~Aim()
 {
 }
 
 //初期化
-void PlayerCamera::Initialize()
+void Aim::Initialize()
 {
     //モデルデータのロード
     hModel_ = Model::Load("Character/PlayerCamera.fbx");
     assert(hModel_ >= 0);
-    transform_.position_.x = 0;
     transform_.position_.y = 2;
-    transform_.position_.z = 0;
 
     //マウス座標テキスト
     pNum = new Text;
@@ -42,7 +40,7 @@ void PlayerCamera::Initialize()
 }
 
 //更新
-void PlayerCamera::Update()
+void Aim::Update()
 {
     
     //マウス移動量
@@ -76,9 +74,11 @@ void PlayerCamera::Update()
     //視点を固定
     vMove = XMVector3TransformCoord(vMove, mRotY*mRotX);
 
-    //カメラの位置(移動)
-    camPos = transform_.position_;   //目線高さ調整
     Camera::SetPosition(camPos);
+    //カメラの位置(移動)
+    camPos.x = PlaPosX_;   //
+    camPos.y = PlaPosY_+2; //目線
+    camPos.z = PlaPosZ_;   //
 
     //カメラ焦点
     XMStoreFloat3(&camTarget, vPos + vMove);
@@ -90,7 +90,7 @@ void PlayerCamera::Update()
 }
 
 //描画
-void PlayerCamera::Draw()
+void Aim::Draw()
 {
     //モデル
     Model::SetTransform(hModel_, transform_);
@@ -105,6 +105,6 @@ void PlayerCamera::Draw()
 }
 
 //開放
-void PlayerCamera::Release()
+void Aim::Release()
 {
 }

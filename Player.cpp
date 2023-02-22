@@ -2,7 +2,7 @@
 #include "Engine/Model.h"
 #include "Engine/Input.h"
 
-#include "PlayerCamera.h"
+#include "Aim.h"
 //#include "Gravity.h"
 #include "Player.h"
 #include "Gauge.h"
@@ -30,7 +30,7 @@ void Player::Initialize()
     assert(hModel_ >= 0);
 
     //ƒJƒƒ‰
-    Instantiate<PlayerCamera>(this);
+    Instantiate<Aim>(this);
 
 }
 
@@ -131,7 +131,7 @@ void Player::PlayerMove()
     if (Input::IsKey(DIK_D)){
         fMove.x = 1.0f;
     }
-
+    
     //ˆÚ“®—Ê‚ğˆê’è‚É’²®
     XMVECTOR vMove;
     vMove = XMLoadFloat3(&fMove);
@@ -149,7 +149,9 @@ void Player::PlayerMove()
 //‹“_
 void Player::CameraPosition() 
 {
+
     //test
+    //Camera::SetPosition();
 }
 
 

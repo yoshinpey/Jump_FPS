@@ -4,7 +4,7 @@
 
 
 //主人公を管理するクラス
-class PlayerCamera : public GameObject
+class Aim : public GameObject
 {
     int hModel_;                            //モデル番号
     float PlaPosX_, PlaPosY_, PlaPosZ_;     //プレイヤー位置
@@ -15,10 +15,10 @@ class PlayerCamera : public GameObject
     Text* pNum;                             //テキスト
 public:
     //コンストラクタ
-    PlayerCamera(GameObject* parent);
+    Aim(GameObject* parent);
 
     //デストラクタ
-    ~PlayerCamera();
+    ~Aim();
 
     //初期化
     void Initialize() override;
