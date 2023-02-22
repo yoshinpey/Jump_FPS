@@ -9,10 +9,10 @@
 
 //コンストラクタ
 Aim::Aim(GameObject* parent)
-    :GameObject(parent, "Aim"), hModel_(-1),
-    pNum(nullptr), PlaPosX_(0), PlaPosY_(0), PlaPosZ_(0),
+    :GameObject(parent, "Aim"), pNum(nullptr), 
+    PlaPosX_(0), PlaPosY_(0), PlaPosZ_(0),
     camPos{ 0,0,0 }, camTarget{ 0,0,0 }, fPoint{ 0,0,0 },
-    vPos{0,0,0,0}, vMove{ 0.0f, 0.0f, 0.0f, 0.0f}
+    vPos{ 0,0,0,0 },  vMove{ 0.0f, 0.0f, 0.0f, 0.0f }
 {
 }
 
@@ -24,9 +24,6 @@ Aim::~Aim()
 //初期化
 void Aim::Initialize()
 {
-    //モデルデータのロード
-    hModel_ = Model::Load("Character/PlayerCamera.fbx");
-    assert(hModel_ >= 0);
     transform_.position_.y = 2;
 
     //マウス座標テキスト
@@ -36,13 +33,13 @@ void Aim::Initialize()
     //銃はカメラにつく
     Instantiate<Gun>(this);
 
-    Input::SetMousePosition(300, 250);//マウス初期位置(画面中央)
+     Input::SetMousePosition(300, 250);//マウス初期位置(画面中央)
 }
 
 //更新
 void Aim::Update()
 {
-    
+   
     //マウス移動量
     fPoint = Input::GetMouseMove();
 
@@ -77,24 +74,18 @@ void Aim::Update()
     Camera::SetPosition(camPos);
     //カメラの位置(移動)
     camPos.x = PlaPosX_;   //
-    camPos.y = PlaPosY_+2; //目線
+    camPos.y = PlaPosY_+2; //目線高さ
     camPos.z = PlaPosZ_;   //
 
     //カメラ焦点
     XMStoreFloat3(&camTarget, vPos + vMove);
     Camera::SetTarget(camTarget);
 
-    //XMFLOAT3 GunTop = Model::GetBonePosition(hModel_, "Top");
-    //Camera::SetTarget(GunTop);
-
 }
 
 //描画
 void Aim::Draw()
 {
-    //モデル
-    Model::SetTransform(hModel_, transform_);
-    Model::Draw(hModel_);
 
     //デバック用テキスト
     pNum->Draw(650, 400, "+");

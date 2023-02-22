@@ -6,12 +6,10 @@
 //主人公を管理するクラス
 class Aim : public GameObject
 {
-    int hModel_;                            //モデル番号
     float PlaPosX_, PlaPosY_, PlaPosZ_;     //プレイヤー位置
     XMFLOAT3 fPoint;                        //マウスの移動
     XMFLOAT3 camPos, camTarget;             //カメラ 位置,焦点
-    XMVECTOR vMove;                         //1フレームの移動ベクトル
-    XMVECTOR vPos;                          //1フレームの位置ベクトル
+    XMVECTOR vPos,vMove;                    //1フレームの位置,移動ベクトル
     Text* pNum;                             //テキスト
 public:
     //コンストラクタ
@@ -32,11 +30,4 @@ public:
     //開放
     void Release() override;
 
-    //カメラ回転
-    /*
-    XMVECTOR GetCamRotate()
-    {
-        return vMove;
-    };
-    */
 };
