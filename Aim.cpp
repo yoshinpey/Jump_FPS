@@ -39,7 +39,6 @@ void Aim::Initialize()
 //更新
 void Aim::Update()
 {
-   
     //マウス移動量
     fPoint = Input::GetMouseMove();
 
