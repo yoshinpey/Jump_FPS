@@ -52,8 +52,8 @@ void Aim::Update()
     float Px=0,Py=0;
 
     //ˆÚ“®—Ê‚ð‰ÁŽZ
-    Px += fPoint.x;
-    Py += fPoint.y;
+    Px += fPoint.x + PlaPosX_;
+    Py += fPoint.y + PlaPosY_;
     //‰ñ“]ˆÚ“®‚É”½‰f
     transform_.rotate_.y += Px *0.05;
     transform_.rotate_.x += Py *0.05;
