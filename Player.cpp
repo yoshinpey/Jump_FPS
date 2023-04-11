@@ -12,8 +12,7 @@
 //コンストラクタ
 Player::Player(GameObject* parent)
     :GameObject(parent, "Player"), hModel_(-1), Gravity_(-0.1), 
-    PlaPosX_(0), PlaPosY_(0), PlaPosZ_(0), maxHp_(100), nowHp_(100),
-    jumpReady(false)
+    PlaPosX_(0), PlaPosY_(0), PlaPosZ_(0), maxHp_(100), nowHp_(100),jumpTime(0)
 {
 }
 
@@ -44,33 +43,17 @@ void Player::Update()
 
     PlayerHitPoint();
 
-    //Gravity* pGravity = (Gravity*)FindObject("Gravity");
-    //Gravity_ = pGravity->SetGravity(transform_.position_.y);
-
-    float velocity = 1.0f;
-    if (transform_.position_.y > 0)
+ 
+    //ジャンプ
+    if (Input::IsKeyDown(DIK_SPACE) && jumpTime < 0)
     {
-        jumpReady = false;
-        transform_.position_.y += Gravity_;//重力
+        transform_.position_.y += 3;
+        jumpTime = 60;
     }
-    else
+    jumpTime--;
+    if (jumpTime == 0)
     {
-        jumpReady = true;
-    }
-
-    //ジャンプ力（上昇速度）
-    if (jumpReady == true)//ジャンプ可能
-    {
-        if (Input::IsKeyDown(DIK_SPACE))//押されたらジャンプ
-        {
-            if (velocity < 9)//ジャンプ力
-            {
-                velocity += 3.0f;
-            }
-
-            transform_.position_.y += velocity;
-            velocity += Gravity_;
-        }
+        transform_.position_.y -= 3;
     }
 }
 

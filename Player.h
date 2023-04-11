@@ -10,7 +10,7 @@ class Player : public GameObject
     bool jumpReady;
     float Gravity_;
     float PlaPosX_, PlaPosY_, PlaPosZ_;     //プレイヤー座標
-
+    double jumpTime;
 public:
     //コンストラクタ
     Player(GameObject* parent);
