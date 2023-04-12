@@ -1,4 +1,5 @@
 #pragma once
+#include "Engine/Text.h"
 #include "Engine/GameObject.h"
 
 
@@ -10,7 +11,10 @@ class Player : public GameObject
     bool jumpReady;
     float Gravity_;
     float PlaPosX_, PlaPosY_, PlaPosZ_;     //プレイヤー座標
-    double jumpTime;
+    double jumpCool, jumpHeight;
+    bool CanJump;
+
+    Text* pNum;
 public:
     //コンストラクタ
     Player(GameObject* parent);

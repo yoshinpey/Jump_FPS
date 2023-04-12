@@ -12,7 +12,7 @@
 //コンストラクタ
 Player::Player(GameObject* parent)
     :GameObject(parent, "Player"), hModel_(-1), Gravity_(-0.1), 
-    PlaPosX_(0), PlaPosY_(0), PlaPosZ_(0), maxHp_(100), nowHp_(100),jumpTime(0)
+    PlaPosX_(0), PlaPosY_(0), PlaPosZ_(0), maxHp_(100), nowHp_(100),jumpCool(0),jumpHeight(60), CanJump(true)
 {
 }
 
@@ -31,6 +31,9 @@ void Player::Initialize()
     //カメラ
     Instantiate<Aim>(this);
 
+    pNum = new Text;
+    pNum->Initialize();
+
 }
 
 //更新
@@ -45,16 +48,35 @@ void Player::Update()
 
  
     //ジャンプ
-    if (Input::IsKeyDown(DIK_SPACE) && jumpTime < 0)
+    /*if (transform_.position_.y >= 0)
     {
-        transform_.position_.y += 3;
-        jumpTime = 60;
-    }
-    jumpTime--;
-    if (jumpTime == 0)
+        transform_.position_.y -= 0.1;
+    }*/
+
+    if (CanJump)
     {
-        transform_.position_.y -= 3;
+        if (Input::IsKey(DIK_SPACE))
+        {
+            transform_.position_.y += 0.3;
+            jumpCool+= 0.1;
+        }
+        if (jumpCool >= 1)
+        {
+            CanJump = false;
+        }
     }
+    else
+    {
+        jumpCool-= 0.1;
+        transform_.position_.y -= 0.3;
+
+        if (jumpCool <= 0)
+        {
+            CanJump = true;
+        }
+        
+    }
+
 }
 
 //描画
@@ -63,6 +85,9 @@ void Player::Draw()
     //モデル
     Model::SetTransform(hModel_, transform_);
     Model::Draw(hModel_);
+
+    pNum->Draw(500, 100, jumpCool);
+    pNum->Draw(500, 300, CanJump);
 }
 
 //開放
