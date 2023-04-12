@@ -12,7 +12,7 @@
 //コンストラクタ
 Player::Player(GameObject* parent)
     :GameObject(parent, "Player"), hModel_(-1), Gravity_(-0.1), 
-    PlaPosX_(0), PlaPosY_(0), PlaPosZ_(0), maxHp_(100), nowHp_(100),jumpCool(0),jumpHeight(60), CanJump(true)
+    PlaPosX_(0), PlaPosY_(0), PlaPosZ_(0), maxHp_(100), nowHp_(100),jumpCool(0),jumpTime(5)//, CanJump(true)
 {
 }
 
@@ -48,34 +48,28 @@ void Player::Update()
 
  
     //ジャンプ
-    /*if (transform_.position_.y >= 0)
+
+    if (transform_.position_.y > 0)
     {
         transform_.position_.y -= 0.1;
-    }*/
+    }
+    else if(jumpCool >= 0)
+        jumpCool--;
 
-    if (CanJump)
+
+    if (jumpCool <= 0)
     {
         if (Input::IsKey(DIK_SPACE))
         {
             transform_.position_.y += 0.3;
-            jumpCool+= 0.1;
-        }
-        if (jumpCool >= 1)
-        {
-            CanJump = false;
+            jumpTime--;
         }
     }
-    else
+    if (jumpTime == 0)
     {
-        jumpCool-= 0.1;
-        transform_.position_.y -= 0.3;
-
-        if (jumpCool <= 0)
-        {
-            CanJump = true;
-        }
-        
+        jumpCool = 60;
     }
+    
 
 }
 
@@ -87,7 +81,7 @@ void Player::Draw()
     Model::Draw(hModel_);
 
     pNum->Draw(500, 100, jumpCool);
-    pNum->Draw(500, 300, CanJump);
+    pNum->Draw(500, 300, jumpTime);
 }
 
 //開放

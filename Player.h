@@ -11,8 +11,8 @@ class Player : public GameObject
     bool jumpReady;
     float Gravity_;
     float PlaPosX_, PlaPosY_, PlaPosZ_;     //プレイヤー座標
-    double jumpCool, jumpHeight;
-    bool CanJump;
+    double jumpCool, jumpTime;
+    //bool CanJump;
 
     Text* pNum;
 public:
