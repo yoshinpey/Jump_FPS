@@ -69,7 +69,7 @@ void Player::Update()
     {
         jumpCool = 60;
     }
-    
+    //
 
 }
 
