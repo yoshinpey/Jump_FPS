@@ -11,7 +11,7 @@
 //コンストラクタ
 Player::Player(GameObject* parent)
     :GameObject(parent, "Player"), hModel_(-1), 
-    Gravity_(-0.1), jumpGauge(1200),jumpTime(0), CanJump(false),  jumpVel(0.3),
+    Gravity_(-0.1), jumpGauge(120),jumpTime(0), CanJump(false),  jumpVel(0.3),
     PlaPosX_(0), PlaPosY_(0), PlaPosZ_(0), maxHp_(100), nowHp_(100)
 {
 }
@@ -79,7 +79,7 @@ void Player::Update()
     }
 
     //ジャンプ不可能な時の処理--gaugeはYが0の時に回復
-    if(transform_.position_.y <= 0 && jumpGauge < 1200)
+    if(transform_.position_.y <= 0 && jumpGauge < 120)
     {
         jumpGauge++;
     }
