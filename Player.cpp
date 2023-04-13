@@ -11,8 +11,8 @@
 //コンストラクタ
 Player::Player(GameObject* parent)
     :GameObject(parent, "Player"), hModel_(-1), 
-    Gravity_(-0.1), jumpGauge(120),jumpTime(0), CanJump(false),  jumpVel(0.3),
-    PlaPosX_(0), PlaPosY_(0), PlaPosZ_(0), maxHp_(100), nowHp_(100)
+    Gravity_(-0.1), jumpGauge(30),jumpCool(0), CanJump(false), jumpVel(0.3),
+    maxHp_(100), nowHp_(100)
 {
 }
 
@@ -47,7 +47,7 @@ void Player::Update()
     PlayerHitPoint();
 
 
-    //重力は座標0以上の時に働く
+    //重力は座標0より大きい時に働く
     if (transform_.position_.y > 0)
     {
         transform_.position_.y += Gravity_;
@@ -57,33 +57,39 @@ void Player::Update()
     //ジャンプフラグ---gaugeが0より大きい時ジャンプ可能
     if (jumpGauge > 0)
     {
-        CanJump == true;
+        CanJump = true;
     }
 
     //ジャンプ可能な時の処理
-    if (CanJump=true)
+    if (CanJump)
     {
         if (Input::IsKey(DIK_SPACE))
         {
             jumpGauge--;
-            jumpTime++; //経過時間確認用
             transform_.position_.y += jumpVel;
         }
-        
     }
 
-    //ジャンプ不能になる条件--gaugeが0
+    //ジャンプ不可能になる条件--gaugeが0
     if (jumpGauge <= 0)
     {
-        CanJump == false;
+        CanJump = false;
+        //クールタイムを設定
+        if (jumpCool <= 0 )
+        {
+            jumpCool += 60; //再使用可能時間-----------------無限やなおい！
+        }
     }
 
+    jumpCool--;
     //ジャンプ不可能な時の処理--gaugeはYが0の時に回復
-    if(transform_.position_.y <= 0 && jumpGauge < 120)
+    if(transform_.position_.y <= 0 && jumpGauge < 30)//最大値がマジックナンバー。そのうち直したい
     {
-        jumpGauge++;
+        if (jumpCool <= 0)
+        {
+            jumpGauge++;
+        }
     }
-
 }
 
 //描画
@@ -94,7 +100,7 @@ void Player::Draw()
     Model::Draw(hModel_);
 
     pNum->Draw(500, 100, jumpGauge);
-    pNum->Draw(500, 300, jumpTime);
+    pNum->Draw(500, 300, jumpCool);
     pNum->Draw(500, 500, transform_.position_.x);
     pNum->Draw(800, 500, transform_.position_.y);
     pNum->Draw(1000, 500, transform_.position_.z);

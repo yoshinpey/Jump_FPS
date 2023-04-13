@@ -9,7 +9,7 @@ class Player : public GameObject
     int hModel_;                            //モデル番号   
     int maxHp_, nowHp_;                     //HP 
     bool CanJump;                           //ジャンプ可能
-    float Gravity_, jumpGauge, jumpTime,    //重力、ジャンプゲージ、ジャンプ経過時間
+    float Gravity_, jumpGauge, jumpCool,    //重力、ジャンプゲージ、リチャージ時間
           jumpVel;                          //ジャンプ力
     float PlaPosX_, PlaPosY_, PlaPosZ_;     //プレイヤー座標
    
