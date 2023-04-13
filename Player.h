@@ -7,13 +7,12 @@
 class Player : public GameObject
 {
     int hModel_;                            //モデル番号   
-    int maxHp_, nowHp_;                     //HP
-    bool jumpReady;
-    float Gravity_;
+    int maxHp_, nowHp_;                     //HP 
+    bool CanJump;                           //ジャンプ可能
+    float Gravity_, jumpGauge, jumpTime,    //重力、ジャンプゲージ、ジャンプ経過時間
+          jumpVel;                          //ジャンプ力
     float PlaPosX_, PlaPosY_, PlaPosZ_;     //プレイヤー座標
-    double jumpCool, jumpTime;
-    //bool CanJump;
-
+   
     Text* pNum;
 public:
     //コンストラクタ
@@ -47,7 +46,7 @@ public:
 
 
     //プレイヤー座標のゲッター
-    float GetPlaPosX() { return PlaPosX_ = transform_.position_.x; }
-    float GetPlaPosY() { return PlaPosY_ = transform_.position_.y; }
-    float GetPlaPosZ() { return PlaPosZ_ = transform_.position_.z; }
+    float GetPlaPosX() { return transform_.position_.x; }
+    float GetPlaPosY() { return transform_.position_.y; }
+    float GetPlaPosZ() { return transform_.position_.z; }
 };

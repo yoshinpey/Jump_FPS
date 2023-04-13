@@ -1,7 +1,6 @@
 #include "Engine/Camera.h"
 #include "Engine/Model.h"
 #include "Engine/Input.h"
-
 #include "Aim.h"
 //#include "Gravity.h"
 #include "Player.h"
@@ -11,8 +10,9 @@
 
 //コンストラクタ
 Player::Player(GameObject* parent)
-    :GameObject(parent, "Player"), hModel_(-1), Gravity_(-0.1), 
-    PlaPosX_(0), PlaPosY_(0), PlaPosZ_(0), maxHp_(100), nowHp_(100),jumpCool(0),jumpTime(5)//, CanJump(true)
+    :GameObject(parent, "Player"), hModel_(-1), 
+    Gravity_(-0.1), jumpGauge(1200),jumpTime(0), CanJump(false),  jumpVel(0.3),
+    PlaPosX_(0), PlaPosY_(0), PlaPosZ_(0), maxHp_(100), nowHp_(100)
 {
 }
 
@@ -46,30 +46,43 @@ void Player::Update()
 
     PlayerHitPoint();
 
- 
-    //ジャンプ
 
+    //重力は座標0以上の時に働く
     if (transform_.position_.y > 0)
     {
-        transform_.position_.y -= 0.1;
+        transform_.position_.y += Gravity_;
     }
-    else if(jumpCool >= 0)
-        jumpCool--;
 
 
-    if (jumpCool <= 0)
+    //ジャンプフラグ---gaugeが0より大きい時ジャンプ可能
+    if (jumpGauge > 0)
+    {
+        CanJump == true;
+    }
+
+    //ジャンプ可能な時の処理
+    if (CanJump=true)
     {
         if (Input::IsKey(DIK_SPACE))
         {
-            transform_.position_.y += 0.3;
-            jumpTime--;
+            jumpGauge--;
+            jumpTime++; //経過時間確認用
+            transform_.position_.y += jumpVel;
         }
+        
     }
-    if (jumpTime == 0)
+
+    //ジャンプ不能になる条件--gaugeが0
+    if (jumpGauge <= 0)
     {
-        jumpCool = 60;
+        CanJump == false;
     }
-    //
+
+    //ジャンプ不可能な時の処理--gaugeはYが0の時に回復
+    if(transform_.position_.y <= 0 && jumpGauge < 1200)
+    {
+        jumpGauge++;
+    }
 
 }
 
@@ -80,8 +93,11 @@ void Player::Draw()
     Model::SetTransform(hModel_, transform_);
     Model::Draw(hModel_);
 
-    pNum->Draw(500, 100, jumpCool);
+    pNum->Draw(500, 100, jumpGauge);
     pNum->Draw(500, 300, jumpTime);
+    pNum->Draw(500, 500, transform_.position_.x);
+    pNum->Draw(800, 500, transform_.position_.y);
+    pNum->Draw(1000, 500, transform_.position_.z);
 }
 
 //開放
