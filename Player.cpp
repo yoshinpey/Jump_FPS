@@ -10,8 +10,8 @@
 
 //コンストラクタ
 Player::Player(GameObject* parent)
-    :GameObject(parent, "Player"), hModel_(-1), 
-    Gravity_(-0.1), jumpGauge(30),jumpCool(0), CanJump(false), jumpVel(0.3),
+    :GameObject(parent, "Player"), hModel_(-1), TheZERO(0),
+    Gravity_(-0.1), jumpGauge(50),jumpCool(0), CanJump(false), jumpVel(0.2), jumpTime(0),
     maxHp_(100), nowHp_(100)
 {
 }
@@ -47,49 +47,7 @@ void Player::Update()
     PlayerHitPoint();
 
 
-    //重力は座標0より大きい時に働く
-    if (transform_.position_.y > 0)
-    {
-        transform_.position_.y += Gravity_;
-    }
 
-
-    //ジャンプフラグ---gaugeが0より大きい時ジャンプ可能
-    if (jumpGauge > 0)
-    {
-        CanJump = true;
-    }
-
-    //ジャンプ可能な時の処理
-    if (CanJump)
-    {
-        if (Input::IsKey(DIK_SPACE))
-        {
-            jumpGauge--;
-            transform_.position_.y += jumpVel;
-        }
-    }
-
-    //ジャンプ不可能になる条件--gaugeが0
-    if (jumpGauge <= 0)
-    {
-        CanJump = false;
-        //クールタイムを設定
-        if (jumpCool <= 0 )
-        {
-            jumpCool += 60; //再使用可能時間-----------------無限やなおい！
-        }
-    }
-
-    jumpCool--;
-    //ジャンプ不可能な時の処理--gaugeはYが0の時に回復
-    if(transform_.position_.y <= 0 && jumpGauge < 30)//最大値がマジックナンバー。そのうち直したい
-    {
-        if (jumpCool <= 0)
-        {
-            jumpGauge++;
-        }
-    }
 }
 
 //描画
@@ -168,14 +126,70 @@ void Player::PlayerMove()
     transform_.position_.z += fMove.z;
 
 
+    //ジャンプ------------------------------
+    //重力は座標0より大きい時に働く
+    if (transform_.position_.y > 0)
+    {
+        transform_.position_.y += Gravity_;
+    }
+    //ジャンプフラグ---gaugeが0より大きい時ジャンプ可能
+    if (jumpGauge > 0)
+    {
+        CanJump = true;
+    }
+    //ジャンプ可能な時の処理
+    if (CanJump)
+    {
+        if (Input::IsKey(DIK_SPACE))
+        {
+            if (jumpTime <= 1)//加速限界
+            {
+                jumpTime += 0.01;
+            }
+            jumpGauge--;
+            transform_.position_.y += jumpVel + jumpTime;
+        }
+        else
+        {
+            jumpTime = 0;
+        }
+    }
+    //ジャンプ不可能になる条件--gaugeが0
+    if (jumpGauge <= 0)
+    {
+        CanJump = false;
+        //クールタイムを設定
+        if (jumpCool <= 0)
+        {
+            jumpCool += 30; //再使用可能(回復待機)時間
+        }
+    }
+    //クールタイムは0まで減らす
+    if (jumpCool > 0)
+    {
+        jumpCool--;
+    }
+    //ジャンプ不可能な時の処理--gaugeはYが0の時のみ回復
+    if (transform_.position_.y <= 0 && jumpCool <= 0)//クールタイムが無くなってから減らす
+    {
+        if (jumpGauge < 50)//ゲージの最大値まで
+        {
+            jumpGauge++;
+        }
+    }
+    //--------------------------
 }
 
 //視点
 void Player::CameraPosition() 
 {
 
-    //test
-    //Camera::SetPosition();
+    //テスト用のカメラ
+    XMFLOAT3 camTest1{ 0,0,20 };
+    XMFLOAT3 camTest2{ 0,10,-20 };
+    //Camera::SetPosition(camTest2);
+    Camera::SetPosition(transform_.position_);
+    Camera::SetTarget(camTest1);
 }
 
 

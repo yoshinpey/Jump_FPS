@@ -7,10 +7,11 @@
 class Player : public GameObject
 {
     int hModel_;                            //モデル番号   
+    int TheZERO;                            //無意味な変数。ゼロ。
     int maxHp_, nowHp_;                     //HP 
     bool CanJump;                           //ジャンプ可能
     float Gravity_, jumpGauge, jumpCool,    //重力、ジャンプゲージ、リチャージ時間
-          jumpVel;                          //ジャンプ力
+          jumpVel, jumpTime;                //ジャンプ力、加速度変化用タイマー
     float PlaPosX_, PlaPosY_, PlaPosZ_;     //プレイヤー座標
    
     Text* pNum;
