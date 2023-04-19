@@ -33,7 +33,7 @@ void Aim::Initialize()
     //銃はカメラにつく
     Instantiate<Gun>(this);
 
-    Input::SetMousePosition(300, 250);//マウス初期位置(画面中央)
+    Input::SetMousePosition(800/2, 600/2);//マウス初期位置(画面中央)
 }
 
 //更新
