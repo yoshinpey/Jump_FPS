@@ -183,13 +183,14 @@ void Player::PlayerMove()
 //視点
 void Player::CameraPosition() 
 {
-
+    /*
     //テスト用のカメラ
     XMFLOAT3 camTest1{ 0,0,20 };
     XMFLOAT3 camTest2{ 0,10,-20 };
     //Camera::SetPosition(camTest2);
     Camera::SetPosition(transform_.position_);
     Camera::SetTarget(camTest1);
+    */
 }
 
 
