@@ -1,4 +1,5 @@
 #pragma once
+#include "Engine/Text.h"
 #include "Engine/GameObject.h"
 
 
@@ -6,9 +7,14 @@
 class Player : public GameObject
 {
     int hModel_;                            //モデル番号   
-    int maxHp_, nowHp_;                     //HP
+    int TheZERO;                            //無意味な変数。ゼロ。
+    int maxHp_, nowHp_;                     //HP 
+    bool CanJump;                           //ジャンプ可能
+    float Gravity_, jumpGauge, jumpCool,    //重力、ジャンプゲージ、リチャージ時間
+          jumpVel, jumpTime;                //ジャンプ力、加速度変化用タイマー
     float PlaPosX_, PlaPosY_, PlaPosZ_;     //プレイヤー座標
-
+   
+    Text* pNum;
 public:
     //コンストラクタ
     Player(GameObject* parent);
@@ -31,11 +37,17 @@ public:
     //プレイヤー移動
     void PlayerMove();
 
+    //プレイヤーHP
+    void PlayerHitPoint();
+
     //カメラ
     void CameraPosition();
 
+    //ジャンプ
+
+
     //プレイヤー座標のゲッター
-    float GetPlaPosX() { return PlaPosX_ = transform_.position_.x; }
-    float GetPlaPosY() { return PlaPosY_ = transform_.position_.y; }
-    float GetPlaPosZ() { return PlaPosZ_ = transform_.position_.z; }
+    float GetPlaPosX() { return transform_.position_.x; }
+    float GetPlaPosY() { return transform_.position_.y; }
+    float GetPlaPosZ() { return transform_.position_.z; }
 };

@@ -71,8 +71,9 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.0.1\include;C:\Program Files\Autodesk\FBX\FBX SDK\2020.0\include;C:\Program Files\Autodesk\FBX\FBX SDK\2019.5\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.0.1\lib\vs2017\x64\debug;C:\Program Files\Autodesk\FBX\FBX SDK\2020.0\lib\vs2017\x64\debug;C:\Program Files\Autodesk\FBX\FBX SDK\2019.5\lib\vs2017\x64\debug;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>$(VC_ExecutablePath_x64);$(CommonExecutablePath)</ExecutablePath>
+    <IncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.2.1\include;C:\Program Files\Autodesk\FBX\FBX SDK\2020.2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.2.1\lib\vs2019\x64\debug;C:\Program Files\Autodesk\FBX\FBX SDK\2020.2\lib\vs2019\x64\debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.0.1\include;C:\Program Files\Autodesk\FBX\FBX SDK\2019.5\include;C:\Program Files\Autodesk\FBX\FBX SDK\2020.0\include;$(IncludePath)</IncludePath>
@@ -154,11 +155,12 @@
     <ClCompile Include="Engine\Texture.cpp" />
     <ClCompile Include="Engine\Transform.cpp" />
     <ClCompile Include="Gauge.cpp" />
+    <ClCompile Include="Gravity.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Gun.cpp" />
     <ClCompile Include="OverScene.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayerCamera.cpp" />
+    <ClCompile Include="Aim.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Score.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -194,11 +196,12 @@
     <ClInclude Include="Engine\Texture.h" />
     <ClInclude Include="Engine\Transform.h" />
     <ClInclude Include="Gauge.h" />
+    <ClInclude Include="Gravity.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Gun.h" />
     <ClInclude Include="OverScene.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="PlayerCamera.h" />
+    <ClInclude Include="Aim.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Score.h" />
     <ClInclude Include="Timer.h" />

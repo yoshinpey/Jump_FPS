@@ -21,6 +21,10 @@ void Enemy_Fly::Initialize()
     hModel_ = Model::Load("Character/Enemy.fbx");
     assert(hModel_ >= 0);
     transform_.position_.z = 10;
+
+    //アニメーション
+    Model::SetAnimFrame(hModel_, 0, 100, 0.75);
+
 }
 
 //更新

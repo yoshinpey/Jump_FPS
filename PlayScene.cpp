@@ -40,18 +40,7 @@ void PlayScene::Initialize()
 //更新
 void PlayScene::Update()
 {
-	//タイマー起動
-	if (Input::IsKeyDown(DIK_Y))
-	{
-		Timer* t = (Timer*)FindObject("Timer");
-		t->TimeStart();
-	}
-	//タイマー一時停止
-	if (Input::IsKeyDown(DIK_H))
-	{
-		Timer* t = (Timer*)FindObject("Timer");
-		t->TimeStop();
-	}
+	TimeProcess();
 }
 
 //描画
@@ -65,4 +54,21 @@ void PlayScene::Draw()
 //開放
 void PlayScene::Release()
 {
+}
+
+//タイマー
+void PlayScene::TimeProcess()
+{
+	//タイマー起動
+	if (Input::IsKeyDown(DIK_T))
+	{
+		Timer* t = (Timer*)FindObject("Timer");
+		t->TimeStart();
+	}
+	//タイマー一時停止
+	if (Input::IsKeyDown(DIK_Y))
+	{
+		Timer* t = (Timer*)FindObject("Timer");
+		t->TimeStop();
+	}
 }

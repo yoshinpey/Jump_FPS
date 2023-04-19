@@ -137,9 +137,6 @@
     <ClCompile Include="Attack.cpp">
       <Filter>Resource\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy_Ground.cpp">
-      <Filter>Resource\Character</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy_Fly.cpp">
       <Filter>Resource\Character</Filter>
     </ClCompile>
@@ -158,11 +155,17 @@
     <ClCompile Include="Gun.cpp">
       <Filter>Resource\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerCamera.cpp">
+    <ClCompile Include="Aim.cpp">
       <Filter>Resource\Character</Filter>
     </ClCompile>
     <ClCompile Include="Gauge.cpp">
       <Filter>Multipurpose</Filter>
+    </ClCompile>
+    <ClCompile Include="Gravity.cpp">
+      <Filter>Multipurpose</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_Ground.cpp">
+      <Filter>Resource\Entity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -253,9 +256,6 @@
     <ClInclude Include="Attack.h">
       <Filter>Resource\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy_Ground.h">
-      <Filter>Resource\Character</Filter>
-    </ClInclude>
     <ClInclude Include="Enemy_Fly.h">
       <Filter>Resource\Character</Filter>
     </ClInclude>
@@ -274,11 +274,17 @@
     <ClInclude Include="Gun.h">
       <Filter>Resource\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerCamera.h">
+    <ClInclude Include="Aim.h">
       <Filter>Resource\Character</Filter>
     </ClInclude>
     <ClInclude Include="Gauge.h">
       <Filter>Multipurpose</Filter>
+    </ClInclude>
+    <ClInclude Include="Gravity.h">
+      <Filter>Multipurpose</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_Ground.h">
+      <Filter>Resource\Entity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
