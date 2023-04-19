@@ -11,6 +11,7 @@ class Aim : public GameObject
     XMFLOAT3 camPos, camTarget;             //カメラ 位置,焦点
     XMVECTOR vPos, vMove;                    //1フレームの位置,移動ベクトル
     Text* pNum;                             //テキスト
+    XMFLOAT3 ConvDrawPos(float x, float y);
 public:
     //コンストラクタ
     Aim(GameObject* parent);
