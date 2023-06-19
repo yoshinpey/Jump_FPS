@@ -99,7 +99,7 @@ void Player::Move()
     if (Input::IsKey(DIK_W)){
         fMove.z = 1.0f;
     }
-    if (Input::IsKey(DIK_A)) {
+    if (Input::IsKey(DIK_A)){
         fMove.x = -1.0f;
     }
     if (Input::IsKey(DIK_S)){
