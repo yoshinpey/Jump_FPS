@@ -28,7 +28,7 @@ void Player::Initialize()
     assert(hModel_ >= 0);
 
     //視点クラス読み込み
-    Instantiate<Aim>(this);
+    //Instantiate<Aim>(this);
 
     //テキスト
     pNum = new Text;
@@ -127,7 +127,6 @@ void Player::Move()
 //ジャンプ
 void Player::Jump()
 {
-
     //重力 => 座標が0より大きい時に働く
     if (transform_.position_.y > 0)
         transform_.position_.y += gravity_;
@@ -168,8 +167,8 @@ void Player::Jump()
         jumpCool--;
     }
 
-    //ジャンプ不可能な時の処理--gaugeはYが0の時のみ回復
-    if (transform_.position_.y <= 0 && jumpCool <= 0)//クールタイムが無くなってから減らす
+    //ジャンプ不可能な時の処理--ゲージはY座標が0の時のみ回復
+    if (transform_.position_.y <= 0 && jumpCool <= 0)//クールタイムが無くなってから増やす
     {
         if (jumpGauge < 50)//ゲージの最大値まで
         {
@@ -181,12 +180,9 @@ void Player::Jump()
 //視点
 void Player::CameraPosition() 
 {
-    /*
     //テスト用のカメラ
-    XMFLOAT3 camTest1{ 0,0,20 };
-    XMFLOAT3 camTest2{ 0,10,-20 };
-    //Camera::SetPosition(camTest2);
-    Camera::SetPosition(transform_.position_);
-    Camera::SetTarget(camTest1);
-    */
+    XMFLOAT3 camPos{ 0, 10, -20 };
+    XMFLOAT3 camTag{ 0, 0, 0 };
+    Camera::SetPosition(camPos);
+    Camera::SetTarget(camTag);
 }
