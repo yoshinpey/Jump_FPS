@@ -12,7 +12,7 @@ public:
 
     //デストラクタ
     ~Gun();
-
+    
     //初期化
     void Initialize() override;
 
