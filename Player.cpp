@@ -28,7 +28,7 @@ void Player::Initialize()
     assert(hModel_ >= 0);
 
     //視点クラス読み込み
-    //Instantiate<Aim>(this);
+    Instantiate<Aim>(this);
 
     //テキスト
     pNum = new Text;
@@ -180,9 +180,9 @@ void Player::Jump()
 //視点
 void Player::CameraPosition() 
 {
-    //テスト用のカメラ
+    /*テスト用のカメラ
     XMFLOAT3 camPos{ 0, 10, -20 };
     XMFLOAT3 camTag{ 0, 0, 0 };
     Camera::SetPosition(camPos);
-    Camera::SetTarget(camTag);
+    Camera::SetTarget(camTag);*/
 }

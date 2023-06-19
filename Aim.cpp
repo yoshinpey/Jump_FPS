@@ -33,54 +33,53 @@ void Aim::Initialize()
     //銃はカメラにつく
     Instantiate<Gun>(this);
 
-    Input::SetMousePosition(800/2, 600/2);//マウス初期位置(画面中央)
+   
 }
 
 //更新
 void Aim::Update()
-{
+{ 
+    Input::SetMousePosition(800/2, 600/2);//マウス初期位置(画面中央)
     //マウス移動量
-    fPoint = Input::GetMouseMove();
+    XMFLOAT3 mouseMove = Input::GetMouseMove(); // マウスの移動量を取得
+
+    //移動量を加算
+    transform_.rotate_.y += static_cast<float>(mouseMove.x) * 0.05f; // 横方向の回転
+    transform_.rotate_.x += static_cast<float>(mouseMove.y) * 0.05f; // 縦方向の回転
 
     //プレイヤー座標取得
-    Player* pPlayer = (Player*)FindObject("Player");
+    Player* pPlayer = static_cast<Player*>(FindObject("Player"));
     PlaPosX_ = pPlayer->GetPlaPosX();
     PlaPosY_ = pPlayer->GetPlaPosY();
     PlaPosZ_ = pPlayer->GetPlaPosZ();
 
-    //マウス位置保存用変数
-    float Px = 0, Py = 0;
-
-    //移動量を加算
-    Px += fPoint.x + PlaPosX_;
-    Py += fPoint.y + PlaPosY_;
-    //回転移動に反映
-    transform_.rotate_.y += Px * 0.05;
-    transform_.rotate_.x += Py * 0.05;
-
-    //現在地をベクトルに変換
-    vPos = XMLoadFloat3(&transform_.position_);
+    //プレイヤーキャラクターの位置をカメラの位置とする
+    camPos.x = PlaPosX_;
+    camPos.y = PlaPosY_ + 2; //目線高さ
+    camPos.z = PlaPosZ_;
 
     //カメラの回転
     XMMATRIX mRotX = XMMatrixRotationX(XMConvertToRadians(transform_.rotate_.x));
     XMMATRIX mRotY = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));
 
-    //方向
-    vMove = { 0, 0, 1, 0 };
-    //視点を固定
-    vMove = XMVector3TransformCoord(vMove, mRotY * mRotX);
+    //カメラの位置と回転を合成
+    XMMATRIX mView = mRotX * mRotY;
 
-    Camera::SetPosition(camPos);
-    //カメラの位置(移動)
-    camPos.x = PlaPosX_;   //
-    camPos.y = PlaPosY_ + 2; //目線高さ
-    camPos.z = PlaPosZ_;   //
+    //カメラの位置と焦点を取得
+    XMVECTOR camPosVector = XMLoadFloat3(&camPos);
+    XMVECTOR camTarget = XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f);
+    camTarget = XMVector3TransformCoord(camTarget, mView);
+    camTarget = XMVectorAdd(camPosVector, camTarget);
 
-    //カメラ焦点
-    XMStoreFloat3(&camTarget, vPos + vMove);
-    Camera::SetTarget(camTarget);
-
+    //カメラの位置と焦点を設定
+    XMFLOAT3 camPosFloat3;
+    XMFLOAT3 camTargetFloat3;
+    XMStoreFloat3(&camPosFloat3, camPosVector);
+    XMStoreFloat3(&camTargetFloat3, camTarget);
+    Camera::SetPosition(camPosFloat3);
+    Camera::SetTarget(camTargetFloat3);
 }
+
 
 //描画
 void Aim::Draw()
