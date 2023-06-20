@@ -135,6 +135,7 @@ void Player::Move()
     transform_.position_.x += fMove.x*0.3;
     transform_.position_.z += fMove.z*0.3;
 
+
     //ジャンプアクション
     Jump();
 }
