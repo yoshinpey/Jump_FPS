@@ -111,16 +111,16 @@ void Player::Move()
         fMove.z = pAim->GetAimDirection().z;
     }
     if (Input::IsKey(DIK_A)) {
-        fMove.x = -pAim->GetAimDirection().z;
-        fMove.z = pAim->GetAimDirection().x;
+        fMove.x = pAim->GetAimDirection().z;
+        fMove.z = -pAim->GetAimDirection().x;
     }
     if (Input::IsKey(DIK_S)) {
         fMove.x = -pAim->GetAimDirection().x;
         fMove.z = -pAim->GetAimDirection().z;
     }
     if (Input::IsKey(DIK_D)) {
-        fMove.x = pAim->GetAimDirection().z;
-        fMove.z = -pAim->GetAimDirection().x;
+        fMove.x = -pAim->GetAimDirection().z;
+        fMove.z = pAim->GetAimDirection().x;   
     }
 
     
@@ -132,8 +132,8 @@ void Player::Move()
     XMStoreFloat3(&fMove, rotatedMove);
 
     // 移動に反映
-    transform_.position_.x += fMove.x;
-    transform_.position_.z += fMove.z;
+    transform_.position_.x += fMove.x*0.3;
+    transform_.position_.z += fMove.z*0.3;
 
     //ジャンプアクション
     Jump();
