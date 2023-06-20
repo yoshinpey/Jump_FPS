@@ -33,19 +33,28 @@ void Aim::Initialize()
     //銃はカメラにつく
     Instantiate<Gun>(this);
 
-   
+       Input::SetMousePosition(800/2, 600/2);//マウス初期位置(画面中央)
 }
 
 //更新
 void Aim::Update()
 { 
-    Input::SetMousePosition(800/2, 600/2);//マウス初期位置(画面中央)
     //マウス移動量
     XMFLOAT3 mouseMove = Input::GetMouseMove(); // マウスの移動量を取得
 
     //移動量を加算
-    transform_.rotate_.y += static_cast<float>(mouseMove.x) * 0.05f; // 横方向の回転
-    transform_.rotate_.x += static_cast<float>(mouseMove.y) * 0.05f; // 縦方向の回転
+    transform_.rotate_.y += (mouseMove.x) * 0.05f; // 横方向の回転
+    transform_.rotate_.x += (mouseMove.y) * 0.05f; // 縦方向の回転
+
+    ////カメラの回転
+    XMMATRIX mRotX = XMMatrixRotationX(XMConvertToRadians(transform_.rotate_.x));
+    XMMATRIX mRotY = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y)); 
+    //カメラの位置と回転を合成
+    XMMATRIX mView = mRotX * mRotY;
+
+    XMVECTOR forwardVector = XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f);
+    forwardVector = XMVector3TransformCoord(forwardVector, mView);
+    XMStoreFloat3(&aimDirection_, forwardVector);
 
     //プレイヤー座標取得
     Player* pPlayer = static_cast<Player*>(FindObject("Player"));
@@ -57,13 +66,6 @@ void Aim::Update()
     camPos.x = PlaPosX_;
     camPos.y = PlaPosY_ + 2; //目線高さ
     camPos.z = PlaPosZ_;
-
-    //カメラの回転
-    XMMATRIX mRotX = XMMatrixRotationX(XMConvertToRadians(transform_.rotate_.x));
-    XMMATRIX mRotY = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));
-
-    //カメラの位置と回転を合成
-    XMMATRIX mView = mRotX * mRotY;
 
     //カメラの位置と焦点を取得
     XMVECTOR camPosVector = XMLoadFloat3(&camPos);
@@ -84,13 +86,7 @@ void Aim::Update()
 //描画
 void Aim::Draw()
 {
-
-    //デバック用テキスト
     pNum->Draw(650, 400, "+");
-    pNum->Draw(1100, 100, "X:   ");
-    pNum->Draw(1150, 100, fPoint.x);
-    pNum->Draw(1100, 200, "Y:   ");
-    pNum->Draw(1150, 200, fPoint.y * -1);//表記を視覚的にわかりやすくするため上下反転表示
 }
 
 //開放

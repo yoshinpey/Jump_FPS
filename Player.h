@@ -12,7 +12,6 @@ class Player : public GameObject
     float gravity_, jumpGauge, jumpCool,    //重力、ジャンプゲージ、リチャージ時間
           jumpVel, jumpTime;                //ジャンプ力、加速度変化用タイマー
     float PlaPosX_, PlaPosY_, PlaPosZ_;     //プレイヤー座標
-   
     Text* pNum;
 public:
     Player(GameObject* parent);     //コンストラクタ
@@ -32,4 +31,6 @@ public:
     float GetPlaPosX() { return transform_.position_.x; }
     float GetPlaPosY() { return transform_.position_.y; }
     float GetPlaPosZ() { return transform_.position_.z; }
+
+
 };

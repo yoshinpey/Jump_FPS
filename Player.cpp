@@ -33,7 +33,6 @@ void Player::Initialize()
     //テキスト
     pNum = new Text;
     pNum->Initialize();
-
 }
 
 //更新
@@ -52,11 +51,18 @@ void Player::Draw()
     Model::SetTransform(hModel_, transform_);
     Model::Draw(hModel_);
 
-    pNum->Draw(500, 100, jumpGauge);
-    pNum->Draw(500, 300, jumpCool);
-    pNum->Draw(500, 500, transform_.position_.x);
-    pNum->Draw(800, 500, transform_.position_.y);
-    pNum->Draw(1000, 500, transform_.position_.z);
+    //デバック用テキスト
+    pNum->Draw(50, 200, "jumpGauge");
+    pNum->Draw(50, 250, jumpGauge);
+    pNum->Draw(50, 400, "jumpCool");
+    pNum->Draw(50, 450, jumpCool);
+
+    pNum->Draw(1150, 100, "X:");
+    pNum->Draw(1200, 100, transform_.position_.x);
+    pNum->Draw(1150, 250, "Y:");
+    pNum->Draw(1200, 250, transform_.position_.y);
+    pNum->Draw(1150, 400, "Z:");
+    pNum->Draw(1200, 400, transform_.position_.z);
 }
 
 //開放
@@ -96,27 +102,36 @@ void Player::Move()
     //移動
     XMFLOAT3 fMove = XMFLOAT3(0, 0, 0);
 
-    if (Input::IsKey(DIK_W)){
-        fMove.z = 1.0f;
+    //エイム情報呼び出し
+    Aim* pAim = (Aim*)FindObject("Aim");
+
+    // PlayerクラスのMove関数内の一部
+    if (Input::IsKey(DIK_W)) {
+        fMove.x = pAim->GetAimDirection().x;
+        fMove.z = pAim->GetAimDirection().z;
     }
-    if (Input::IsKey(DIK_A)){
-        fMove.x = -1.0f;
+    if (Input::IsKey(DIK_A)) {
+        fMove.x = -pAim->GetAimDirection().z;
+        fMove.z = pAim->GetAimDirection().x;
     }
-    if (Input::IsKey(DIK_S)){
-        fMove.z = -1.0f;
+    if (Input::IsKey(DIK_S)) {
+        fMove.x = -pAim->GetAimDirection().x;
+        fMove.z = -pAim->GetAimDirection().z;
     }
-    if (Input::IsKey(DIK_D)){
-        fMove.x = 1.0f;
+    if (Input::IsKey(DIK_D)) {
+        fMove.x = pAim->GetAimDirection().z;
+        fMove.z = -pAim->GetAimDirection().x;
     }
+
     
     //移動量を一定に調整
-    XMVECTOR vMove;
-    vMove = XMLoadFloat3(&fMove);
-    vMove = XMVector3Normalize(vMove);
-    vMove *= 0.1f;
-    XMStoreFloat3(&fMove, vMove);
+    // 移動ベクトルをAimコンポーネントの回転情報に合わせて変換
+    XMFLOAT3 forward = pAim->GetAimDirection();
+    XMVECTOR vMove = XMLoadFloat3(&fMove);
+    XMVECTOR rotatedMove = XMVector3Rotate(vMove, XMLoadFloat3(&forward));
+    XMStoreFloat3(&fMove, rotatedMove);
 
-    //移動に反映
+    // 移動に反映
     transform_.position_.x += fMove.x;
     transform_.position_.z += fMove.z;
 
