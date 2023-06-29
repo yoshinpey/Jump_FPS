@@ -6,12 +6,10 @@
 //主人公を管理するクラス
 class Aim : public GameObject
 {
-    float PlaPosX_, PlaPosY_, PlaPosZ_;     //プレイヤー位置
-    XMFLOAT3 fPoint;                        //マウスの移動
+    XMFLOAT3 plaPos_;                       //プレイヤー位置
     XMFLOAT3 camPos, camTarget;             //カメラ 位置,焦点
-    XMVECTOR vPos, vMove;                    //1フレームの位置,移動ベクトル
     Text* pNum;                             //テキスト
-    XMFLOAT3 aimDirection_; // 現在の視点に基づいた進行方向ベクトル
+    XMFLOAT3 aimDirection_;                 //現在の視点に基づいた進行方向ベクトル
 public:
     //コンストラクタ
     Aim(GameObject* parent);
@@ -31,6 +29,6 @@ public:
     //開放
     void Release() override;
 
-    //Aim情報を取得
+    //進行方向ベクトルのAim情報を取得
     XMFLOAT3 GetAimDirection(){ return aimDirection_; }
 };

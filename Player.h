@@ -28,9 +28,6 @@ public:
     void CameraPosition();          //視点
 
     //プレイヤー座標のゲッター
-    float GetPlaPosX() { return transform_.position_.x; }
-    float GetPlaPosY() { return transform_.position_.y; }
-    float GetPlaPosZ() { return transform_.position_.z; }
-
+    XMFLOAT3 GetPlaPos() { return transform_.position_; }
 
 };
