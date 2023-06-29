@@ -179,7 +179,7 @@ HWND InitApp(HINSTANCE hInstance, int screenWidth, int screenHeight, int nCmdSho
 	wc.style = CS_VREDRAW | CS_HREDRAW;				//スタイル（デフォルト）
 	wc.hIcon = LoadIcon(nullptr, IDI_APPLICATION);	//アイコン
 	wc.hIconSm = LoadIcon(nullptr, IDI_WINLOGO);	//小さいアイコン
-	wc.hCursor = LoadCursor(nullptr, IDC_NO);		//マウスカーソル
+	wc.hCursor = LoadCursor(nullptr, IDC_ARROW);	//マウスカーソル
 	wc.lpszMenuName = nullptr;						//メニュー（なし）
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
