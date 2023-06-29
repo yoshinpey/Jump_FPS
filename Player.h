@@ -17,6 +17,7 @@ class Player : public GameObject
     float jumpTime;     //加速度変化用タイマー
 
     Text* pNum;         //テキスト
+
 public:
     Player(GameObject* parent);     //コンストラクタ
     ~Player();                      //デストラクタ
