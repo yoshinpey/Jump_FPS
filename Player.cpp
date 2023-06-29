@@ -6,11 +6,10 @@
 #include "Gauge.h"
 
 
-
 //コンストラクタ
 Player::Player(GameObject* parent)
     :GameObject(parent, "Player"), hModel_(-1),
-    gravity_(-0.1), jumpGauge(50),jumpCool(0), CanJump(false), jumpVel(0.2), jumpTime(0),
+    gravity_(-0.1), jumpGauge(50),jumpCool(0), CanJump_(false), jumpVel(0.2), jumpTime(0),
     maxHp_(100), nowHp_(100)
 {
 }
@@ -123,9 +122,7 @@ void Player::Move()
         fMove.z = pAim->GetAimDirection().x;   
     }
 
-    
-    //移動量を一定に調整
-    // 移動ベクトルをAimコンポーネントの回転情報に合わせて変換
+    //Aimクラスの移動ベクトルを回転情報に合わせて変換
     XMFLOAT3 forward = pAim->GetAimDirection();
     XMVECTOR vMove = XMLoadFloat3(&fMove);
     XMVECTOR rotatedMove = XMVector3Rotate(vMove, XMLoadFloat3(&forward));
@@ -134,7 +131,6 @@ void Player::Move()
     // 移動に反映
     transform_.position_.x += fMove.x*0.3;
     transform_.position_.z += fMove.z*0.3;
-
 
     //ジャンプアクション
     Jump();
@@ -149,10 +145,10 @@ void Player::Jump()
 
     //ジャンプフラグ----ゲージが0より大きい時ジャンプ可能
     if (jumpGauge > 0)
-        CanJump = true;
+        CanJump_ = true;
 
     //ジャンプ可能な時の処理
-    if (CanJump)
+    if (CanJump_)
     {
         if (Input::IsKey(DIK_SPACE))        //ジャンプキー
         {
@@ -172,7 +168,7 @@ void Player::Jump()
     //ジャンプ不可能になる条件--ゲージが0以下
     if (jumpGauge <= 0)
     {
-        CanJump = false;                    //ジャンプ不可
+        CanJump_ = false;                    //ジャンプ不可
         if (jumpCool <= 0)                  //クールタイムを設定
             jumpCool += 30;                 //再使用可能(回復待機)時間
     }

@@ -6,13 +6,17 @@
 //主人公を管理するクラス
 class Player : public GameObject
 {
-    int hModel_;                            //モデル番号   
-    int maxHp_, nowHp_;                     //HP 
-    bool CanJump;                           //ジャンプ可能か
-    float gravity_, jumpGauge, jumpCool,    //重力、ジャンプゲージ、リチャージ時間
-          jumpVel, jumpTime;                //ジャンプ力、加速度変化用タイマー
-    float PlaPosX_, PlaPosY_, PlaPosZ_;     //プレイヤー座標
-    Text* pNum;
+    int hModel_;        //モデル番号   
+    int maxHp_, nowHp_; //HP 
+    bool CanJump_;       //ジャンプ可能か
+    float gravity_;     //重力
+
+    float jumpGauge;    //滞空可能時間
+    float jumpCool;     //リチャージ時間
+    float jumpVel;      //ジャンプ力
+    float jumpTime;     //加速度変化用タイマー
+
+    Text* pNum;         //テキスト
 public:
     Player(GameObject* parent);     //コンストラクタ
     ~Player();                      //デストラクタ

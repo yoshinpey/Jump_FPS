@@ -66,7 +66,7 @@ void Aim::Update()
     XMVECTOR camPosVector = XMLoadFloat3(&camPos);
     XMVECTOR forwardVector = XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f);
     forwardVector = XMVector3TransformCoord(forwardVector, mView);
-    XMStoreFloat3(&aimDirection_, forwardVector);   //プレイヤークラスに進行方向ベクトルを伝える用                    
+    XMStoreFloat3(&aimDirection_, forwardVector);   //プレイヤークラスに進行方向ベクトル(float3)を伝える用                    
     forwardVector = XMVectorAdd(camPosVector, forwardVector);
 
     //カメラの位置と焦点を設定
