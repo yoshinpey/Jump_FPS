@@ -232,6 +232,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		LimitMousePointer(hWnd);  // マウスポインターの制限を設定
 		Input::SetMousePosition(LOWORD(lParam), HIWORD(lParam));
 		return 0;
+
+	// ウィンドウがアクティブになった
+	case WM_ACTIVATE:
+		if (LOWORD(wParam) == WA_ACTIVE || LOWORD(wParam) == WA_CLICKACTIVE)
+		{
+			// マウスカーソルを非表示にする
+			while (ShowCursor(FALSE) >= 0);
+		}
+		else
+		{
+			// マウスカーソルを表示する
+			while (ShowCursor(TRUE) < 0);
+		}
+		return 0;
 	}
 	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
