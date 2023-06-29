@@ -27,6 +27,8 @@ const char* WIN_CLASS_NAME = "SampleGame";	//ウィンドウクラス名
 //プロトタイプ宣言
 HWND InitApp(HINSTANCE hInstance, int screenWidth, int screenHeight, int nCmdShow);
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+void LimitMousePointer(HWND hwnd);
+void ReleaseMousePointer();
 
 
 // エントリーポイント
@@ -177,7 +179,7 @@ HWND InitApp(HINSTANCE hInstance, int screenWidth, int screenHeight, int nCmdSho
 	wc.style = CS_VREDRAW | CS_HREDRAW;				//スタイル（デフォルト）
 	wc.hIcon = LoadIcon(nullptr, IDI_APPLICATION);	//アイコン
 	wc.hIconSm = LoadIcon(nullptr, IDI_WINLOGO);	//小さいアイコン
-	wc.hCursor = LoadCursor(nullptr, IDC_ARROW);	//マウスカーソル
+	wc.hCursor = LoadCursor(nullptr, IDC_NO);		//マウスカーソル
 	wc.lpszMenuName = nullptr;						//メニュー（なし）
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
@@ -221,13 +223,34 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	{
 	//ウィンドウを閉じた
 	case WM_DESTROY:
-		PostQuitMessage(0);	//プログラム終了
+		ReleaseMousePointer();  // マウスポインターの制限を解除
+		PostQuitMessage(0);		//プログラム終了
 		return 0;
 
 	//マウスが動いた
 	case WM_MOUSEMOVE:
+		LimitMousePointer(hWnd);  // マウスポインターの制限を設定
 		Input::SetMousePosition(LOWORD(lParam), HIWORD(lParam));
 		return 0;
 	}
 	return DefWindowProc(hWnd, msg, wParam, lParam);
+}
+
+// マウスポインターを制限する関数
+void LimitMousePointer(HWND hwnd)
+{
+	RECT windowRect;
+	GetClientRect(hwnd, &windowRect);
+
+	// ウィンドウの矩形領域をスクリーン座標に変換
+	MapWindowPoints(hwnd, nullptr, reinterpret_cast<POINT*>(&windowRect), 2);
+
+	// マウスポインターの制限領域を設定
+	ClipCursor(&windowRect);
+}
+
+// マウスポインターの制限を解除する関数
+void ReleaseMousePointer()
+{
+	ClipCursor(nullptr);
 }
