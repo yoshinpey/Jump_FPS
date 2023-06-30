@@ -95,6 +95,16 @@ void Player::PlayerHitPoint()
     }
 }
 
+//視点
+void Player::CameraPosition()
+{
+    /*テスト用のカメラ
+    XMFLOAT3 camPos{ 0, 10, -20 };
+    XMFLOAT3 camTag{ 0, 0, 0 };
+    Camera::SetPosition(camPos);
+    Camera::SetTarget(camTag);*/
+}
+
 //プレイヤーの移動
 void Player::Move() 
 {
@@ -138,6 +148,37 @@ void Player::Move()
 
 //ジャンプ
 void Player::Jump()
+{
+    Jun();
+    /*
+    static int jumpCount = 0;              // ジャンプ回数
+    if (Input::IsKey(DIK_SPACE))            // ジャンプキーが押された場合
+    {
+        if (jumpCount == 0)                 // ジャンプ回数が0の場合（通常のジャンプ）
+        {
+            // 通常のジャンプ処理
+            Jun();
+            jumpCount = 1;                  // ジャンプ回数を1に設定
+        }
+        else if (jumpCount == 1)            // ジャンプ回数が1の場合（ブーストジャンプ）
+        {
+            // ブーストジャンプ処理
+            Boost();
+            jumpCount = 0;                  // ジャンプ回数をリセット
+        }
+    }
+    // 地面に着地した場合の処理
+    if (transform_.position_.y <= 0)
+    {
+        transform_.position_.y = 0;
+        jumpCount = 0;                      // ジャンプ回数をリセット
+    }*/
+}
+
+
+
+
+void Player::Boost()
 {
     //重力 => 座標が0より大きい時に働く
     if (transform_.position_.y > 0)
@@ -189,12 +230,44 @@ void Player::Jump()
     }
 }
 
-//視点
-void Player::CameraPosition() 
+
+
+//Boost
+void Player::Jun()
 {
-    /*テスト用のカメラ
-    XMFLOAT3 camPos{ 0, 10, -20 };
-    XMFLOAT3 camTag{ 0, 0, 0 };
-    Camera::SetPosition(camPos);
-    Camera::SetTarget(camTag);*/
+    float jumpHeight = 2.0f;               // ジャンプの高さ
+    float initialJumpVelocity = 5.0f;      // ジャンプの初速度
+    float gravity = -9.8f;                 // 重力の値
+    float deltaTime = 0.016f;              // フレーム間の時間
+
+    static bool canJump = true;            // ジャンプ可能な状態かどうか
+    static float jumpTime = 0.0f;          // ジャンプ経過時間
+    float jumpVelocity = initialJumpVelocity;
+
+    if (Input::IsKey(DIK_SPACE) && canJump) // ジャンプキーが押されており、ジャンプ可能な場合
+    {
+        // ジャンプの処理
+        jumpTime = 0.0f;
+        canJump = false;  // ジャンプ中は連続ジャンプを防止するためジャンプフラグを無効化
+    }
+
+    if (!canJump)
+    {
+        // ジャンプ中の処理
+        jumpTime += deltaTime;
+
+        // 上方向の移動
+        float jumpHeightReached = jumpVelocity * jumpTime + 0.5f * gravity * jumpTime * jumpTime;
+        transform_.position_.y = jumpHeightReached;
+
+        // 重力による落下処理
+        jumpVelocity += gravity * deltaTime;
+
+        // 地面に着地した場合の処理
+        if (transform_.position_.y <= 0)
+        {
+            transform_.position_.y = 0;
+            canJump = true;  // 地面に着地したらジャンプ可能にする
+        }
+    }
 }
