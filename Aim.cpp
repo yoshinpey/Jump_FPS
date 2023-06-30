@@ -81,7 +81,7 @@ void Aim::Update()
 //•`‰æ
 void Aim::Draw()
 {
-    pNum->Draw(1280/2, 720/2, "+");
+    pNum->Draw(1520/2, 800/2, "+");
 }
 
 //ŠJ•ú
