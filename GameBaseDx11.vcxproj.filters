@@ -232,9 +232,6 @@
     <ClInclude Include="Engine\Model.h">
       <Filter>01Engine\ResourceManager</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Global.h">
-      <Filter>01Engine</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\SceneManager.h">
       <Filter>01Engine</Filter>
     </ClInclude>
@@ -303,6 +300,9 @@
     </ClInclude>
     <ClInclude Include="Enemy_Ground.h">
       <Filter>Enemy\head</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Global.h">
+      <Filter>01Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
