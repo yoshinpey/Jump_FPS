@@ -5,22 +5,12 @@
 class Enemy_Ground : public GameObject
 {
     int hModel_;    //モデル番号
+
 public:
-    //コンストラクタ
-    Enemy_Ground(GameObject* parent);
-
-    //デストラクタ
-    ~Enemy_Ground();
-
-    //初期化
-    void Initialize() override;
-
-    //更新
-    void Update() override;
-
-    //描画
-    void Draw() override;
-
-    //開放
-    void Release() override;
+    Enemy_Ground(GameObject* parent);//コンストラクタ
+    ~Enemy_Ground();                //デストラクタ
+    void Initialize() override;     //初期化
+    void Update() override;         //更新
+    void Draw() override;           //描画
+    void Release() override;        //開放
 };

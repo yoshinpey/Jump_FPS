@@ -8,8 +8,8 @@ class Gauge : public GameObject
     int maxHp_, nowHp_;
 
 public:
-    Gauge(GameObject* parent);//コンストラクタ
-    ~Gauge();//デストラクタ
+    Gauge(GameObject* parent);      //コンストラクタ
+    ~Gauge();                       //デストラクタ
     void Initialize() override;     //初期化
     void Update() override;         //更新
     void Draw() override;           //描画

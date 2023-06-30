@@ -5,22 +5,12 @@
 class Crystal : public GameObject
 {
     int hModel_;    //モデル番号
+
 public:
-    //コンストラクタ
-    Crystal(GameObject* parent);
-
-    //デストラクタ
-    ~Crystal();
-
-    //初期化
-    void Initialize() override;
-
-    //更新
-    void Update() override;
-
-    //描画
-    void Draw() override;
-
-    //開放
-    void Release() override;
+    Crystal(GameObject* parent);    //コンストラクタ
+    ~Crystal();                     //デストラクタ
+    void Initialize() override;     //初期化
+    void Update() override;         //更新
+    void Draw() override;           //描画
+    void Release() override;        //開放
 };
