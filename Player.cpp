@@ -38,6 +38,8 @@ void Player::Initialize()
 void Player::Update()
 {
     Move();             //動き
+    Jun();             //ジャンプアクション
+    Boost();       //ジャンプアクション
     CameraPosition();   //視点
     PlayerHitPoint();   //HP
 
@@ -142,14 +144,12 @@ void Player::Move()
     transform_.position_.x += fMove.x*0.3;
     transform_.position_.z += fMove.z*0.3;
 
-    //ジャンプアクション
-    Jump();
+
 }
 
 //ジャンプ
 void Player::Jump()
 {
-    Jun();
     /*
     static int jumpCount = 0;              // ジャンプ回数
     if (Input::IsKey(DIK_SPACE))            // ジャンプキーが押された場合
