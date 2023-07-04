@@ -34,17 +34,19 @@ void Aim::Initialize()
 
     //マウス初期位置(幅/2, 高さ/2)
     Input::SetMousePosition(800/2, 600/2);
+
+    //初めのマウス位置座標を取得
+    XMFLOAT3 firstMousePos_ = Input::GetMousePosition();
 }
 
 //更新
 void Aim::Update()
 { 
-    /*/////////////////////////////////////////このために数学を勉強し直しました。
-    ----------------------------
-    //初めのマウス位置座標を取得
-    XMFLOAT3 firstMousePos_ = Input::GetMousePosition();
-    ------------------------------
-
+#if 0
+    //----------------------------イニシャライズで記述
+    // 初めのマウス位置座標を取得
+    //XMFLOAT3 firstMousePos_ = Input::GetMousePosition();
+    //------------------------------
     //現在のマウス位置座標を取得
     XMFLOAT3 mousePos_ = Input::GetMousePosition();
 
@@ -52,15 +54,22 @@ void Aim::Update()
     float deltaX = firstMousePos_.x - mousePos_.x;
     float deltaY = firstMousePos_.y - mousePos_.y;
 
-    //向きを算出
-    direction_ = -(float)atan2(deltaX, deltaY);
-    /////////////////////////////////////////////////*/
+    //ベクトル合成、向きを算出
+    direction_ = (float)atan2(deltaY, deltaX);
+
+    //移動量を加算
+    transform_.rotate_.y += (direction_); // 横方向の回転
+
+    firstMousePos_.x = mousePos_.x;
+    firstMousePos_.y = mousePos_.y;
     
-    //////////////////////////////////////あるいは、、、、、、
+#endif
+
+#if 0
     //マウスの移動量を取得
     XMFLOAT3 mouseMove = Input::GetMouseMove();
     
-    //移動ベクトルの長さを計算------3平方の定理------
+    //移動ベクトルの長さを計算------3平方の定理------a^2+b^2=c^2 c=root(a^2+b^2)
     float moveLength = sqrtf(mouseMove.x * mouseMove.x + mouseMove.y * mouseMove.y);
 
     //方向ベクトルを計算-----正規化-----
@@ -70,13 +79,11 @@ void Aim::Update()
     fDirection.z = 0.0f;
 
     //移動量を加算
-    transform_.rotate_.y += (fDirection.x) * 5.0f; // 横方向の回転
-    transform_.rotate_.x += (fDirection.y) * 5.0f; // 縦方向の回転
+    transform_.rotate_ = (fDirection); // 横方向の回転
+#endif
 
-    //////////////////////////////////////でもやっぱ、せっかくだしカッコよく書きたい！
-
-
-    /*//////////////////////////////////関数なんか使ってカッコよく！
+#if 0
+    /////////////////カクツキが酷い
     //マウスの移動量を取得
     XMFLOAT3 mouseMove = Input::GetMouseMove();
 
@@ -90,11 +97,22 @@ void Aim::Update()
     XMFLOAT3 fDirection;
     XMStoreFloat3(&fDirection, normalizedDirection);
 
-    //移動量を加算
-    transform_.rotate_.y += (fDirection.x) * 5.0f; // 横方向の回転
-    transform_.rotate_.x += (fDirection.y) * 5.0f; // 縦方向の回転
+    //回転速度の係数
+    float rotationSpeed = 1.20f;
 
-    //////////////////////////////////////////////////一見良さげだけどだめでした。。*/
+    //移動量に加算
+    transform_.rotate_.y += (fDirection.x) * rotationSpeed; //Y軸回転
+    transform_.rotate_.x += (fDirection.y) * rotationSpeed; //X軸回転
+#endif
+
+#if 1
+    //マウス移動量
+    XMFLOAT3 mouseMove = Input::GetMouseMove(); // マウスの移動量を取得
+
+    //移動量を加算
+    transform_.rotate_.y += (mouseMove.x) * 0.05f; // 横方向の回転
+    transform_.rotate_.x += (mouseMove.y) * 0.05f; // 縦方向の回転
+#endif
 
     ////カメラの回転
     XMMATRIX mRotX = XMMatrixRotationX(XMConvertToRadians(transform_.rotate_.x));
