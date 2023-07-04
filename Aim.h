@@ -10,7 +10,9 @@ class Aim : public GameObject
     XMFLOAT3 camPos, camTarget;             //カメラ 位置,焦点
     Text* pNum;                             //テキスト
     XMFLOAT3 aimDirection_;                 //現在の視点に基づいた進行方向ベクトル
-
+    XMFLOAT3 mousePos_;                     //現在のマウス位置
+    XMFLOAT3 firstMousePos_;                //過去のマウス位置
+    float direction_;	                    //向き(Y回転の角度：ラジアン)
 public:
     Aim(GameObject* parent);        //コンストラクタ
     ~Aim();                         //デストラクタ
