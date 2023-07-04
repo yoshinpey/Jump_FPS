@@ -38,8 +38,8 @@ void Player::Initialize()
 void Player::Update()
 {
     Move();             //動き
-    Jun();             //ジャンプアクション
-    Boost();       //ジャンプアクション
+    Jun();              //ジャンプアクション
+    Boost();            //ブーストアクション
     CameraPosition();   //視点
     PlayerHitPoint();   //HP
 
