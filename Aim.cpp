@@ -76,6 +76,7 @@ void Aim::Update()
     XMStoreFloat3(&camTargetFloat3, forwardVector);
     Camera::SetPosition(camPosFloat3);
     Camera::SetTarget(camTargetFloat3);
+
 }
 
 //•`‰æ
