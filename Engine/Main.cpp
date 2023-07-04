@@ -230,6 +230,24 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		PostQuitMessage(0);		//プログラム終了
 		return 0;
 
+	//キーボードのキーが押された
+	case WM_KEYDOWN:
+		//エスケープキーが押された場合
+		if (Input::IsKeyDown(DIK_ESCAPE))
+		{
+			//確認メッセージボックスを表示
+			int result = MessageBox(hWnd, "プログラムを終了しますか？", "確認", MB_OKCANCEL | MB_ICONQUESTION);
+			while (ShowCursor(TRUE) < 0);	// マウスカーソルを表示する
+
+			//OKボタンが押された場合、プログラムを終了
+			if (result == IDOK)
+			{
+				ReleaseMousePointer();  // マウスポインターの制限を解除
+				PostQuitMessage(0);		//プログラム終了
+			}
+		}
+		return 0;
+
 	//マウスが動いた
 	case WM_MOUSEMOVE:
 		LimitMousePointer(hWnd);  // マウスポインターの制限を設定

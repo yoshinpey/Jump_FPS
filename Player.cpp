@@ -230,9 +230,7 @@ void Player::Boost()
     }
 }
 
-
-
-//Boost
+//ジャンプ
 void Player::Jun()
 {
     float jumpHeight = 2.0f;               // ジャンプの高さ
