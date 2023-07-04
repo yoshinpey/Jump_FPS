@@ -34,9 +34,6 @@ void Aim::Initialize()
 
     //マウス初期位置(幅/2, 高さ/2)
     Input::SetMousePosition(800/2, 600/2);
-
-    //初めのマウス位置座標を取得
-    XMFLOAT3 firstMousePos_ = Input::GetMousePosition();
 }
 
 //更新
