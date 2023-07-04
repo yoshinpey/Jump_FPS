@@ -108,44 +108,47 @@ void Player::CameraPosition()
 }
 
 //プレイヤーの移動
-void Player::Move() 
+void Player::Move()
 {
     //移動
     XMFLOAT3 fMove = XMFLOAT3(0, 0, 0);
 
     //エイム情報呼び出し
     Aim* pAim = (Aim*)FindObject("Aim");
+    XMFLOAT3 aimDirection = pAim->GetAimDirection();
 
     // PlayerクラスのMove関数内の一部
     if (Input::IsKey(DIK_W)) {
-        fMove.x = pAim->GetAimDirection().x;
-        fMove.z = pAim->GetAimDirection().z;
+        fMove.x += aimDirection.x;
+        fMove.z += aimDirection.z;
     }
     if (Input::IsKey(DIK_A)) {
-        fMove.x = pAim->GetAimDirection().z;
-        fMove.z = -pAim->GetAimDirection().x;
+        fMove.x -= aimDirection.z;
+        fMove.z += aimDirection.x;
     }
     if (Input::IsKey(DIK_S)) {
-        fMove.x = -pAim->GetAimDirection().x;
-        fMove.z = -pAim->GetAimDirection().z;
+        fMove.x -= aimDirection.x;
+        fMove.z -= aimDirection.z;
     }
     if (Input::IsKey(DIK_D)) {
-        fMove.x = -pAim->GetAimDirection().z;
-        fMove.z = pAim->GetAimDirection().x;   
+        fMove.x += aimDirection.z;
+        fMove.z -= aimDirection.x;
     }
 
-    //Aimクラスの移動ベクトルを回転情報に合わせて変換
-    XMFLOAT3 forward = pAim->GetAimDirection();
-    XMVECTOR vMove = XMLoadFloat3(&fMove);
-    XMVECTOR rotatedMove = XMVector3Rotate(vMove, XMLoadFloat3(&forward));
-    XMStoreFloat3(&fMove, rotatedMove);
+    //正規化する
+    float moveLength = sqrtf(fMove.x * fMove.x + fMove.z * fMove.z);
+    if (moveLength != 0) 
+    {
+        fMove.x /= moveLength;
+        fMove.z /= moveLength;
+    }
 
-    // 移動に反映
-    transform_.position_.x += fMove.x*0.3;
-    transform_.position_.z += fMove.z*0.3;
-
-
+    //移動に反映
+    float moveSpeed = 0.3f;
+    transform_.position_.x += fMove.x * moveSpeed;
+    transform_.position_.z += fMove.z * moveSpeed;
 }
+
 
 //ジャンプ
 void Player::Jump()

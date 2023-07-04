@@ -39,12 +39,77 @@ void Aim::Initialize()
 //更新
 void Aim::Update()
 { 
+#if 0
+    //----------------------------イニシャライズで記述
+    // 初めのマウス位置座標を取得
+    //XMFLOAT3 firstMousePos_ = Input::GetMousePosition();
+    //------------------------------
+    //現在のマウス位置座標を取得
+    XMFLOAT3 mousePos_ = Input::GetMousePosition();
+
+    //移動ベクトル ＝ 初期位置 - 現在地
+    float deltaX = firstMousePos_.x - mousePos_.x;
+    float deltaY = firstMousePos_.y - mousePos_.y;
+
+    //ベクトル合成、向きを算出
+    direction_ = (float)atan2(deltaY, deltaX);
+
+    //移動量を加算
+    transform_.rotate_.y += (direction_); // 横方向の回転
+
+    firstMousePos_.x = mousePos_.x;
+    firstMousePos_.y = mousePos_.y;
+    
+#endif
+
+#if 0
+    //マウスの移動量を取得
+    XMFLOAT3 mouseMove = Input::GetMouseMove();
+    
+    //移動ベクトルの長さを計算------3平方の定理------a^2+b^2=c^2 c=root(a^2+b^2)
+    float moveLength = sqrtf(mouseMove.x * mouseMove.x + mouseMove.y * mouseMove.y);
+
+    //方向ベクトルを計算-----正規化-----
+    XMFLOAT3 fDirection{};
+    fDirection.x = mouseMove.x / moveLength;
+    fDirection.y = mouseMove.y / moveLength;
+    fDirection.z = 0.0f;
+
+    //移動量を加算
+    transform_.rotate_ = (fDirection); // 横方向の回転
+#endif
+
+#if 0
+    /////////////////カクツキが酷い
+    //マウスの移動量を取得
+    XMFLOAT3 mouseMove = Input::GetMouseMove();
+
+    //移動ベクトルを計算
+    XMVECTOR moveVector = XMLoadFloat3(&mouseMove);
+
+    //方向ベクトルを正規化
+    XMVECTOR normalizedDirection = XMVector3Normalize(moveVector);
+
+    //正規化された方向ベクトルを取得
+    XMFLOAT3 fDirection;
+    XMStoreFloat3(&fDirection, normalizedDirection);
+
+    //回転速度の係数
+    float rotationSpeed = 1.20f;
+
+    //移動量に加算
+    transform_.rotate_.y += (fDirection.x) * rotationSpeed; //Y軸回転
+    transform_.rotate_.x += (fDirection.y) * rotationSpeed; //X軸回転
+#endif
+
+#if 1
     //マウス移動量
     XMFLOAT3 mouseMove = Input::GetMouseMove(); // マウスの移動量を取得
 
     //移動量を加算
     transform_.rotate_.y += (mouseMove.x) * 0.05f; // 横方向の回転
     transform_.rotate_.x += (mouseMove.y) * 0.05f; // 縦方向の回転
+#endif
 
     ////カメラの回転
     XMMATRIX mRotX = XMMatrixRotationX(XMConvertToRadians(transform_.rotate_.x));
@@ -76,6 +141,7 @@ void Aim::Update()
     XMStoreFloat3(&camTargetFloat3, forwardVector);
     Camera::SetPosition(camPosFloat3);
     Camera::SetTarget(camTargetFloat3);
+
 }
 
 //描画
