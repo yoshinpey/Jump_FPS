@@ -38,11 +38,10 @@ void Player::Initialize()
 void Player::Update()
 {
     Move();             //動き
-    Jun();              //ジャンプアクション
+    Jump();             //ジャンプアクション
     Boost();            //ブーストアクション
     CameraPosition();   //視点
     PlayerHitPoint();   //HP
-
 }
 
 //描画
@@ -100,11 +99,13 @@ void Player::PlayerHitPoint()
 //視点
 void Player::CameraPosition()
 {
-    /*テスト用のカメラ
+#if 0
+    //テスト用のカメラ
     XMFLOAT3 camPos{ 0, 10, -20 };
     XMFLOAT3 camTag{ 0, 0, 0 };
     Camera::SetPosition(camPos);
-    Camera::SetTarget(camTag);*/
+    Camera::SetTarget(camTag);
+#endif
 }
 
 //プレイヤーの移動
@@ -150,23 +151,22 @@ void Player::Move()
 }
 
 
-//ジャンプ
-void Player::Jump()
+#if 0
+void Player::BoostJump()
 {
-    /*
     static int jumpCount = 0;              // ジャンプ回数
     if (Input::IsKey(DIK_SPACE))            // ジャンプキーが押された場合
     {
         if (jumpCount == 0)                 // ジャンプ回数が0の場合（通常のジャンプ）
         {
             // 通常のジャンプ処理
-            Jun();
+            Jump();
             jumpCount = 1;                  // ジャンプ回数を1に設定
         }
         else if (jumpCount == 1)            // ジャンプ回数が1の場合（ブーストジャンプ）
         {
             // ブーストジャンプ処理
-            Boost();
+            JetPack();
             jumpCount = 0;                  // ジャンプ回数をリセット
         }
     }
@@ -175,14 +175,36 @@ void Player::Jump()
     {
         transform_.position_.y = 0;
         jumpCount = 0;                      // ジャンプ回数をリセット
-    }*/
+    }
 }
+#endif
 
 
 
-
-void Player::Boost()
+void Player::JetPack()
 {
+    float velocity = 5.0f;          // 初速度
+    float gravity = -9.8f;          // 重力加速度
+    float deltaTime = 0.019f;       // 適当なごく小さい値
+
+    static bool canJump = true;     // ジャンプ可能な状態かどうか
+    static float jumpTime = 0.0f;   // ジャンプ経過時間
+
+
+    //重力による落下
+    velocity += gravity * deltaTime;
+
+    float pos = 1*0;
+    transform_.position_.y = pos;
+
+    //地面に着地したとき
+    if (transform_.position_.y <= 0)
+    {
+        transform_.position_.y = 0;
+        canJump = true;  // 地面に着地したらジャンプ可能にする
+    }
+
+
     //重力 => 座標が0より大きい時に働く
     if (transform_.position_.y > 0)
         transform_.position_.y += gravity_;
@@ -234,7 +256,7 @@ void Player::Boost()
 }
 
 //ジャンプ
-void Player::Jun()
+void Player::Jump()
 {
     float velocity = 5.0f;          // 初速度
     float gravity = -9.8f;          // 重力加速度

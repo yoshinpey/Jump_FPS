@@ -29,8 +29,8 @@ public:
     //アクション
     void Move();                    //プレイヤーの移動
     void Jump();                    //ジャンプ
-    void Jun();
-    void Boost();
+    void JetPack();                 //ジェットパック
+    void BoostJump();                 //ジェットパック
     void PlayerHitPoint();          //体力
     void CameraPosition();          //視点
 
