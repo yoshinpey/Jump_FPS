@@ -201,7 +201,7 @@ HWND InitApp(HINSTANCE hInstance, int screenWidth, int screenHeight, int nCmdSho
 	HWND hWnd = CreateWindow(
 		WIN_CLASS_NAME,					//ウィンドウクラス名
 		caption,						//タイトルバーに表示する内容
-		WS_OVERLAPPEDWINDOW,			//スタイル（普通のウィンドウ WS_OVERLAPPEDWINDOW）
+		WS_POPUP | WS_VISIBLE,			//スタイル（普通のウィンドウ WS_OVERLAPPEDWINDOW）
 		CW_USEDEFAULT,					//表示位置左（おまかせ）
 		CW_USEDEFAULT,					//表示位置上（おまかせ）
 		winRect.right - winRect.left,	//ウィンドウ幅
@@ -224,47 +224,34 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{
-	//ウィンドウを閉じた
+		//ウィンドウを閉じた
 	case WM_DESTROY:
-		ReleaseMousePointer();  // マウスポインターの制限を解除
+		ReleaseMousePointer();  //マウスポインターの制限を解除
 		PostQuitMessage(0);		//プログラム終了
 		return 0;
 
-	//キーボードのキーが押された
-	case WM_KEYDOWN:
-		//エスケープキーが押された場合
+		//マウスが動いた
+	case WM_MOUSEMOVE:
+
+		//マウスポインターの制限を設定
+		LimitMousePointer(hWnd);  
+		Input::SetMousePosition(LOWORD(lParam), HIWORD(lParam));			
+
+		//マウスカーソルを非表示にする
+			while (ShowCursor(FALSE) >= 0);
+
+		//エスケープキーが押された場合、確認メッセージボックスを表示
 		if (Input::IsKeyDown(DIK_ESCAPE))
 		{
-			//確認メッセージボックスを表示
+			while (ShowCursor(TRUE) < 0);   //マウスカーソルを表示する
 			int result = MessageBox(hWnd, "プログラムを終了しますか？", "確認", MB_OKCANCEL | MB_ICONQUESTION);
-			while (ShowCursor(TRUE) < 0);	// マウスカーソルを表示する
 
 			//OKボタンが押された場合、プログラムを終了
 			if (result == IDOK)
 			{
 				ReleaseMousePointer();  // マウスポインターの制限を解除
-				PostQuitMessage(0);		//プログラム終了
+				PostQuitMessage(0);      // プログラム終了
 			}
-		}
-		return 0;
-
-	//マウスが動いた
-	case WM_MOUSEMOVE:
-		LimitMousePointer(hWnd);  // マウスポインターの制限を設定
-		Input::SetMousePosition(LOWORD(lParam), HIWORD(lParam));
-		return 0;
-
-	// ウィンドウがアクティブになった
-	case WM_ACTIVATE:
-		if (LOWORD(wParam) == WA_ACTIVE || LOWORD(wParam) == WA_CLICKACTIVE)
-		{
-			// マウスカーソルを非表示にする
-			while (ShowCursor(FALSE) >= 0);
-		}
-		else
-		{
-			// マウスカーソルを表示する
-			while (ShowCursor(TRUE) < 0);
 		}
 		return 0;
 	}
