@@ -39,7 +39,8 @@ void Player::Update()
 {
     Move();             //動き
     Jump();             //ジャンプアクション
-    Boost();            //ブーストアクション
+    //JetPack();          //ブーストアクション
+    //BoostJump();
     CameraPosition();   //視点
     PlayerHitPoint();   //HP
 }
@@ -117,6 +118,8 @@ void Player::Move()
     //エイム情報呼び出し
     Aim* pAim = (Aim*)FindObject("Aim");
     XMFLOAT3 aimDirection = pAim->GetAimDirection();
+    //float aim = aimDirection.x * aimDirection.z;
+    //transform_.rotate_.y += aim;------------------------------なんか変
 
     // PlayerクラスのMove関数内の一部
     if (Input::IsKey(DIK_W)) {
@@ -179,41 +182,9 @@ void Player::BoostJump()
 }
 #endif
 
-void Player::Jump()
+void Player::BoostJump()
 {
-    float velocity = 5.0f;          // 初速度
-    float gravity = -9.8f;          // 重力加速度
-    float deltaTime = 0.019f;       // 適当なごく小さい値
-    float fuel = 100.0f;
-    static bool canJump = true;     // ジャンプ可能な状態かどうか
-    static float jumpTime = 0.0f;   // ジャンプ経過時間
 
-    if (Input::IsKeyDown(DIK_SPACE) && canJump) //ジャンプキーが押されており、ジャンプ可能な場合
-    {
-        jumpTime = 0.0f;
-        canJump = false;  //連続ジャンプを防止するため、ジャンプ中はジャンプフラグを無効化
-    }
-
-    if (!canJump)
-    {
-        //ジャンプしてからの時間の経過
-        jumpTime += deltaTime;
-
-        //鉛直投げ上げ運動    y  =  v_0  *  t  -  0.5  *  g  *  t^2
-        float pos = velocity * jumpTime + 0.5f * gravity * jumpTime * jumpTime;
-        if()
-        transform_.position_.y = pos;
-
-        //重力による落下
-        velocity += gravity * deltaTime;
-
-        //地面に着地したとき
-        if (transform_.position_.y <= 0)
-        {
-            transform_.position_.y = 0;
-            canJump = true;  // 地面に着地したらジャンプ可能にする
-        }
-    }
 }
 
 void Player::JetPack()
