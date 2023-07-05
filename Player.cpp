@@ -144,7 +144,7 @@ void Player::Move()
     }
 
     //移動に反映
-    float moveSpeed = 0.3f;
+    float moveSpeed = 0.2f;
     transform_.position_.x += fMove.x * moveSpeed;
     transform_.position_.z += fMove.z * moveSpeed;
 }
@@ -212,7 +212,7 @@ void Player::Boost()
     //ジャンプ不可能になる条件--ゲージが0以下
     if (jumpGauge <= 0)
     {
-        CanJump_ = false;                    //ジャンプ不可
+        CanJump_ = false;                   //ジャンプ不可
         if (jumpCool <= 0)                  //クールタイムを設定
             jumpCool += 30;                 //再使用可能(回復待機)時間
     }
@@ -236,35 +236,32 @@ void Player::Boost()
 //ジャンプ
 void Player::Jun()
 {
-    float jumpHeight = 2.0f;               // ジャンプの高さ
-    float initialJumpVelocity = 5.0f;      // ジャンプの初速度
-    float gravity = -9.8f;                 // 重力の値
-    float deltaTime = 0.016f;              // フレーム間の時間
+    float velocity = 5.0f;          // 初速度
+    float gravity = -9.8f;          // 重力加速度
+    float deltaTime = 0.019f;       // 適当なごく小さい値
 
-    static bool canJump = true;            // ジャンプ可能な状態かどうか
-    static float jumpTime = 0.0f;          // ジャンプ経過時間
-    float jumpVelocity = initialJumpVelocity;
+    static bool canJump = true;     // ジャンプ可能な状態かどうか
+    static float jumpTime = 0.0f;   // ジャンプ経過時間
 
-    if (Input::IsKey(DIK_SPACE) && canJump) // ジャンプキーが押されており、ジャンプ可能な場合
+    if (Input::IsKeyDown(DIK_SPACE) && canJump) //ジャンプキーが押されており、ジャンプ可能な場合
     {
-        // ジャンプの処理
         jumpTime = 0.0f;
-        canJump = false;  // ジャンプ中は連続ジャンプを防止するためジャンプフラグを無効化
+        canJump = false;  //連続ジャンプを防止するため、ジャンプ中はジャンプフラグを無効化
     }
 
     if (!canJump)
     {
-        // ジャンプ中の処理
+        //ジャンプしてからの時間の経過
         jumpTime += deltaTime;
+        
+        //鉛直投げ上げ運動    y  =  v_0  *  t  -  0.5  *  g  *  t^2
+        float pos = velocity * jumpTime + 0.5f * gravity * jumpTime * jumpTime;
+        transform_.position_.y = pos;
 
-        // 上方向の移動
-        float jumpHeightReached = jumpVelocity * jumpTime + 0.5f * gravity * jumpTime * jumpTime;
-        transform_.position_.y = jumpHeightReached;
+        //重力による落下
+        velocity += gravity * deltaTime;
 
-        // 重力による落下処理
-        jumpVelocity += gravity * deltaTime;
-
-        // 地面に着地した場合の処理
+        //地面に着地したとき
         if (transform_.position_.y <= 0)
         {
             transform_.position_.y = 0;
