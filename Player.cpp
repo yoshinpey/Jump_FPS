@@ -179,31 +179,45 @@ void Player::BoostJump()
 }
 #endif
 
-
-
-void Player::JetPack()
+void Player::Jump()
 {
     float velocity = 5.0f;          // 初速度
     float gravity = -9.8f;          // 重力加速度
     float deltaTime = 0.019f;       // 適当なごく小さい値
-
+    float fuel = 100.0f;
     static bool canJump = true;     // ジャンプ可能な状態かどうか
     static float jumpTime = 0.0f;   // ジャンプ経過時間
 
-
-    //重力による落下
-    velocity += gravity * deltaTime;
-
-    float pos = 1*0;
-    transform_.position_.y = pos;
-
-    //地面に着地したとき
-    if (transform_.position_.y <= 0)
+    if (Input::IsKeyDown(DIK_SPACE) && canJump) //ジャンプキーが押されており、ジャンプ可能な場合
     {
-        transform_.position_.y = 0;
-        canJump = true;  // 地面に着地したらジャンプ可能にする
+        jumpTime = 0.0f;
+        canJump = false;  //連続ジャンプを防止するため、ジャンプ中はジャンプフラグを無効化
     }
 
+    if (!canJump)
+    {
+        //ジャンプしてからの時間の経過
+        jumpTime += deltaTime;
+
+        //鉛直投げ上げ運動    y  =  v_0  *  t  -  0.5  *  g  *  t^2
+        float pos = velocity * jumpTime + 0.5f * gravity * jumpTime * jumpTime;
+        if()
+        transform_.position_.y = pos;
+
+        //重力による落下
+        velocity += gravity * deltaTime;
+
+        //地面に着地したとき
+        if (transform_.position_.y <= 0)
+        {
+            transform_.position_.y = 0;
+            canJump = true;  // 地面に着地したらジャンプ可能にする
+        }
+    }
+}
+
+void Player::JetPack()
+{
 
     //重力 => 座標が0より大きい時に働く
     if (transform_.position_.y > 0)
@@ -218,10 +232,7 @@ void Player::JetPack()
     {
         if (Input::IsKey(DIK_SPACE))        //ジャンプキー
         {
-            if (jumpTime <= 1)              //加速限界以下だったら
-            {
-                jumpTime += 0.01;
-            }
+            jumpTime += 0.01;
             jumpGauge--;
             transform_.position_.y += (jumpVel + jumpTime);
         }
