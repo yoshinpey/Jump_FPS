@@ -42,20 +42,8 @@
     <Filter Include="Multipurpose">
       <UniqueIdentifier>{88ed1941-2d7b-4413-9a54-7a1aee039f7e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Multipurpose\head">
-      <UniqueIdentifier>{97f9642f-7f59-41ee-b2ec-759ba7a88177}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Multipurpose\source">
-      <UniqueIdentifier>{59030ddb-31aa-441d-bcd4-27b242902f90}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Enemy">
       <UniqueIdentifier>{b3e9ad57-7ede-4243-a75c-f023412d8a4d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Enemy\head">
-      <UniqueIdentifier>{57ab9c01-760f-4c18-8d0c-e57d2e8b2da9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Enemy\source">
-      <UniqueIdentifier>{f6af8e5c-9134-4e4b-9dc7-8ccea56201c5}</UniqueIdentifier>
     </Filter>
     <Filter Include="Item">
       <UniqueIdentifier>{fd3012e6-becc-45de-98af-002547e727d7}</UniqueIdentifier>
@@ -65,12 +53,6 @@
     </Filter>
     <Filter Include="Player">
       <UniqueIdentifier>{a1957ed1-345d-4cac-a8f6-3f32f1a82cd3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Player\head">
-      <UniqueIdentifier>{6d2edaab-c38f-4060-b4b0-ec319dab7286}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Player\source">
-      <UniqueIdentifier>{0ff2f402-f33c-4323-8929-66a419a9ec79}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -152,41 +134,41 @@
     <ClCompile Include="Crystal.cpp">
       <Filter>Item</Filter>
     </ClCompile>
-    <ClCompile Include="Gauge.cpp">
-      <Filter>Multipurpose\source</Filter>
-    </ClCompile>
-    <ClCompile Include="Score.cpp">
-      <Filter>Multipurpose\source</Filter>
-    </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>Multipurpose\source</Filter>
-    </ClCompile>
-    <ClCompile Include="Aim.cpp">
-      <Filter>Player\source</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Player\source</Filter>
-    </ClCompile>
-    <ClCompile Include="Bomb.cpp">
-      <Filter>Player\source</Filter>
-    </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>Player\source</Filter>
-    </ClCompile>
-    <ClCompile Include="Gun.cpp">
-      <Filter>Player\source</Filter>
-    </ClCompile>
     <ClCompile Include="Ground.cpp">
       <Filter>Map</Filter>
     </ClCompile>
-    <ClCompile Include="Attack.cpp">
-      <Filter>Enemy\source</Filter>
+    <ClCompile Include="Player.cpp">
+      <Filter>Player</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy_Fly.cpp">
-      <Filter>Enemy\source</Filter>
+    <ClCompile Include="Gun.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Bomb.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Aim.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Multipurpose</Filter>
+    </ClCompile>
+    <ClCompile Include="Score.cpp">
+      <Filter>Multipurpose</Filter>
+    </ClCompile>
+    <ClCompile Include="Gauge.cpp">
+      <Filter>Multipurpose</Filter>
     </ClCompile>
     <ClCompile Include="Enemy_Ground.cpp">
-      <Filter>Enemy\source</Filter>
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Attack.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_Fly.cpp">
+      <Filter>Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -265,44 +247,44 @@
     <ClInclude Include="Crystal.h">
       <Filter>Item</Filter>
     </ClInclude>
-    <ClInclude Include="Gauge.h">
-      <Filter>Multipurpose\head</Filter>
-    </ClInclude>
-    <ClInclude Include="Score.h">
-      <Filter>Multipurpose\head</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>Multipurpose\head</Filter>
-    </ClInclude>
-    <ClInclude Include="Aim.h">
-      <Filter>Player\head</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Player\head</Filter>
-    </ClInclude>
-    <ClInclude Include="Gun.h">
-      <Filter>Player\head</Filter>
-    </ClInclude>
     <ClInclude Include="Ground.h">
       <Filter>Map</Filter>
     </ClInclude>
-    <ClInclude Include="Bomb.h">
-      <Filter>Player\head</Filter>
-    </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>Player\head</Filter>
-    </ClInclude>
-    <ClInclude Include="Attack.h">
-      <Filter>Enemy\head</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy_Fly.h">
-      <Filter>Enemy\head</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy_Ground.h">
-      <Filter>Enemy\head</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Global.h">
       <Filter>01Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Gun.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Bomb.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Aim.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Multipurpose</Filter>
+    </ClInclude>
+    <ClInclude Include="Gauge.h">
+      <Filter>Multipurpose</Filter>
+    </ClInclude>
+    <ClInclude Include="Score.h">
+      <Filter>Multipurpose</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_Ground.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Attack.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_Fly.h">
+      <Filter>Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
