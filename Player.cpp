@@ -6,10 +6,20 @@
 #include "Gauge.h"
 
 
+/*
+<やることリスト>
+ジェットパックのコード汚すぎるから直す
+通常ジャンプとジェットパックの掛け合わせ
+歩きと走りに加速を付ける
+移動入力をやめたときピタッと止まるの直したい
+
+スクリーンの座標取得でスクリーンサイズをディスプレイごとに合わせたい
+*/
+
 //コンストラクタ
 Player::Player(GameObject* parent)
     :GameObject(parent, "Player"), hModel_(-1),
-    gravity_(-0.1), jumpGauge(50),jumpCool(0), CanJump_(false), jumpVel(0.2), jumpTime(0),
+    gravity_(-9.81), fuel_(50),coolTime_(0), CanJump_(false), acceleration_(0),
     maxHp_(100), nowHp_(100)
 {
 }
@@ -53,10 +63,10 @@ void Player::Draw()
     Model::Draw(hModel_);
 
     //デバック用テキスト
-    pNum->Draw(50, 200, "jumpGauge");
-    pNum->Draw(50, 250, jumpGauge);
-    pNum->Draw(50, 400, "jumpCool");
-    pNum->Draw(50, 450, jumpCool);
+    pNum->Draw(50, 200, "fuel");
+    pNum->Draw(50, 250, fuel_);
+    pNum->Draw(50, 400, "coolTime");
+    pNum->Draw(50, 450, coolTime_);
 
     pNum->Draw(1150, 100, "X:");
     pNum->Draw(1200, 100, transform_.position_.x);
@@ -207,10 +217,10 @@ void Player::BoostJump()
 }
 #endif
 
-
+#if 0
 void Player::BoostJump()
 {
-    /////////////////////////////////////////////////////////////////工事中//////////////
+    ///////////////工事中////////////////////
     float velocity = 5.0f;          // 初速度
     float gravity = -9.8f;          // 重力加速度
     float deltaTime = 0.019f;       // 適当なごく小さい値
@@ -244,92 +254,96 @@ void Player::BoostJump()
         }
     }
 }
+#endif
 
 void Player::JetPack()
 {
-    //重力 => 座標が0より大きい時に働く
-    if (transform_.position_.y > 0)
-        transform_.position_.y += gravity_;
+    float gravity = -9.81;      // 重力
+    float delta = 0.02f;        // 適当なごく小さい値
 
-    //ジャンプフラグ----ゲージが0より大きい時ジャンプ可能
-    if (jumpGauge > 0)
-        CanJump_ = true;
+    float fuel_ = 50;            // 燃料
+    float coolTime = 0;         // クールタイム
+    float acceleration_ = 0.3f;     // 飛行加速度
+    float velocity = 0.0f;      // 初速度
 
-    //ジャンプ可能な時の処理
-    if (CanJump_)
+    float flightTime = 0;       // 滞空中の時間経過
+
+    // 地面にいるとき
+    if (transform_.position_.y <= 0)
     {
-        if (Input::IsKey(DIK_SPACE))        //ジャンプキー
+        flightTime = 0;         // 滞空してない
+    }
+    else
+    {
+        // 自由落下
+        transform_.position_.y += gravity * delta;
+        flightTime++;
+    }
+
+    // 燃料が0より大きい時はジャンプ可能
+    if (fuel_ > 0)
+    {
+        // ジャンプ入力
+        if (Input::IsKey(DIK_SPACE))
         {
-            if (jumpTime <= 1)              //加速限界以下だったら
-            {
-                jumpTime += 0.01;
-            }
-            jumpGauge--;
-            transform_.position_.y += (jumpVel + jumpTime);
+            velocity = acceleration_ * flightTime;
+            transform_.position_.y += velocity * delta;     // 位置＝初速度*経過時間
+            fuel_--;     // 燃料を減らす
         }
         else
         {
-            jumpTime = 0;                   //キー入力がなければジャンプタイムを0にする
+            flightTime = 0;     // キー入力がなければ加速をリセット
+            velocity = 0;
         }
     }
 
-    //ジャンプ不可能になる条件--ゲージが0以下
-    if (jumpGauge <= 0)
+    // ジャンプ不可能--燃料がカラでかつ地面にいる
+    if (transform_.position_.y <= 0 && fuel_ <= 0)
     {
-        CanJump_ = false;                    //ジャンプ不可
-        if (jumpCool <= 0)                  //クールタイムを設定
-            jumpCool += 30;                 //再使用可能(回復待機)時間
+        transform_.position_.y = 0;
+        if (coolTime <= 0) coolTime += 30;             // わずかな回復待機時間を用意
     }
 
-    //クールタイムは0まで減らす
-    if (jumpCool > 0)
-    {
-        jumpCool--;
-    }
-
-    //ジャンプ不可能な時の処理--ゲージはY座標が0の時のみ回復
-    if (transform_.position_.y <= 0 && jumpCool <= 0)//クールタイムが無くなってから増やす
-    {
-        if (jumpGauge < 50)//ゲージの最大値まで
-        {
-            jumpGauge++;
-        }
-    }
+    // クールタイムが残っていたら0になるまで減らす
+    if (coolTime > 0)
+        coolTime--;
+    else
+        if (fuel_ < 50) fuel_++;          // 燃料を最大値まで回復
 }
+
 
 
 //ジャンプ
 void Player::Jump()
 {
     float velocity = 5.0f;          // 初速度
-    float gravity = -9.8f;          // 重力加速度
-    float deltaTime = 0.019f;       // 適当なごく小さい値
-
+    float delta = 0.02f;       // 適当なごく小さい値
+    float gravity = 9.81;
     static bool canJump = true;     // ジャンプ可能な状態かどうか
-    static float jumpTime = 0.0f;   // ジャンプ経過時間
+    static float flightTime = 0.0f;   // ジャンプ経過時間
 
     if (Input::IsKeyDown(DIK_SPACE) && canJump) //ジャンプキーが押されており、ジャンプ可能な場合
     {
-        jumpTime = 0.0f;
+        flightTime = 0.0f;
         canJump = false;  //連続ジャンプを防止するため、ジャンプ中はジャンプフラグを無効化
     }
 
     if (!canJump)
     {
         //ジャンプしてからの時間の経過
-        jumpTime += deltaTime;
+        flightTime += delta;
         
         //鉛直投げ上げ運動    y  =  v_0  *  t  -  0.5  *  g  *  t^2
-        float pos = velocity * jumpTime + 0.5f * gravity * jumpTime * jumpTime;
+        float pos = velocity * flightTime + 0.5f * gravity * flightTime * flightTime;
         transform_.position_.y = pos;
 
         //重力による落下
-        velocity += gravity * deltaTime;
+        velocity += gravity * delta;
 
         //地面に着地したとき
         if (transform_.position_.y <= 0)
         {
-            transform_.position_.y = 0;
+            transform_.position_.y = 0;//念のため地面に合わせる
             canJump = true;  // 地面に着地したらジャンプ可能にする
         }
     }
