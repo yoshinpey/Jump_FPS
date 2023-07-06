@@ -39,8 +39,8 @@ void Player::Update()
 {
     Move();             //動き
     //Jump();           //ジャンプアクション
-    //JetPack();        //ジェットパック
-    BoostJump();        //ブーストジャンプ
+    JetPack();        //ジェットパック
+    //BoostJump();        //ブーストジャンプ
     CameraPosition();   //視点
     PlayerHitPoint();   //HP
 }
@@ -247,7 +247,6 @@ void Player::BoostJump()
 
 void Player::JetPack()
 {
-
     //重力 => 座標が0より大きい時に働く
     if (transform_.position_.y > 0)
         transform_.position_.y += gravity_;
@@ -261,7 +260,10 @@ void Player::JetPack()
     {
         if (Input::IsKey(DIK_SPACE))        //ジャンプキー
         {
-            jumpTime += 0.01;
+            if (jumpTime <= 1)              //加速限界以下だったら
+            {
+                jumpTime += 0.01;
+            }
             jumpGauge--;
             transform_.position_.y += (jumpVel + jumpTime);
         }
@@ -274,7 +276,7 @@ void Player::JetPack()
     //ジャンプ不可能になる条件--ゲージが0以下
     if (jumpGauge <= 0)
     {
-        CanJump_ = false;                   //ジャンプ不可
+        CanJump_ = false;                    //ジャンプ不可
         if (jumpCool <= 0)                  //クールタイムを設定
             jumpCool += 30;                 //再使用可能(回復待機)時間
     }
