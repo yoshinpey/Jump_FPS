@@ -19,7 +19,7 @@
 //コンストラクタ
 Player::Player(GameObject* parent)
     :GameObject(parent, "Player"), hModel_(-1),
-    gravity_(-9.81), fuel_(50),coolTime_(0), CanJump_(false), acceleration_(0),
+    gravity_(-9.81), fuel_(50),coolTime_(0), CanJump_(false), acceleration_(0.5),
     maxHp_(100), nowHp_(100)
 {
 }
@@ -258,59 +258,82 @@ void Player::BoostJump()
 
 void Player::JetPack()
 {
-    float gravity = -9.81;      // 重力
-    float delta = 0.02f;        // 適当なごく小さい値
+    float gravity = -9.81f;      // 重力
+    float delta = 0.02f;         // 適当なごく小さい値
+    float velocity = 0.0f;       // 初速度
 
-    float fuel_ = 50;            // 燃料
-    float coolTime = 0;         // クールタイム
-    float acceleration_ = 0.3f;     // 飛行加速度
-    float velocity = 0.0f;      // 初速度
-
-    float flightTime = 0;       // 滞空中の時間経過
+    float flightTime = 0.0f;     // 滞空中の時間経過
 
     // 地面にいるとき
-    if (transform_.position_.y <= 0)
-    {
-        flightTime = 0;         // 滞空してない
-    }
-    else
+    bool isOnGround = transform_.position_.y <= 0.0f;
+
+
+    if (!isOnGround)
     {
         // 自由落下
         transform_.position_.y += gravity * delta;
-        flightTime++;
     }
 
     // 燃料が0より大きい時はジャンプ可能
-    if (fuel_ > 0)
+    if (fuel_ > 0.0f)
     {
-        // ジャンプ入力
-        if (Input::IsKey(DIK_SPACE))
+        if (Input::IsKey(DIK_SPACE)) 
         {
+            flightTime++;
             velocity = acceleration_ * flightTime;
-            transform_.position_.y += velocity * delta;     // 位置＝初速度*経過時間
+            transform_.position_.y += velocity;     // 位置＝初速度*経過時間
             fuel_--;     // 燃料を減らす
         }
-        else
-        {
-            flightTime = 0;     // キー入力がなければ加速をリセット
-            velocity = 0;
-        }
     }
-
-    // ジャンプ不可能--燃料がカラでかつ地面にいる
-    if (transform_.position_.y <= 0 && fuel_ <= 0)
-    {
-        transform_.position_.y = 0;
-        if (coolTime <= 0) coolTime += 30;             // わずかな回復待機時間を用意
-    }
-
-    // クールタイムが残っていたら0になるまで減らす
-    if (coolTime > 0)
-        coolTime--;
     else
-        if (fuel_ < 50) fuel_++;          // 燃料を最大値まで回復
+    {
+        flightTime = 0.0f;     // キー入力がなければ加速をリセット
+        velocity = 0.0f;
+    }
+
+
+    // ジャンプ不可能--地面にいるかつ燃料がカラ
+    if (isOnGround && fuel_ <= 0.0f)
+    {
+        transform_.position_.y = 0.0f;
+        if (coolTime_ <= 0.0f)
+            coolTime_ += 30.0f;             // わずかな回復待機時間を用意
+
+        if (fuel_ <= 50.0f)
+            fuel_++;          // 燃料を最大値まで回復
+    }
+    if (coolTime_ > 0.0f)
+        coolTime_--;                // クールタイムが残っていたら0になるまで減らす
 }
 
+
+#if 0
+// 地面にいるか判定
+bool isOnGround = transform_.position_.y <= 0.0f;
+
+// ジャンプ入力を受け付ける条件
+bool canJump = fuel > 0 && isOnGround;
+
+// ジャンプ入力
+if (Input::IsKey(DIK_SPACE) && canJump)
+{
+    velocity += acceleration * delta;  // 上昇速度を増加させる
+    fuel--;                           // 燃料を減らす
+}
+else
+{
+    velocity = 0.0f;  // 上昇速度をリセット
+}
+
+// 自由落下
+if (!isOnGround)
+{
+    velocity += gravity * delta;        // 重力による下降速度を追加
+}
+
+// 位置の更新
+transform_.position_.y += velocity * delta;
+#endif
 
 
 //ジャンプ
@@ -348,3 +371,4 @@ void Player::Jump()
         }
     }
 }
+
