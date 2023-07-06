@@ -38,9 +38,9 @@ void Player::Initialize()
 void Player::Update()
 {
     Move();             //動き
-    //Jump();             //ジャンプアクション
-    //JetPack();          //ブーストアクション
-    BoostJump();
+    //Jump();           //ジャンプアクション
+    //JetPack();        //ジェットパック
+    BoostJump();        //ブーストジャンプ
     CameraPosition();   //視点
     PlayerHitPoint();   //HP
 }
