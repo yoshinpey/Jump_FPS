@@ -146,41 +146,43 @@ void Player::Move()
         fMove.z /= moveLength;
     }
 
+    // 速度の制御
+    float walkSpeed = 0.2f;         // 歩行速度
+    float runSpeed = 0.4f;          // 走行速度
+    float nowSpeed = 0;             // 初期速度
 
-    // 加速度と速度の制御
-    float acceleration = 0.02f;  // 加速度の設定
-    float maxSpeed = 0.3f;     // 最大速度の設定
-    float walkSpeed = 0.2f;      // 歩行速度の設定
-
-    static float currentSpeed = 0.0f; // 初期速度を0に設定
+    // 移動入力があるかどうか
     bool isMoving = Input::IsKey(DIK_W) || Input::IsKey(DIK_A) || Input::IsKey(DIK_S) || Input::IsKey(DIK_D);
 
-    if (isMoving) 
+    // 移動入力あり
+    if (isMoving)
     {
-        currentSpeed = min(currentSpeed + acceleration, maxSpeed); // 加速度に基づいて速度を増加させる
+        // 走っているかどうか
+        if (Input::IsKey(DIK_LSHIFT))
+        {
+            nowSpeed = runSpeed;    // 走り速度を設定
+        }
+        else
+        {
+            nowSpeed = walkSpeed;   // 歩き速度を設定
+        }
     }
-    else 
+    else
     {
-        currentSpeed = max(currentSpeed - acceleration, walkSpeed); // 減速度に基づいて速度を減少させる
+        // 各移動ボタンを離したときに速度をリセット
+        nowSpeed = 0.0f;
     }
 
     // 移動に反映
-    transform_.position_.x += fMove.x * currentSpeed;
-    transform_.position_.z += fMove.z * currentSpeed;
-
-    // 各移動ボタンを離したときに速度をリセット
-    if (!isMoving) 
-    {
-        currentSpeed = 0.0f;
-    }
+    transform_.position_.x += fMove.x * nowSpeed;
+    transform_.position_.z += fMove.z * nowSpeed;
 }
-
-
 
 
 #if 0
 void Player::BoostJump()
 {
+    ///////////とりあえずの構想////////////////////
     static int jumpCount = 0;              // ジャンプ回数
     if (Input::IsKey(DIK_SPACE))            // ジャンプキーが押された場合
     {
@@ -201,13 +203,14 @@ void Player::BoostJump()
     if (transform_.position_.y <= 0)
     {
         transform_.position_.y = 0;
-        jumpCount = 0;                      // ジャンプ回数をリセット
     }
 }
 #endif
 
+
 void Player::BoostJump()
 {
+    /////////////////////////////////////////////////////////////////工事中//////////////
     float velocity = 5.0f;          // 初速度
     float gravity = -9.8f;          // 重力加速度
     float deltaTime = 0.019f;       // 適当なごく小さい値
@@ -292,7 +295,7 @@ void Player::JetPack()
     }
 }
 
-#if 0
+
 //ジャンプ
 void Player::Jump()
 {
@@ -329,4 +332,3 @@ void Player::Jump()
         }
     }
 }
-#endif
