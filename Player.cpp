@@ -38,9 +38,9 @@ void Player::Initialize()
 void Player::Update()
 {
     Move();             //動き
-    Jump();             //ジャンプアクション
+    //Jump();             //ジャンプアクション
     //JetPack();          //ブーストアクション
-    //BoostJump();
+    BoostJump();
     CameraPosition();   //視点
     PlayerHitPoint();   //HP
 }
@@ -109,17 +109,16 @@ void Player::CameraPosition()
 #endif
 }
 
-//プレイヤーの移動
+
+// プレイヤーの移動
 void Player::Move()
 {
-    //移動
+    // 移動
     XMFLOAT3 fMove = XMFLOAT3(0, 0, 0);
 
-    //エイム情報呼び出し
+    // エイム情報呼び出し
     Aim* pAim = (Aim*)FindObject("Aim");
     XMFLOAT3 aimDirection = pAim->GetAimDirection();
-    //float aim = aimDirection.x * aimDirection.z;
-    //transform_.rotate_.y += aim;------------------------------なんか変
 
     // PlayerクラスのMove関数内の一部
     if (Input::IsKey(DIK_W)) {
@@ -139,19 +138,44 @@ void Player::Move()
         fMove.z -= aimDirection.x;
     }
 
-    //正規化する
+    // 正規化する
     float moveLength = sqrtf(fMove.x * fMove.x + fMove.z * fMove.z);
-    if (moveLength != 0) 
+    if (moveLength != 0)
     {
         fMove.x /= moveLength;
         fMove.z /= moveLength;
     }
 
-    //移動に反映
-    float moveSpeed = 0.2f;
-    transform_.position_.x += fMove.x * moveSpeed;
-    transform_.position_.z += fMove.z * moveSpeed;
+
+    // 加速度と速度の制御
+    float acceleration = 0.02f;  // 加速度の設定
+    float maxSpeed = 0.3f;     // 最大速度の設定
+    float walkSpeed = 0.2f;      // 歩行速度の設定
+
+    static float currentSpeed = 0.0f; // 初期速度を0に設定
+    bool isMoving = Input::IsKey(DIK_W) || Input::IsKey(DIK_A) || Input::IsKey(DIK_S) || Input::IsKey(DIK_D);
+
+    if (isMoving) 
+    {
+        currentSpeed = min(currentSpeed + acceleration, maxSpeed); // 加速度に基づいて速度を増加させる
+    }
+    else 
+    {
+        currentSpeed = max(currentSpeed - acceleration, walkSpeed); // 減速度に基づいて速度を減少させる
+    }
+
+    // 移動に反映
+    transform_.position_.x += fMove.x * currentSpeed;
+    transform_.position_.z += fMove.z * currentSpeed;
+
+    // 各移動ボタンを離したときに速度をリセット
+    if (!isMoving) 
+    {
+        currentSpeed = 0.0f;
+    }
 }
+
+
 
 
 #if 0
@@ -184,7 +208,38 @@ void Player::BoostJump()
 
 void Player::BoostJump()
 {
+    float velocity = 5.0f;          // 初速度
+    float gravity = -9.8f;          // 重力加速度
+    float deltaTime = 0.019f;       // 適当なごく小さい値
 
+    static bool canJump = true;     // ジャンプ可能な状態かどうか
+    static float jumpTime = 0.0f;   // ジャンプ経過時間
+
+    if (Input::IsKeyDown(DIK_SPACE) && canJump) //ジャンプキーが押されており、ジャンプ可能な場合
+    {
+        jumpTime = 0.0f;
+        canJump = false;  //連続ジャンプを防止するため、ジャンプ中はジャンプフラグを無効化
+    }
+
+    if (!canJump)
+    {
+        //ジャンプしてからの時間の経過
+        jumpTime += deltaTime;
+
+        //鉛直投げ上げ運動    y  =  v_0  *  t  -  0.5  *  g  *  t^2
+        float pos = velocity * jumpTime + 0.5f * gravity * jumpTime * jumpTime;
+        transform_.position_.y = pos;
+
+        //重力による落下
+        velocity += gravity * deltaTime;
+
+        //地面に着地したとき
+        if (transform_.position_.y <= 0)
+        {
+            transform_.position_.y = 0;
+            canJump = true;  // 地面に着地したらジャンプ可能にする
+        }
+    }
 }
 
 void Player::JetPack()
@@ -237,6 +292,7 @@ void Player::JetPack()
     }
 }
 
+#if 0
 //ジャンプ
 void Player::Jump()
 {
@@ -273,3 +329,4 @@ void Player::Jump()
         }
     }
 }
+#endif
