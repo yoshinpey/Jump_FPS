@@ -6,15 +6,15 @@
 //主人公を管理するクラス
 class Player : public GameObject
 {
-    int hModel_;        //モデル番号   
-    int maxHp_, nowHp_; //HP 
-    float acceleration_;
-    float fuel_;            //燃料
-    float coolTime_;         //クールタイム
-    float gravity_;
-    bool CanJump_;       //ジャンプ可能か
+    int hModel_;                //モデル番号   
+    int maxHp_, nowHp_;         //HP 
+    float acceleration_;        //加速
+    float fuel_;                //燃料
+    float coolTime_;            //クールタイム
+    float gravity_;             //重力
+    bool CanJump_;              //ジャンプ可能か
 
-    Text* pNum;         //テキスト
+    Text* pNum;                 //テキスト
 
 public:
     Player(GameObject* parent);     //コンストラクタ

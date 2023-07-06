@@ -5,15 +5,58 @@
 #include "Player.h"
 #include "Gauge.h"
 
-
 /*
-<やることリスト>
-ジェットパックのコード汚すぎるから直す
-通常ジャンプとジェットパックの掛け合わせ
-歩きと走りに加速を付ける
-移動入力をやめたときピタッと止まるの直したい
+<今思いついてるやることリスト>
 
-スクリーンの座標取得でスクリーンサイズをディスプレイごとに合わせたい
+//player
+当たり判定作るの忘れてた
+---コライダーつける。
+HPゲージの実装する
+---今まだ銃のダメージ判定とかできてないから後でやろう
+ジェットパックのコード汚すぎるから直す
+---上昇の加速が微妙。自然落下するときの挙動もなんか変。あとゲージも出したいな
+通常ジャンプとジェットパックの掛け合わせ
+---あとでやる。
+歩きと走りに加速を付ける
+---色々試したけど結構むずい気がする
+移動入力をやめたときピタッと止まるの直す
+---加速ができれば自ずとできるかなって思ってる
+逆キーを入力したら慣性の法則が働く感じにしたい
+---同上
+しゃがみ作りたい
+---モデル差し替えて判定を半分にするだけ
+スライディング作りたい
+---そもそもプレイヤーの頭と体を一緒にしたのが間違いかもしれない・・・・
+---はじめから腕クラスとか作って頭と銃とカメラとか結びつけたほうが良かったのでは。
+---カメラをどうするかが課題。目線のままスライディングしようとしたらおそらくバグる
+---スライディング中は固定カメラにしちゃおうか・・・？あるいはクラスを分ければいいかも
+
+//gun
+当たり判定をレイキャストにするか、もしくはノズルの先端からコライダーを伸ばして判定を作るとかやりたい。
+今の異状態だと弾抜けとかあるし、本場のFPSプレイヤーなら台パン不可避。着弾スピードが遅いのもストレス
+
+//bomb
+モデル追加して時間経過で適当にサウンドとエフェクト再生してコライダー広げればいいかな
+
+//winmain
+スクリーンの座標取得でスクリーンサイズをディスプレイサイズに合わせたい
+
+//各シーン
+それぞれ画像用意したりなんか動きつけたりしたい
+---タイマーとかスコアの反映とかも考えねば
+
+//enemy
+近づいて爆発してくる敵を作る
+---経路探索の実装が正直よくわかってない
+---壁を避けるやつとか前に誰か作ってたよな教えてほちい
+---胴体と頭で別の判定付けてダメージ倍率変えたい
+空飛んで遠距離攻撃を売ってくる敵を作る
+---玉っころとかレーザービーム
+---せっかく自分も空飛べるから、プレイヤーから一定の距離保って攻撃して来るとかやりたい
+---弾除けとかするようにできたら極悪過ぎて最高
+
+//クリスタル
+スコアアップアイテムにするか殲滅スキルにするか未定
 */
 
 //コンストラクタ
@@ -47,12 +90,12 @@ void Player::Initialize()
 //更新
 void Player::Update()
 {
-    Move();             //動き
-    //Jump();           //ジャンプアクション
-    JetPack();        //ジェットパック
-    //BoostJump();        //ブーストジャンプ
-    CameraPosition();   //視点
-    PlayerHitPoint();   //HP
+    Move();                 //動き
+    //Jump();               //ジャンプアクション
+    JetPack();              //ジェットパック
+    //BoostJump();          //ブーストジャンプ
+    CameraPosition();       //視点
+    PlayerHitPoint();       //HP
 }
 
 //描画
@@ -188,7 +231,7 @@ void Player::Move()
     transform_.position_.z += fMove.z * nowSpeed;
 }
 
-
+//初期段階の組み合わせ構想、骨組み
 #if 0
 void Player::BoostJump()
 {
@@ -217,51 +260,12 @@ void Player::BoostJump()
 }
 #endif
 
-#if 0
-void Player::BoostJump()
-{
-    ///////////////工事中////////////////////
-    float velocity = 5.0f;          // 初速度
-    float gravity = -9.8f;          // 重力加速度
-    float deltaTime = 0.019f;       // 適当なごく小さい値
-
-    static bool canJump = true;     // ジャンプ可能な状態かどうか
-    static float jumpTime = 0.0f;   // ジャンプ経過時間
-
-    if (Input::IsKeyDown(DIK_SPACE) && canJump) //ジャンプキーが押されており、ジャンプ可能な場合
-    {
-        jumpTime = 0.0f;
-        canJump = false;  //連続ジャンプを防止するため、ジャンプ中はジャンプフラグを無効化
-    }
-
-    if (!canJump)
-    {
-        //ジャンプしてからの時間の経過
-        jumpTime += deltaTime;
-
-        //鉛直投げ上げ運動    y  =  v_0  *  t  -  0.5  *  g  *  t^2
-        float pos = velocity * jumpTime + 0.5f * gravity * jumpTime * jumpTime;
-        transform_.position_.y = pos;
-
-        //重力による落下
-        velocity += gravity * deltaTime;
-
-        //地面に着地したとき
-        if (transform_.position_.y <= 0)
-        {
-            transform_.position_.y = 0;
-            canJump = true;  // 地面に着地したらジャンプ可能にする
-        }
-    }
-}
-#endif
-
+//実装できたけど挙動が早すぎてキモい
 void Player::JetPack()
 {
     float gravity = -9.81f;      // 重力
     float delta = 0.02f;         // 適当なごく小さい値
     float velocity = 0.0f;       // 初速度
-
     float flightTime = 0.0f;     // 滞空中の時間経過
 
     // 地面にいるとき
@@ -282,31 +286,87 @@ void Player::JetPack()
             flightTime++;
             velocity = acceleration_ * flightTime;
             transform_.position_.y += velocity;     // 位置＝初速度*経過時間
-            fuel_--;     // 燃料を減らす
+            fuel_--;                                // 燃料を減らす
         }
     }
     else
     {
-        flightTime = 0.0f;     // キー入力がなければ加速をリセット
-        velocity = 0.0f;
+        flightTime = 0.0f;      // キー入力がなければ時間加速率をリセット
     }
-
 
     // ジャンプ不可能--地面にいるかつ燃料がカラ
     if (isOnGround && fuel_ <= 0.0f)
-    {
+    {    
         transform_.position_.y = 0.0f;
         if (coolTime_ <= 0.0f)
-            coolTime_ += 30.0f;             // わずかな回復待機時間を用意
-
-        if (fuel_ <= 50.0f)
-            fuel_++;          // 燃料を最大値まで回復
+            coolTime_ += 20.0f;                     // わずかな回復待機時間を用意
     }
+
     if (coolTime_ > 0.0f)
-        coolTime_--;                // クールタイムが残っていたら0になるまで減らす
+        coolTime_--;                                // クールタイムが残っていたら0になるまで減らす
+
+    //ジャンプ不可能な時の処理--ゲージはY座標が0の時のみ回復
+    if (isOnGround && coolTime_ <= 0)
+    {
+        if (fuel_ < 60)         //ゲージの最大値まで
+        {
+            fuel_++;
+        }
+    }
 }
 
+//前に書いた変数名ダサいけど一応動いてるやつ
+#if 0
+void Player::JetPack()
+{
+    //重力 => 座標が0より大きい時に働く
+    if (transform_.position_.y > 0)
+        transform_.position_.y += gravity_;
 
+
+    //ジャンプ可能な時の処理
+    if (jumpGauge > 0)
+    {
+        if (Input::IsKey(DIK_SPACE))        //ジャンプキー
+        {
+            if (jumpTime <= 1)              //加速限界以下だったら
+            {
+                jumpTime += 0.01;
+            }
+            jumpGauge--;
+            transform_.position_.y += (jumpVel + jumpTime);
+        }
+        else
+        {
+            jumpTime = 0;                   //キー入力がなければジャンプタイムを0にする
+        }
+    }
+
+    //ジャンプ不可能になる条件--ゲージが0以下
+    if (jumpGauge <= 0)
+    {                 
+        if (jumpCool <= 0)                  //クールタイムを設定
+            jumpCool += 30;                 //再使用可能(回復待機)時間
+    }
+
+    //クールタイムは0まで減らす
+    if (jumpCool > 0)
+    {
+        jumpCool--;
+    }
+
+    //ジャンプ不可能な時の処理--ゲージはY座標が0の時のみ回復
+    if (transform_.position_.y <= 0 && jumpCool <= 0)//クールタイムが無くなってから増やす
+    {
+        if (jumpGauge < 50)//ゲージの最大値まで
+        {
+            jumpGauge++;
+        }
+    }
+}
+#endif
+
+//判定のメモ
 #if 0
 // 地面にいるか判定
 bool isOnGround = transform_.position_.y <= 0.0f;
@@ -335,20 +395,19 @@ if (!isOnGround)
 transform_.position_.y += velocity * delta;
 #endif
 
-
-//ジャンプ
+//通常ジャンプ
 void Player::Jump()
 {
-    float velocity = 5.0f;          // 初速度
-    float delta = 0.02f;       // 適当なごく小さい値
-    float gravity = 9.81;
-    static bool canJump = true;     // ジャンプ可能な状態かどうか
-    static float flightTime = 0.0f;   // ジャンプ経過時間
+    float velocity = 5.0f;              // 初速度
+    float delta = 0.02f;                // 適当なごく小さい値
+    float gravity = 9.81;               // 
+    static bool canJump = true;         // ジャンプ可能な状態かどうか
+    static float flightTime = 0.0f;     // ジャンプ経過時間
 
     if (Input::IsKeyDown(DIK_SPACE) && canJump) //ジャンプキーが押されており、ジャンプ可能な場合
     {
         flightTime = 0.0f;
-        canJump = false;  //連続ジャンプを防止するため、ジャンプ中はジャンプフラグを無効化
+        canJump = false;                // 連続ジャンプを防止するため、ジャンプ中はジャンプフラグを無効化
     }
 
     if (!canJump)
@@ -356,7 +415,7 @@ void Player::Jump()
         //ジャンプしてからの時間の経過
         flightTime += delta;
         
-        //鉛直投げ上げ運動    y  =  v_0  *  t  -  0.5  *  g  *  t^2
+        //鉛直投げ上げ運動          y  =  v_0  *  t  -  0.5  *  g  *  t^2
         float pos = velocity * flightTime + 0.5f * gravity * flightTime * flightTime;
         transform_.position_.y = pos;
 
@@ -366,8 +425,8 @@ void Player::Jump()
         //地面に着地したとき
         if (transform_.position_.y <= 0)
         {
-            transform_.position_.y = 0;//念のため地面に合わせる
-            canJump = true;  // 地面に着地したらジャンプ可能にする
+            transform_.position_.y = 0;     // 念のため地面に合わせる
+            canJump = true;                 // 地面に着地したらジャンプ可能にする
         }
     }
 }
