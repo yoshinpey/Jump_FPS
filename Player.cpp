@@ -65,7 +65,7 @@ HPゲージの実装する
 //コンストラクタ
 Player::Player(GameObject* parent)
     :GameObject(parent, "Player"), hModel_(-1),
-    gravity_(-9.81), fuel_(50),coolTime_(0), CanJump_(false), acceleration_(0.5),
+    gravity_(-9.81), maxFuel_(50), fuel_(0), coolTime_(0), CanJump_(false), acceleration_(0.5),
     maxHp_(100), nowHp_(100)
 {
 }
@@ -234,6 +234,108 @@ void Player::Move()
     transform_.position_.z += fMove.z * nowSpeed;
 }
 
+
+
+#if 1
+//実装できたけど挙動が早すぎてキモい
+void Player::JetPack()
+{
+    float gravity = -9.81f;      // 重力
+    float delta = 0.02f;         // 適当なごく小さい値
+    float velocity = 0.0f;       // 初速度
+    float flightTime = 0.0f;     // 滞空中の時間経過
+
+    bool onGround = transform_.position_.y <= 0;   // 地面にいるとき
+    bool hasHuel = fuel_ > 0;                       // 燃料があるとき
+
+    if (!onGround)
+    {
+        // 自由落下
+        transform_.position_.y += gravity * delta + delta;
+    }
+
+    // ジャンプ可能--燃料が0より大きい時
+    if (hasHuel)
+    {
+        if (Input::IsKey(DIK_SPACE)) 
+        {
+            flightTime++;
+            velocity = acceleration_ * flightTime;
+            transform_.position_.y += velocity;     // 位置＝初速度*経過時間
+            fuel_--;                                // 燃料を減らす
+        }
+    }
+    else
+    {
+        flightTime = 0.0f;      // キー入力がなければ時間加速率をリセット
+    }
+
+    // ジャンプ不可能--地面にいるかつ燃料がカラ
+    if (onGround && !hasHuel)
+    {    
+        transform_.position_.y = 0.0f;
+        if (coolTime_ <= 0.0f)
+            coolTime_ += 20.0f;             // わずかな回復待機時間を用意
+    }
+
+    if (coolTime_ > 0.0f) 
+        coolTime_--;        // クールタイムが残っていたら0になるまで減らす
+
+    //ジャンプ不可能--地面にいるかつクールタイム中
+    if (onGround && coolTime_ <= 0)
+    {
+        if (fuel_ < maxFuel_)         //ゲージの最大値まで
+            fuel_++;
+    }
+}
+#endif
+
+//前に書いた仕組みダサいけど一応動いてるboost
+#if 0
+void Player::JetPack()
+{
+    float velocity = 1.0f;      // ジャンプ力
+    float flightTime = 0.0f;    // 滞空中の時間経過
+    float gravity = -0.3f;      // 重力
+    float fallTime = 0.0f;      // 落下時間
+
+    bool onGround = transform_.position_.y <= 0;   // 地面にいるとき
+    bool hasHuel = fuel_ > 0;                       // 燃料があるとき
+
+    // 重力は空中にいるときのみ働く
+    if(!onGround) transform_.position_.y += gravity + fallTime;
+
+    // ジャンプ可能な時
+    if(hasHuel)
+    {
+        if (Input::IsKey(DIK_SPACE)) // ジャンプキー入力したら
+        {
+            if (flightTime <= 1) flightTime += 0.1;            //加速限界まで徐々に加速
+            transform_.position_.y += (velocity + flightTime);  //速度にジャンプ時間を加える
+            fuel_--;                                            //燃料を減らす
+        }
+        else
+        {
+            flightTime = 0; //キー入力がなければ経過時間(加速)をリセット
+            fallTime *= 1.1;
+        }
+    }
+    else
+    {
+        if (coolTime_ <= 0) coolTime_ += 30; //わずかな燃料回復遅延を設定
+    }
+
+    // クールタイムを0まで減らす
+    if (coolTime_ > 0)   coolTime_--;
+
+    // 燃料は地面にいてクールタイム中でないときに回復
+    if (onGround && coolTime_ <= 0)
+    {
+        if (fuel_ < 50) fuel_++; // 燃料を最大値まで回復
+    }
+}
+#endif
+
 //初期段階の組み合わせ構想、骨組み
 #if 0
 void Player::BoostJump()
@@ -259,112 +361,6 @@ void Player::BoostJump()
     if (transform_.position_.y <= 0)
     {
         transform_.position_.y = 0;
-    }
-}
-#endif
-
-//実装できたけど挙動が早すぎてキモい
-void Player::JetPack()
-{
-    float gravity = -9.81f;      // 重力
-    float delta = 0.02f;         // 適当なごく小さい値
-    float velocity = 0.0f;       // 初速度
-    float flightTime = 0.0f;     // 滞空中の時間経過
-
-    // 地面にいるとき
-    bool isOnGround = transform_.position_.y <= 0.0f;
-
-
-    if (!isOnGround)
-    {
-        // 自由落下
-        transform_.position_.y += gravity * delta;
-    }
-
-    // 燃料が0より大きい時はジャンプ可能
-    if (fuel_ > 0.0f)
-    {
-        if (Input::IsKey(DIK_SPACE)) 
-        {
-            flightTime++;
-            velocity = acceleration_ * flightTime;
-            transform_.position_.y += velocity;     // 位置＝初速度*経過時間
-            fuel_--;                                // 燃料を減らす
-        }
-    }
-    else
-    {
-        flightTime = 0.0f;      // キー入力がなければ時間加速率をリセット
-    }
-
-    // ジャンプ不可能--地面にいるかつ燃料がカラ
-    if (isOnGround && fuel_ <= 0.0f)
-    {    
-        transform_.position_.y = 0.0f;
-        if (coolTime_ <= 0.0f)
-            coolTime_ += 20.0f;                     // わずかな回復待機時間を用意
-    }
-
-    if (coolTime_ > 0.0f)
-        coolTime_--;                                // クールタイムが残っていたら0になるまで減らす
-
-    //ジャンプ不可能な時の処理--ゲージはY座標が0の時のみ回復
-    if (isOnGround && coolTime_ <= 0)
-    {
-        if (fuel_ < 60)         //ゲージの最大値まで
-        {
-            fuel_++;
-        }
-    }
-}
-
-//前に書いた変数名ダサいけど一応動いてるやつ
-#if 0
-void Player::JetPack()
-{
-    //重力 => 座標が0より大きい時に働く
-    if (transform_.position_.y > 0)
-        transform_.position_.y += gravity_;
-
-
-    //ジャンプ可能な時の処理
-    if (jumpGauge > 0)
-    {
-        if (Input::IsKey(DIK_SPACE))        //ジャンプキー
-        {
-            if (jumpTime <= 1)              //加速限界以下だったら
-            {
-                jumpTime += 0.01;
-            }
-            jumpGauge--;
-            transform_.position_.y += (jumpVel + jumpTime);
-        }
-        else
-        {
-            jumpTime = 0;                   //キー入力がなければジャンプタイムを0にする
-        }
-    }
-
-    //ジャンプ不可能になる条件--ゲージが0以下
-    if (jumpGauge <= 0)
-    {                 
-        if (jumpCool <= 0)                  //クールタイムを設定
-            jumpCool += 30;                 //再使用可能(回復待機)時間
-    }
-
-    //クールタイムは0まで減らす
-    if (jumpCool > 0)
-    {
-        jumpCool--;
-    }
-
-    //ジャンプ不可能な時の処理--ゲージはY座標が0の時のみ回復
-    if (transform_.position_.y <= 0 && jumpCool <= 0)//クールタイムが無くなってから増やす
-    {
-        if (jumpGauge < 50)//ゲージの最大値まで
-        {
-            jumpGauge++;
-        }
     }
 }
 #endif
