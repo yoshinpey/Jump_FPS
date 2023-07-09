@@ -8,10 +8,11 @@ class Player : public GameObject
 {
     int hModel_;                //モデル番号   
     int maxHp_, nowHp_;         //HP 
-    float acceleration_;        //加速
+
+    float jampVelocity_;        //ジャンプ速度
     float fuel_;                //燃料
-    float maxFuel_;                //燃料
-    float coolTime_;            //クールタイム
+    float maxFuel_;             //最大燃料
+    float jumpCool_;            //クールタイム
     float gravity_;             //重力
     bool CanJump_;              //ジャンプ可能か
 
