@@ -10,7 +10,7 @@
 //コンストラクタ
 Aim::Aim(GameObject* parent)
     :GameObject(parent, "Aim"), pNum_(nullptr),
-    plaPos_{ 0,0,0 }, camPos_{ 0,0,0 }, camTarget_{ 0,0,0 }, aimDirection_{ 0,0,0 }
+    plaPos_{ 0,0,0 }, camPos_{ 0,0,0 }, camTarget_{ 0,0,0 }, aimDirection_{ 0,0,0 }, screenHeight_(0), screenWidth_(0)
 {
 }
 
@@ -32,8 +32,13 @@ void Aim::Initialize()
     //銃はカメラにつく
     Instantiate<Gun>(this);
 
+    //スクリーンサイズを取得
+    screenWidth_ = GetPrivateProfileInt("SCREEN", "Width", 800, ".\\setup.ini");    //スクリーンの幅
+    screenHeight_ = GetPrivateProfileInt("SCREEN", "Height", 600, ".\\setup.ini");	//スクリーンの高さ
+
     //マウス初期位置(幅/2, 高さ/2)
-    Input::SetMousePosition(800/2, 600/2);
+    Input::SetMousePosition(screenWidth_ /2, screenHeight_ /2);
+
 }
 
 //更新
@@ -81,7 +86,7 @@ void Aim::Update()
 //描画
 void Aim::Draw()
 {
-    pNum_->Draw(1520/2, 800/2, "+");
+    pNum_->Draw(screenWidth_ /2, screenHeight_ /2, "+");
 }
 
 //開放

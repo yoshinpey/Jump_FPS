@@ -6,6 +6,7 @@
 //視点を管理するクラス
 class Aim : public GameObject
 {
+    float screenWidth_, screenHeight_;
     XMFLOAT3 plaPos_;                       //プレイヤー位置
     XMFLOAT3 camPos_, camTarget_;             //カメラ 位置,焦点
     Text* pNum_;                             //テキスト

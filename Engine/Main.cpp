@@ -1,7 +1,4 @@
 
-//
-//　最終更新日：2022/11/22
-//
 
 
 
@@ -218,7 +215,6 @@ HWND InitApp(HINSTANCE hInstance, int screenWidth, int screenHeight, int nCmdSho
 	return hWnd;
 }
 
-
 //ウィンドウプロシージャ（何かあった時によばれる関数）
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -232,16 +228,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 		//マウスが動いた
 	case WM_MOUSEMOVE:
-
 		//マウスポインターの制限を設定
-		LimitMousePointer(hWnd);  
-		Input::SetMousePosition(LOWORD(lParam), HIWORD(lParam));			
+		LimitMousePointer(hWnd);
+		Input::SetMousePosition(LOWORD(lParam), HIWORD(lParam));
 
 		//マウスカーソルを非表示にする
-			while (ShowCursor(FALSE) >= 0);
+		while (ShowCursor(FALSE) >= 0);
+		return 0;
 
-		//エスケープキーが押された場合、確認メッセージボックスを表示
-		if (Input::IsKeyDown(DIK_ESCAPE))
+		//キーボードのキーが押された
+	case WM_KEYDOWN:
+		//エスケープキーが押された場合
+		if (wParam == VK_ESCAPE)
 		{
 			while (ShowCursor(TRUE) < 0);   //マウスカーソルを表示する
 			int result = MessageBox(hWnd, "プログラムを終了しますか？", "確認", MB_OKCANCEL | MB_ICONQUESTION);
@@ -251,6 +249,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			{
 				ReleaseMousePointer();  // マウスポインターの制限を解除
 				PostQuitMessage(0);      // プログラム終了
+			}
+			else if (result == IDCANCEL)
+			{
+				// キャンセル選択時は何もしない
 			}
 		}
 		return 0;
