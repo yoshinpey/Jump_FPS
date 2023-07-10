@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Engine/Camera.h"
 #include "Engine/Model.h"
 #include "Engine/Input.h"
@@ -65,7 +66,7 @@ HPゲージの実装する
 //コンストラクタ
 Player::Player(GameObject* parent)
     :GameObject(parent, "Player"), hModel_(-1),
-    gravity_(-0.3), maxFuel_(50), fuel_(0), jumpCool_(0), CanJump_(false), jampVelocity_(1.0),
+    gravity_(-0.3), maxFuel_(50), fuel_(0), jumpCool_(0), CanJump_(false), jumpVelocity_(1.0),
     maxHp_(100), nowHp_(100)
 {
 }
@@ -279,21 +280,27 @@ void Player::JetPack()
     bool hasFuel = fuel_ > 0;                       // 燃料があるとき
 
     // 重力は空中にいるときのみ働く
-    if(!onGround) transform_.position_.y += gravity_ + fallTime;
+    if (!onGround) transform_.position_.y += gravity_ + fallTime;
 
     // ジャンプ可能
-    if(hasFuel)
+    if (hasFuel)
     {
         if (Input::IsKey(DIK_SPACE)) // ジャンプキー入力したら
         {
-            if (flightTime <= 1) flightTime += 0.1;            //加速限界まで徐々に加速
-            transform_.position_.y += jampVelocity_ + flightTime;  //速度にジャンプ時間を加える
-            fuel_--;                                            //燃料を減らす
+            if (flightTime <= 1.0f) flightTime += 0.1f; // 加速限界まで徐々に加速
+
+            // ブーストジャンプにイーズインアウトカーブを適用
+            float t = flightTime / 1.0f;  // ブーストジャンプの所要時間を1.0秒と仮定
+            float easeFactor = EaseInOutCubic(t); // EaseInOutCubic()関数を適用
+            float jumpVelocity = jumpVelocity_ * easeFactor; // ジャンプ速度にイーズインアウト効果を乗算
+
+            transform_.position_.y += jumpVelocity + flightTime; // 速度にジャンプ時間を加える
+            fuel_--; // 燃料を減らす
         }
         else
         {
-            flightTime = 0; //キー入力がなければ経過時間(加速)をリセット
-            fallTime += 0.2;
+            flightTime = 0.0f; // キー入力がなければ経過時間(加速)をリセット
+            fallTime += 0.2f;
         }
     }
 
@@ -301,20 +308,28 @@ void Player::JetPack()
     if (onGround && !hasFuel)
     {
         transform_.position_.y = 0.0f;
-        if (jumpCool_ <= 0.0f) jumpCool_ += 20.0f;             // わずかな回復待機時間を設定
+        if (jumpCool_ <= 0.0f) jumpCool_ += 20.0f; // わずかな回復待機時間を設定
     }
 
     // クールタイムを0まで減らす
-    if (jumpCool_ > 0)   jumpCool_--;
+    if (jumpCool_ > 0.0f) jumpCool_--;
 
     // 燃料は地面にいてクールタイム中でないときに回復
-    if (onGround && jumpCool_ <= 0)
+    if (onGround && jumpCool_ <= 0.0f)
     {
         if (fuel_ < maxFuel_) fuel_++; // 燃料を最大値まで回復
     }
 }
 
+
+
+
 //組み合わせ
 void Player::BoostJump()
 {
+}
+
+float Player::EaseInOutCubic(float x)
+{
+    return x < 0.5f ? 4.0f * x * x * x : 1.0f - std::pow(-2.0f * x + 2.0f, 3.0f) / 2.0f;
 }
