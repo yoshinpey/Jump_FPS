@@ -64,7 +64,7 @@ HPゲージの実装する
 
 //コンストラクタ
 Player::Player(GameObject* parent)
-    :GameObject(parent, "Player"), hModel_(-1),
+    :GameObject(parent, "Player"), hModel_(-1), pNum(nullptr),
     gravity_(-0.3), maxFuel_(50), fuel_(0), jumpCool_(0), CanJump_(false), jampVelocity_(1.0),
     maxHp_(100), nowHp_(100)
 {
