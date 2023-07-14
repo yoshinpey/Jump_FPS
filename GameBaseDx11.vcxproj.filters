@@ -54,6 +54,9 @@
     <Filter Include="Player">
       <UniqueIdentifier>{a1957ed1-345d-4cac-a8f6-3f32f1a82cd3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01Engine\Imgui">
+      <UniqueIdentifier>{0bbe5986-6174-490d-ab33-0df99aa86591}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\BoxCollider.cpp">
@@ -170,6 +173,27 @@
     <ClCompile Include="Enemy_Fly.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\imgui\imgui.cpp">
+      <Filter>01Engine\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\imgui\imgui_demo.cpp">
+      <Filter>01Engine\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\imgui\imgui_draw.cpp">
+      <Filter>01Engine\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\imgui\imgui_impl_dx11.cpp">
+      <Filter>01Engine\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\imgui\imgui_impl_win32.cpp">
+      <Filter>01Engine\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\imgui\imgui_tables.cpp">
+      <Filter>01Engine\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\imgui\imgui_widgets.cpp">
+      <Filter>01Engine\Imgui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -285,6 +309,30 @@
     </ClInclude>
     <ClInclude Include="Enemy_Fly.h">
       <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\imgui\imconfig.h">
+      <Filter>01Engine\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\imgui\imgui.h">
+      <Filter>01Engine\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\imgui\imgui_impl_dx11.h">
+      <Filter>01Engine\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\imgui\imgui_impl_win32.h">
+      <Filter>01Engine\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\imgui\imgui_internal.h">
+      <Filter>01Engine\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\imgui\imstb_rectpack.h">
+      <Filter>01Engine\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\imgui\imstb_textedit.h">
+      <Filter>01Engine\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\imgui\imstb_truetype.h">
+      <Filter>01Engine\Imgui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
