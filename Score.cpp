@@ -3,7 +3,7 @@
 //コンストラクタ
 Score::Score(GameObject* parent)
     :GameObject(parent, "Score"), pText(nullptr), 
-    Active(false), drawX(10), drawY(20)
+    drawX_(50), drawY_(700)
 {
 }
 
@@ -27,10 +27,24 @@ void Score::Update()
 //描画
 void Score::Draw()
 {
-    //pText->Draw(30, 30, "Hello");
+    pText->Draw(drawX_, drawY_, score_);
 }
 
 //開放
 void Score::Release()
 {
+    delete pText;
+    pText = nullptr;
+}
+
+//スコアを加算する
+void Score::ScoreAdd(int score)
+{
+    score_ += score;
+}
+
+//スコアを取得する
+int Score::GetScore()
+{
+    return score_;
 }

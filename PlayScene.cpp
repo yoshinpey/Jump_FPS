@@ -8,6 +8,7 @@
 #include "Ground.h"
 #include "Timer.h"
 #include "Gauge.h"
+#include "Score.h"
 
 
 //コンストラクタ
@@ -26,6 +27,7 @@ void PlayScene::Initialize()
 	//※テキストは前面になるように描画
 	Instantiate<Timer>(this);			//タイマー登場
 	Instantiate<Gauge>(this);			//HPゲージ	
+	Instantiate<Score>(this);			//スコア表示
 
 	//背景画像データのロード
 	hPict_ = Image::Load("Earth.png");
@@ -34,12 +36,26 @@ void PlayScene::Initialize()
 	//タイマー設定
 	Timer* t = (Timer*)FindObject("Timer");
 	t->SetLimit(15);
+
+
+
+
+
 }
 
 //更新
 void PlayScene::Update()
 {
-	TimeProcess();
+	TimeProcess();	
+
+	//////スコアテスト用
+	Score* s = (Score*)FindObject("Score");
+	static int score = 0;	
+	static int num = 0;
+	num++;
+	score = (num % 60) * 0.1;
+
+	s->ScoreAdd(score);
 }
 
 //描画
