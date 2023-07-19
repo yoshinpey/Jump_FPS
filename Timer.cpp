@@ -45,9 +45,10 @@ void Timer::Draw()
     pNum->Draw(drawX, drawY, "Time:");                      //•`‰æ“à—e
 
     if (Frame % FPS < 10)                                   //”Žš‚Ì–ô“®Š´
-        pNum->SetScale((Frame % FPS) * 1.2f);        //‹K’èƒtƒŒ[ƒ€ˆÈ‰ºŽž‚É“K‰ž
+        pNum->SetScale((Frame % FPS) * 0.2f + 1.0f);        //‹K’èƒtƒŒ[ƒ€ˆÈ‰ºŽž‚É“K‰ž
     else
         pNum->SetScale(1.0f);
+
     int sec = Frame / FPS;                                  //•b”
     pNum->Draw(drawX + 100, drawY, sec);
 }
