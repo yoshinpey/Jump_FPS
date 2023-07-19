@@ -2,7 +2,8 @@
 
 //コンストラクタ
 Score::Score(GameObject* parent)
-    :GameObject(parent, "Score"), pText(nullptr)
+    :GameObject(parent, "Score"), pText(nullptr), 
+    Active(false), drawX(10), drawY(20)
 {
 }
 

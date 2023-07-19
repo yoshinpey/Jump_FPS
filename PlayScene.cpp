@@ -8,7 +8,6 @@
 #include "Ground.h"
 #include "Timer.h"
 #include "Gauge.h"
-#include "Gun.h"
 
 
 //コンストラクタ
@@ -24,7 +23,7 @@ void PlayScene::Initialize()
 	Instantiate<Enemy_Fly>(this);		//敵登場
 	Instantiate<Player>(this);			//プレイヤー登場
 
-	//※優先描画
+	//※テキストは前面になるように描画
 	Instantiate<Timer>(this);			//タイマー登場
 	Instantiate<Gauge>(this);			//HPゲージ	
 
@@ -63,12 +62,12 @@ void PlayScene::TimeProcess()
 	if (Input::IsKeyDown(DIK_T))
 	{
 		Timer* t = (Timer*)FindObject("Timer");
-		t->TimeStart();
+		t->Start();
 	}
 	//タイマー一時停止
 	if (Input::IsKeyDown(DIK_Y))
 	{
 		Timer* t = (Timer*)FindObject("Timer");
-		t->TimeStop();
+		t->Stop();
 	}
 }

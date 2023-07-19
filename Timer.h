@@ -23,10 +23,10 @@ public:
     void SetLimit(float seconds);
 
     //タイマー開始
-    void TimeStart();
+    void Start();
 
     //タイマー終了
-    void TimeStop();
+    void Stop();
 
     //タイマー処理終了
     bool IsFinished();
