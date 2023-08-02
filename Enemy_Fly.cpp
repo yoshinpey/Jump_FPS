@@ -17,18 +17,22 @@ Enemy_Fly::~Enemy_Fly()
 void Enemy_Fly::Initialize()
 {
     //モデルデータのロード
-    hModel_ = Model::Load("Character/Enemy.fbx");
+    hModel_ = Model::Load("Character/Mob_Robot.fbx");
     assert(hModel_ >= 0);
+    transform_.position_.y = 1;
     transform_.position_.z = 10;
+    transform_.rotate_.y = 180;
 
-    //アニメーション
-    Model::SetAnimFrame(hModel_, 0, 100, 0.75);
 
 }
 
 //更新
 void Enemy_Fly::Update()
 {
+    transform_.rotate_.y += 0.5;    
+
+    //アニメーション
+    Model::SetAnimFrame(hModel_, 0, 120, 1.00);
 }
 
 //描画
