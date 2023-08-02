@@ -23,6 +23,8 @@ void Enemy_Fly::Initialize()
     transform_.position_.z = 10;
     transform_.rotate_.y = 180;
 
+    //アニメーション
+    Model::SetAnimFrame(hModel_, 0, 120, 1.00);
 
 }
 
@@ -31,8 +33,7 @@ void Enemy_Fly::Update()
 {
     transform_.rotate_.y += 0.5;    
 
-    //アニメーション
-    Model::SetAnimFrame(hModel_, 0, 120, 1.00);
+
 }
 
 //描画
